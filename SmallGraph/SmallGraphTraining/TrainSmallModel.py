@@ -2,13 +2,13 @@ from DatasetRepresentation.DataPreprocessing.CombinationOfProsessing import crea
 from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import read_embedings_file
 from DatasetRepresentation.Utils import make_networkx_to_pyg_df
 from sklearn.model_selection import train_test_split
+global dir_to_large
 
 from SmallGraph.SmallGraphTraining.HyperParameterTunningSmall import train_and_write_best_model
 from Utilities.HyperParameterTunning import run_hyper_parameter_tuning
 
 
-def generate_and_save_results_for_small_models(networkx_dataset, hyperparameters, model_hyperparameters, tuning_hyperparameters,
-                            dir_to_large="some_path"):
+def generate_and_save_results_for_small_models(networkx_dataset, hyperparameters, model_hyperparameters, tuning_hyperparameters):
     # create graph that contains node embeddings from the above.
     large_embedings = read_embedings_file(dir_to_large)
 

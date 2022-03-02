@@ -8,6 +8,8 @@ from Utilities.JoinRawDatasetUtils import read_int_to_node_mapping, read_node_to
 global temp_model
 global gpus_per_trial
 global device
+global dir_to_large
+
 
 def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters  ):
   best_model_config = run_hyper_parameter_tuning(hyperparameters, tuning_hyperparameters)
@@ -89,8 +91,7 @@ def create_embs_dic(graph, emb_dic, map):
 
 import json
 
-def write_emd_to_file(graph,emb_dic,  dir_to_large = "/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag",
-                      to_write_path="/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag"):
+def write_emd_to_file(graph,emb_dic,  to_write_path="/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag"):
   map= read_int_to_node_mapping(dir_to_large)
   to_write= create_embs_dic(graph, emb_dic, map)
   file_name=  os.path.join(to_write_path,"emb.json")

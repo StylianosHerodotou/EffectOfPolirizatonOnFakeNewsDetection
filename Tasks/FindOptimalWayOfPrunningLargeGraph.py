@@ -12,6 +12,7 @@ import torch
 
 global device
 global gpus_per_trial
+global dir_to_large
 
 
 def remove_nodes_based_on_frequency(large_graph,threshold):
@@ -31,7 +32,7 @@ def remove_nodes_based_on_frequency(large_graph,threshold):
 
 def findOptimalWayOfPrunningLargeOne():
     # large one one time stuff
-    dir_to_large = "/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag"
+    # dir_to_large = "/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
 
     base_filename = "joined_dataset_no_empty_graphs.csv"
     base_newtorkx_dataset = read_networkx_dataset(base_filename)

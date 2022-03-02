@@ -9,6 +9,7 @@ from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import
     add_identidy_fellowship_node_feature_to_graph, add_large_node_embeddings_to_graph
 from Utilities import JoinRawDatasetUtils
 
+global dir_to_large
 
 def read_networkx_dataset(name,
                           dir_to_dataset="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset"):
@@ -66,7 +67,8 @@ class NetworkXDataset(BaseDataset):
             df = self.df.drop("node_to_int_mapping", axis=1)
         df.to_csv(path_to_save, index=False)
 
-    def remove_nodes_not_in_large(self, nodes_to_delete_names,dir_to_large="/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag"):
+    def remove_nodes_not_in_large(self, nodes_to_delete_names,
+                                  ):
         # find all large nodes
         int_to_node_mapping_large = JoinRawDatasetUtils.read_int_to_node_mapping(dir_to_large)
         all_large_nodes = get_nodes_wiki_id_using_mapping(int_to_node_mapping_large)
