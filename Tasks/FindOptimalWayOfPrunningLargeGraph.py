@@ -15,7 +15,7 @@ global gpus_per_trial
 global dir_to_large
 
 
-def remove_nodes_based_on_frequency(large_graph,threshold):
+def remove_nodes_based_on_frequency(large_graph,int_to_node_mapping_lagre,threshold):
   to_remove_ids=set()
   to_remove_names=set()
   for node in large_graph.nodes(data=True):
