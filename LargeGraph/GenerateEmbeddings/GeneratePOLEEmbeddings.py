@@ -17,7 +17,7 @@ def create_POLE_input_file(graph, filepath="somepath.txt"):
 def write_POLE_embeddings(graph, int_to_node_mapping,
                           filename="temp.txt",
                           large_dir_path="/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag",
-                          path_to_POLE="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/POLE/src/embedding.py"):
+                          path_to_POLE="/POLE/src/embedding.py"):
     create_POLE_input_file(graph, filename)
     command = f"python {path_to_POLE} --graph { os.path.join(dir_to_large,filename)} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
     os.system(command)
