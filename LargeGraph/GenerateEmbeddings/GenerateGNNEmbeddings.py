@@ -59,16 +59,9 @@ def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters
     train_data["SIGNED_features"]= x_features
 
   #swap these to make the training function work.
-  temp= hyperparameters["epochs"]
-  hyperparameters["epochs"]=hyperparameters["final_training_epochs"]
-  hyperparameters["final_training_epochs"]=temp
+  train_data["epochs"]=hyperparameters["final_training_epochs"]
 
   best_trained_model.train_fold_large(train_data,in_hyper_parameter_search=False)
-
-  # swap back
-  temp = hyperparameters["epochs"]
-  hyperparameters["epochs"] = hyperparameters["final_training_epochs"]
-  hyperparameters["final_training_epochs"] = temp
 
   embeddings= best_trained_model.forward(train_data)
   return embeddings
