@@ -48,6 +48,7 @@ def k_fold_training_large(model_hyperparameters, graph,
                                      weight_decay=model_hyperparameters["weight_decay"])
         model.optimizer= optimizer
 
+        train_data["epochs"]= model_hyperparameters["epochs" ]
         train_data["pos_index"] = train_pos
         train_data["neg_index"] = train_neg
         train_data["test_pos_index"] = eval_pos
