@@ -42,7 +42,7 @@ def k_fold_training_large(model_hyperparameters, graph,
         if torch.cuda.is_available():
             if torch.cuda.device_count() > 1:
                 model = torch.nn.DataParallel(model)
-        model.to(device)
+        model.model.to(device)
 
         optimizer = torch.optim.Adam(model.parameters(), lr=model_hyperparameters["learning_rate"],
                                      weight_decay=model_hyperparameters["weight_decay"])

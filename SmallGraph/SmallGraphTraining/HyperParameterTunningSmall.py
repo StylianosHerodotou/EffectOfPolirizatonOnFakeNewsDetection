@@ -30,7 +30,7 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         if torch.cuda.is_available():
             if torch.cuda.device_count() > 1:
                 model = torch.nn.DataParallel(model)
-        model.to(device)
+        model.model.to(device)
 
         optimizer = torch.optim.Adam(model.parameters(), lr=hyperparameters["learning_rate"])
         model.optimizer=optimizer
@@ -62,7 +62,7 @@ def train_and_write_best_model(best_config, train_set, hyperparameters, threshol
             if torch.cuda.is_available():
                 if gpus_per_trial > 1:
                     best_trained_model = torch.nn.DataParallel(best_trained_model)
-            best_trained_model.to(device)
+            best_trained_model.model.to(device)
 
             best_trained_model.train_fold_small(train_loader, eval_loader,
                              epochs=hyperparameters["epochs"],
