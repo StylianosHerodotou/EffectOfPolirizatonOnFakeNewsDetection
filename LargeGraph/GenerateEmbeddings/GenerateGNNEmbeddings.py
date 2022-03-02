@@ -10,6 +10,8 @@ global gpus_per_trial
 global device
 global dir_to_large
 
+# device="cpu"
+
 
 def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters  ):
   best_model_config = run_hyper_parameter_tuning(hyperparameters, tuning_hyperparameters)
@@ -23,6 +25,7 @@ def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters
   if torch.cuda.is_available():
       if gpus_per_trial > 1:
           best_trained_model = torch.nn.DataParallel(best_trained_model)
+  device="cpu"
   best_trained_model.model.to(device)
 
   x_features=graph.x
