@@ -6,6 +6,7 @@ from LargeGraph.LargeGraphTraining.LargeModels.SignedGCN import SignedGCNModel
 from SmallGraph.SmallGraphTraining.SmallModels.GAT import GATModel
 from SmallGraph.SmallGraphTraining.TrainSmallModel import generate_and_save_results_for_small_models
 from Utilities.JoinRawDatasetUtils import read_int_to_node_mapping, read_graph_file
+import networkx as nx
 from ray import tune
 import torch
 
@@ -43,7 +44,7 @@ def findOptimalWayOfPrunningLargeOne():
     # base_df=CutDownLargeOne.read_networkx_dataset(filename,dir_to_dataset="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset")
     # show how many items of each "score" class there are in the dataset.
     print(min(base_newtorkx_dataset.df.groupby('label').size()))
-    base_newtorkx_dataset.df = base_newtorkx_dataset.df.groupby('label').apply(lambda x: x.sample(n=min(base_df.groupby('label').size()))).reset_index(
+    base_newtorkx_dataset.df = base_newtorkx_dataset.df.groupby('label').apply(lambda x: x.sample(n=min(base_newtorkx_dataset.df.groupby('label').size()))).reset_index(
         drop=True)
 
 
