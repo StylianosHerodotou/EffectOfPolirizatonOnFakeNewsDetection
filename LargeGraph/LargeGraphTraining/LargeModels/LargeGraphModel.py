@@ -43,7 +43,7 @@ class LargeGraphModel(ABC):
         self.model.train()
         self.optimizer.zero_grad()
         output = self.forward(train_dic)
-        loss = self.find_loss(output)
+        loss = self.find_loss(output, train_dic)
         loss.backward()
         self.optimizer.step()
         return loss.item()
