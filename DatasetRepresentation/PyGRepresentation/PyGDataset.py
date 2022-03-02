@@ -6,7 +6,7 @@ import torch
 import pandas as pd
 
 
-def read_pyg_dataset(name, dir_to_dataset="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset"):
+def read_pyg_dataset(name, dir_to_dataset= "/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets"):
     path = os.path.join(dir_to_dataset, name)
     dataset = pd.read_csv(path)
     dataset = PyGDataset(dataset)

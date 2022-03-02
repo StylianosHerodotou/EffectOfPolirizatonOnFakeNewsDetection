@@ -26,7 +26,7 @@ class SmallGraphModel(ABC):
             data = data.to(device)
             self.optimizer.zero_grad()
             output = self.model(data)
-            loss =
+            loss =self.find_loss(output, data)
             loss.backward()
             loss_all += data.num_graphs * loss.item()
             self.optimizer.step()
