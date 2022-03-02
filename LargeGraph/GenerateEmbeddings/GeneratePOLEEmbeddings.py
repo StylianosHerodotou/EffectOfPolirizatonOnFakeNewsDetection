@@ -10,7 +10,7 @@ def create_POLE_input_file(graph, filepath="somepath.txt"):
     for edge in graph.edges(data=True):
         s += str(edge[0]) + " " + str(edge[1]) + " " + str(edge[2]["weight"]) + "\n"
     # Writing to file
-    with open(filepath, "w") as f:
+    with open(os.path.join(dir_to_large,filepath), "w") as f:
         # Writing data to a file
         f.write(s)
 
@@ -19,7 +19,7 @@ def write_POLE_embeddings(graph, int_to_node_mapping,
                           large_dir_path="/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag",
                           path_to_POLE="/content/POLE/src/embedding.py"):
     create_POLE_input_file(graph, filename)
-    command = f"python {path_to_POLE} --graph /content/{filename} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
+    command = f"python {path_to_POLE} --graph { os.path.join(dir_to_large,filename)} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
     os.system(command)
 
     # read the POLE emmbeddings
