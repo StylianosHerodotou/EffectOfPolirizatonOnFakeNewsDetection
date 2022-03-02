@@ -44,7 +44,7 @@ def k_fold_training_large(model_hyperparameters, graph,
                 model = torch.nn.DataParallel(model)
         model.model.to(device)
 
-        optimizer = torch.optim.Adam(model.parameters(), lr=model_hyperparameters["learning_rate"],
+        optimizer = torch.optim.Adam(model.model.parameters(), lr=model_hyperparameters["learning_rate"],
                                      weight_decay=model_hyperparameters["weight_decay"])
         model.optimizer= optimizer
 
@@ -55,13 +55,13 @@ def k_fold_training_large(model_hyperparameters, graph,
 
         # only spectral information
         if (model_hyperparameters["spectral_features_type"] == 0):
-            train_data["SIGNED_features"] = model.create_spectral_features(train_pos, train_neg)
+            train_data["SIGNED_features"] = model.model.create_spectral_features(train_pos, train_neg)
         # only node features
         elif (model_hyperparameters["spectral_features_type"] == 1):
             train_data["SIGNED_features"] = x_features
         # using both spectral and node features
         else:
-            spectral_features = temp_model.create_spectral_features(train_pos, train_neg)
+            spectral_features = temp_model.model.create_spectral_features(train_pos, train_neg)
             mixed_features = torch.cat((x_features, spectral_features), dim=1)
             print(spectral_features.shape)
             train_data["SIGNED_features"] = mixed_features

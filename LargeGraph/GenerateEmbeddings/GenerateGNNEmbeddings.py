@@ -49,7 +49,7 @@ def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters
     train_data["SIGNED_features"]= x_features
   #using both spectral and node features
   else:
-    spectral_features= temp_model.create_spectral_features(positive_index, negative_index)
+    spectral_features= temp_model.model.create_spectral_features(positive_index, negative_index)
     print("spectral_features size", spectral_features.size())
     x_features= torch.cat((x_features,spectral_features),dim=1)
     print("size of input", x_features.size(), "size of model input", hyperparameters["size_of_x_features"])
