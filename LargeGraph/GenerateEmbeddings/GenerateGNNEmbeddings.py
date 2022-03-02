@@ -9,6 +9,7 @@ global temp_model
 global gpus_per_trial
 global device
 global dir_to_large
+dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
 
 # device="cpu"
 

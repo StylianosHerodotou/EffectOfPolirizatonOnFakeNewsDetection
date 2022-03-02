@@ -10,6 +10,8 @@ from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import
 from Utilities import JoinRawDatasetUtils
 
 global dir_to_large
+dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
+
 
 def read_networkx_dataset(name,
                           dir_to_dataset= "/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets"):

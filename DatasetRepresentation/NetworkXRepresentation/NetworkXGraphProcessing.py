@@ -5,6 +5,11 @@ import networkx as nx
 from DatasetRepresentation.BaseDataset import get_nodes_wiki_id_using_mapping, switch_values_and_keys
 from Utilities import JoinRawDatasetUtils
 
+global dir_to_large
+dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
+
+
+
 def get_embedings_node_feature(graph, embeddings, int_to_node_map, emb_names=None):
     node_features = dict()
     list_of_emb_types = []

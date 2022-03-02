@@ -14,6 +14,7 @@ import torch
 global device
 global gpus_per_trial
 global dir_to_large
+dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
 
 
 def remove_nodes_based_on_frequency(large_graph,int_to_node_mapping_lagre,threshold):

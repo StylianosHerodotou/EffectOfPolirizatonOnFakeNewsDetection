@@ -3,6 +3,8 @@ from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import
 from DatasetRepresentation.Utils import make_networkx_to_pyg_df
 from sklearn.model_selection import train_test_split
 global dir_to_large
+dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
+
 
 from SmallGraph.SmallGraphTraining.HyperParameterTunningSmall import train_and_write_best_model
 from Utilities.HyperParameterTunning import run_hyper_parameter_tuning
