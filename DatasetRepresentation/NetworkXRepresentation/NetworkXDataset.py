@@ -64,8 +64,8 @@ class NetworkXDataset(BaseDataset):
         self.turn_networkx_graphs_to_dicts()
         self.turn_mapping_to_json()
         if "node_to_int_mapping" in self.df.columns:
-            df = self.df.drop("node_to_int_mapping", axis=1)
-        df.to_csv(path_to_save, index=False)
+            self.df = self.df.drop("node_to_int_mapping", axis=1)
+        self.df.to_csv(path_to_save, index=False)
 
     def remove_nodes_not_in_large(self, nodes_to_delete_names,
                                   ):
