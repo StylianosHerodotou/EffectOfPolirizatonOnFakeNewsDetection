@@ -87,7 +87,9 @@ def create_embs_dic(graph, emb_dic, map):
 
 import json
 
-def write_emd_to_file(graph,emb_dic,  to_write_path="/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag"):
+def write_emd_to_file(graph,emb_dic,  to_write_path=None):
+  if(to_write_path==None):
+    to_write_path=dir_to_large
   map= read_int_to_node_mapping(dir_to_large)
   to_write= create_embs_dic(graph, emb_dic, map)
   file_name=  os.path.join(to_write_path,"emb.json")
