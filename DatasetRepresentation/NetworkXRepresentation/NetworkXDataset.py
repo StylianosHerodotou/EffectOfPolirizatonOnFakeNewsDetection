@@ -88,9 +88,9 @@ class NetworkXDataset(BaseDataset):
             if row[self.graph_column_name].number_of_nodes() == 0 or row[self.graph_column_name].number_of_edges() == 0:
                 self.df.drop(index, inplace=True)
 
-    def add_centrality_node_features_to_df(self):
+    def add_centrality_node_features_to_df(self, features=None):
         for index, row in self.df.iterrows():
-            add_centrality_node_features_to_graph(row[self.graph_column_name])
+            add_centrality_node_features_to_graph(row[self.graph_column_name],features)
 
     def add_identidy_node_feature_to_df(self, node_to_int_large):
         for index, row in self.df.iterrows():
