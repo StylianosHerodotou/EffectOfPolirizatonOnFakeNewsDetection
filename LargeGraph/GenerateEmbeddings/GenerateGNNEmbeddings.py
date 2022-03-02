@@ -15,7 +15,7 @@ def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters
   best_model_config = run_hyper_parameter_tuning(hyperparameters, tuning_hyperparameters)
 
   best_trained_model = hyperparameters["model_function"](best_model_config)
-  best_optimizer = torch.optim.Adam(best_trained_model.parameters(), lr=best_model_config["learning_rate"],
+  best_optimizer = torch.optim.Adam(best_trained_model.model.parameters(), lr=best_model_config["learning_rate"],
                                     weight_decay=best_model_config["weight_decay"])
 
   best_trained_model.optimizer=best_optimizer
@@ -23,7 +23,7 @@ def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters
   if torch.cuda.is_available():
       if gpus_per_trial > 1:
           best_trained_model = torch.nn.DataParallel(best_trained_model)
-  best_trained_model.to(device)
+  best_trained_model.model.to(device)
 
   x_features=graph.x
   edge_index= graph.edge_index
@@ -43,7 +43,7 @@ def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters
 
   #only spectral information
   if(hyperparameters["spectral_features_type"]==0):
-    train_data["SIGNED_features"]= best_trained_model.create_spectral_features(positive_index, negative_index)
+    train_data["SIGNED_features"]= best_trained_model.model.create_spectral_features(positive_index, negative_index)
   #only node features
   elif(hyperparameters["spectral_features_type"]==1):
     train_data["SIGNED_features"]= x_features
