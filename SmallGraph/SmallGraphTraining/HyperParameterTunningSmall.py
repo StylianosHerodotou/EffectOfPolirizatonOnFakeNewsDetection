@@ -32,7 +32,7 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
                 model = torch.nn.DataParallel(model)
         model.model.to(device)
 
-        optimizer = torch.optim.Adam(model.parameters(), lr=hyperparameters["learning_rate"])
+        optimizer = torch.optim.Adam(model.model.parameters(), lr=hyperparameters["learning_rate"])
         model.optimizer=optimizer
 
         model.train_fold_small(train_loader, eval_loader, epochs=hyperparameters["epochs"],
@@ -55,7 +55,7 @@ def train_and_write_best_model(best_config, train_set, hyperparameters, threshol
 
             num_classes = 2
             best_trained_model = hyperparameters["model_function"](best_config)
-            best_optimizer = torch.optim.Adam(best_trained_model.parameters(), lr=best_config["learning_rate"],
+            best_optimizer = torch.optim.Adam(best_trained_model.model.parameters(), lr=best_config["learning_rate"],
                                               weight_decay=best_config["weight_decay"])
             best_trained_model.optimizer=best_optimizer
 
