@@ -3,6 +3,8 @@ import json
 
 from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import read_embedings_file
 
+global dir_to_large
+dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
 def create_POLE_input_file(graph, filepath="somepath.txt"):
     s = ""
     for edge in graph.edges(data=True):
@@ -17,11 +19,11 @@ def write_POLE_embeddings(graph, int_to_node_mapping,
                           large_dir_path="/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag",
                           path_to_POLE="/content/POLE/src/embedding.py"):
     create_POLE_input_file(graph, filename)
-    command = f"python {path_to_POLE} --graph /content/{filename} --embedding POLE.emb"
+    command = f"python {path_to_POLE} --graph /content/{filename} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
     os.system(command)
 
     # read the POLE emmbeddings
-    file1 = open('POLE.emb', 'r')
+    file1 = open(os.path.join(dir_to_large,'POLE.emb'), 'r')
     Lines = file1.readlines()
     file1.close()
 
