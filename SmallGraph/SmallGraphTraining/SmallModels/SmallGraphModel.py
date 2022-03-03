@@ -22,7 +22,7 @@ class SmallGraphModel(ABC):
 
         self.model.train()
         loss_all = 0
-        for data in train_loader:
+        for data in train_loader["loader"]:
             data = data.to(device)
             self.optimizer.zero_grad()
             output = self.model(data)
@@ -36,7 +36,7 @@ class SmallGraphModel(ABC):
 
         self.model.eval()
         correct = 0
-        for data in test_loader:
+        for data in test_loader["loader"]:
             data = data.to(device)
             pred = self.model(data).max(dim=1)[1]
             correct += pred.eq(data.y).sum().item()

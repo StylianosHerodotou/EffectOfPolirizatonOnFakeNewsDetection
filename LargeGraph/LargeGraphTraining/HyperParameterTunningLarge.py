@@ -9,7 +9,6 @@ global temp_model
 from Utilities.InitGlobalVariables import gpus_per_trial
 from Utilities.InitGlobalVariables import device
 # gpus_per_trial=0
-# device="cpu"
 def k_fold_training_large(model_hyperparameters, graph,
                           in_hyper_parameter_search=True):
     x_features = graph.x
@@ -41,7 +40,6 @@ def k_fold_training_large(model_hyperparameters, graph,
         if torch.cuda.is_available():
             if torch.cuda.device_count() > 1:
                 model = torch.nn.DataParallel(model)
-        device = "cpu"
         model.model.to(device)
 
         optimizer = torch.optim.Adam(model.model.parameters(), lr=model_hyperparameters["learning_rate"],

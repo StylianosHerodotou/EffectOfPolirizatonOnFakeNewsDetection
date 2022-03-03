@@ -19,10 +19,12 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
 
         train_sampler = SubsetRandomSampler(train_idx)
         eval_sampler = SubsetRandomSampler(val_idx)
-        train_loader = DataLoader(train_set, batch_size=hyperparameters["batch_size"], sampler=train_sampler)
-        eval_loader = DataLoader(train_set, batch_size=hyperparameters["batch_size"], sampler=eval_sampler)
 
-        num_classes = 2
+        train_loader = {"size":len(train_idx)}
+        eval_loader = {"size": len(eval_sampler)}
+
+        train_loader["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"], sampler=train_sampler)
+        eval_loader ["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"], sampler=eval_sampler)
 
         model = hyperparameters["model_function"](hyperparameters)
 
@@ -30,7 +32,6 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         if torch.cuda.is_available():
             if torch.cuda.device_count() > 1:
                 model = torch.nn.DataParallel(model)
-        device = "cpu"
         model.model.to(device)
 
         optimizer = torch.optim.Adam(model.model.parameters(), lr=hyperparameters["learning_rate"])
@@ -51,10 +52,15 @@ def train_and_write_best_model(best_config, train_set, hyperparameters, threshol
 
             train_sampler = SubsetRandomSampler(train_idx)
             eval_sampler = SubsetRandomSampler(val_idx)
-            train_loader = DataLoader(train_set, batch_size=best_config["batch_size"], sampler=train_sampler)
-            eval_loader = DataLoader(train_set, batch_size=best_config["batch_size"], sampler=eval_sampler)
 
-            num_classes = 2
+            train_loader = {"size": len(train_idx)}
+            eval_loader = {"size": len(eval_sampler)}
+
+            train_loader["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"],
+                                                sampler=train_sampler)
+            eval_loader["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"],
+                                               sampler=eval_sampler)
+
             best_trained_model = hyperparameters["model_function"](best_config)
             best_optimizer = torch.optim.Adam(best_trained_model.model.parameters(), lr=best_config["learning_rate"],
                                               weight_decay=best_config["weight_decay"])
@@ -63,7 +69,6 @@ def train_and_write_best_model(best_config, train_set, hyperparameters, threshol
             if torch.cuda.is_available():
                 if gpus_per_trial > 1:
                     best_trained_model = torch.nn.DataParallel(best_trained_model)
-            device = "cpu"
             best_trained_model.model.to(device)
 
             best_trained_model.train_fold_small(train_loader, eval_loader,
