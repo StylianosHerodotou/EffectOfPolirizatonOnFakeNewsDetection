@@ -9,7 +9,8 @@ from ray.tune import CLIReporter
 from ray.tune.schedulers import ASHAScheduler
 from functools import partial
 
-from Utilities.InitGlobalVariables import devicefrom Utilities.InitGlobalVariables import gpus_per_trial
+from Utilities.InitGlobalVariables import device
+from Utilities.InitGlobalVariables import gpus_per_trial
 
 def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=True):
     splits = KFold(n_splits=hyperparameters["number_of_splits"], shuffle=True, random_state=42)
