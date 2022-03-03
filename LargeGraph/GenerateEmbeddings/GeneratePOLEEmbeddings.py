@@ -16,7 +16,6 @@ def create_POLE_input_file(graph, filepath="somepath.txt"):
 
 def write_POLE_embeddings(graph, int_to_node_mapping,
                           filename="temp.txt",
-                          large_dir_path="/content/drive/MyDrive/ThesisProject/fake_news_in_time/sag",
                           path_to_POLE="/POLE/src/embedding.py"):
     create_POLE_input_file(graph, filename)
     command = f"python {path_to_POLE} --graph { os.path.join(dir_to_large,filename)} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
@@ -38,7 +37,7 @@ def write_POLE_embeddings(graph, int_to_node_mapping,
     # print(len(embedings), len(embedings[0]))
 
     # match the right embeddings to the right node
-    large_embedings = read_embedings_file(large_dir_path)
+    large_embedings = read_embedings_file(dir_to_large)
     POLE_dic = dict()
 
     #######
@@ -55,7 +54,7 @@ def write_POLE_embeddings(graph, int_to_node_mapping,
 
     # put the POLE embeddings in the emb file
     large_embedings["POLE"] = POLE_dic
-    file_name = os.path.join(large_dir_path, "emb.json")
+    file_name = os.path.join(dir_to_large, "emb.json")
     f = open(file_name, "w")
     json.dump(large_embedings, f)
     f.close()
