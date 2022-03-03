@@ -57,7 +57,7 @@ class GATModel(SmallGraphModel):
     def __init__ (self, model_hyperparameters):
         super().__init__()
         sample = model_hyperparameters["train_set"][0]
-        model = GATGNN(in_channels=sample.x.size()[1],
+        self.model = GATGNN(in_channels=sample.x.size()[1],
                     output_size=model_hyperparameters["num_classes"],
                     edge_dim=sample.edge_attr.size()[1],
                     hidden_size=model_hyperparameters["hidden_size"],
@@ -65,7 +65,6 @@ class GATModel(SmallGraphModel):
                     dropout=model_hyperparameters["dropout"],
                     pooling_ratio=model_hyperparameters["pooling_ratio"],
                     num_layers=model_hyperparameters["num_layers"])
-        self.model=model
 
-    def forward(self,data):
+    def forward(self, data):
         return self.model(data)

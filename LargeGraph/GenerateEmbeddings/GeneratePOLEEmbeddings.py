@@ -3,7 +3,7 @@ import json
 
 from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import read_embedings_file
 
-from Utilities.InitGlobalVariables import dir_to_large
+from Utilities.InitGlobalVariables import dir_to_large, dir_to_base
 
 def create_POLE_input_file(graph, filepath="somepath.txt"):
     s = ""
@@ -18,6 +18,7 @@ def write_POLE_embeddings(graph, int_to_node_mapping,
                           filename="temp.txt",
                           path_to_POLE="/POLE/src/embedding.py"):
     create_POLE_input_file(graph, filename)
+    path_to_POLE=os.path.join(dir_to_base, path_to_POLE)
     command = f"python {path_to_POLE} --graph { os.path.join(dir_to_large,filename)} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
     os.system(command)
 
