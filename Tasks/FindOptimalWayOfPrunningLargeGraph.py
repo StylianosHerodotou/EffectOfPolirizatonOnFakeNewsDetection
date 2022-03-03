@@ -3,7 +3,7 @@ from DatasetRepresentation.NetworkXRepresentation.NetworkXDataset import read_ne
 from LargeGraph.GenerateEmbeddings.GenerateAllLargeEmbeddings import generate_all_large_embeddings
 from LargeGraph.LargeGraphTraining.HyperParameterTunningLarge import hyper_parameter_tuning_large
 from LargeGraph.LargeGraphTraining.LargeModels.SignedGCN import SignedGCNModel
-from SmallGraph.SmallGraphTraining.SmallModels.GAT import GATModel
+from SmallGraph.SmallGraphTraining.SmallModels.GAT import GAT
 from SmallGraph.SmallGraphTraining.TrainSmallModel import generate_and_save_results_for_small_models
 from Utilities.JoinRawDatasetUtils import read_int_to_node_mapping, read_graph_file
 import networkx as nx
@@ -111,7 +111,7 @@ def findOptimalWayOfPrunningLargeOne():
     }
 
     model_hyperparameters_small = {
-        'model_function': GATModel,
+        'model_function': GAT,
         "hidden_size": tune.choice([64, 128, 172, 256]),
         "heads": tune.choice([1, 2, 4, 8, 16]),
         "dropout": tune.uniform(0.01, 0.4),
