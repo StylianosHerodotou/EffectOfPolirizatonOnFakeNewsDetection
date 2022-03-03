@@ -36,7 +36,7 @@ def copy_df(df):
         paths.append(row["path"])
         mappings.append(row["int_to_node_mapping"].copy())
 
-    to_return = pd.DataFrame(list(zip(paths, labels, graphs, articles, mappings)), columns=self.df.columns.tolist())
+    to_return = pd.DataFrame(list(zip(paths, labels, graphs, articles, mappings)), columns=df.columns.tolist())
     return to_return
 
 class BaseDataset(ABC):
