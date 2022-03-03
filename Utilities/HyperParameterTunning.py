@@ -4,8 +4,8 @@ from ray.tune.schedulers import ASHAScheduler
 from functools import partial
 import torch
 
-global gpus_per_trial
-global device
+from Utilities.InitGlobalVariables import gpus_per_trial
+from Utilities.InitGlobalVariables import device
 
 def run_hyper_parameter_tuning(hyperparameters, tuning_hyperparameters):
     scheduler = ASHAScheduler(

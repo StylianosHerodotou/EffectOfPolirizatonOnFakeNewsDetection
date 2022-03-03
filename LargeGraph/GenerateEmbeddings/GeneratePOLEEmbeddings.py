@@ -3,8 +3,8 @@ import json
 
 from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import read_embedings_file
 
-global dir_to_large
-dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
+from Utilities.InitGlobalVariables import dir_to_large
+
 def create_POLE_input_file(graph, filepath="somepath.txt"):
     s = ""
     for edge in graph.edges(data=True):

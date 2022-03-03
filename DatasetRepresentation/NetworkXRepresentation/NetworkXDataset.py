@@ -9,8 +9,7 @@ from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import
     add_identidy_fellowship_node_feature_to_graph, add_large_node_embeddings_to_graph
 from Utilities import JoinRawDatasetUtils
 
-from Utilities.dir_to_large
-dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
+from Utilities.InitGlobalVariables import dir_to_large
 
 
 def read_networkx_dataset(name,

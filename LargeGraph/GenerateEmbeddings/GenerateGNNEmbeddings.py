@@ -6,10 +6,11 @@ from Utilities.HyperParameterTunning import run_hyper_parameter_tuning
 from Utilities.JoinRawDatasetUtils import read_int_to_node_mapping, read_node_to_int_mapping
 
 global temp_model
-global gpus_per_trial
-global device
-global dir_to_large
-dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
+from Utilities.InitGlobalVariables import gpus_per_trial
+
+from Utilities.InitGlobalVariables import device
+from Utilities.InitGlobalVariables import dir_to_large
+
 
 # device="cpu"
 

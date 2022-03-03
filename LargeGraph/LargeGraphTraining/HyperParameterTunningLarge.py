@@ -6,9 +6,8 @@ import torch
 
 
 global temp_model
-global gpus_per_trial
-global device
-
+from Utilities.InitGlobalVariables import gpus_per_trial
+from Utilities.InitGlobalVariables import device
 # gpus_per_trial=0
 # device="cpu"
 def k_fold_training_large(model_hyperparameters, graph,

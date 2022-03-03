@@ -12,10 +12,9 @@ import torch
 
 
 
-global device
-global gpus_per_trial
-global dir_to_large
-dir_to_large="/data/pandemic_misinformation/CodeBase/EffectOfPolirizatonOnFakeNewsDetection/Datasets/sag"
+from Utilities.InitGlobalVariables import device
+from Utilities.InitGlobalVariables import gpus_per_trial
+from Utilities.InitGlobalVariables import dir_to_large
 
 
 def remove_nodes_based_on_frequency(large_graph,int_to_node_mapping_lagre,threshold):
@@ -87,14 +86,14 @@ def findOptimalWayOfPrunningLargeOne():
         "num_samples": 2,
 
     }
-    global device
-    device = "cpu"
-
-    global gpus_per_trial
-    gpus_per_trial = 0
-    if torch.cuda.is_available():
-        device = "cuda:0"
-        gpus_per_trial = 1
+    # global device
+    # device = "cpu"
+    #
+    # global gpus_per_trial
+    # gpus_per_trial = 0
+    # if torch.cuda.is_available():
+    #     device = "cuda:0"
+    #     gpus_per_trial = 1
 
     hyperparameters_small = {
         "num_classes": 2,
