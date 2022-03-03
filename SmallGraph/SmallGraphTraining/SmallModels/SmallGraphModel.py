@@ -60,6 +60,6 @@ class SmallGraphModel(ABC):
             if (in_hyper_parameter_search):
                 with ray.tune.checkpoint_dir((fold_number * epochs) + epoch) as checkpoint_dir:
                     path = os.path.join(checkpoint_dir, "checkpoint")
-                    torch.save((self.model.state_dict(), self.state_dict()), path)
+                    torch.save((self.model.model.state_dict(), self.optimizer.state_dict()), path)
 
                 ray.tune.report(accuracy=test_acc)
