@@ -5,7 +5,8 @@ import os
 import torch
 import ray
 
-from Utilities.InitGlobalVariables import deviceclass SmallGraphModel(ABC):
+from Utilities.InitGlobalVariables import device
+class SmallGraphModel(ABC):
     def __init__(self):
         self.model=None
         self.optimizer=None
