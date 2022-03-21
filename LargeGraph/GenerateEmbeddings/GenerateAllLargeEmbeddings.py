@@ -71,5 +71,5 @@ def generate_all_large_embeddings(large_graph, int_to_node_mapping, hyperparamet
     # --> write the embeddings to the appropriate file
     write_emd_to_file(large_graph, emb_dic=embeddings)
 
-    # # --> write the POLE embeddings into the embeddings file created above.
-    # GeneratePOLEEmbeddings.write_POLE_embeddings(large_graph, int_to_node_mapping)
+    # --> write the POLE embeddings into the embeddings file created above.
+    GeneratePOLEEmbeddings.write_POLE_embeddings(large_graph, int_to_node_mapping)
