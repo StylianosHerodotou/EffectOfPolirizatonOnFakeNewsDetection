@@ -5,22 +5,29 @@ from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import
 
 from Utilities.InitGlobalVariables import dir_to_large, dir_to_base
 
-def create_POLE_input_file(graph, filepath="somepath.txt"):
+def create_POLE_input_file(graph, filename="somepath.txt"):
     s = ""
     for edge in graph.edges(data=True):
         s += str(edge[0]) + " " + str(edge[1]) + " " + str(edge[2]["weight"]) + "\n"
     # Writing to file
-    with open(os.path.join(dir_to_large,filepath), "w") as f:
+    with open(os.path.join(dir_to_large,filename), "w") as f:
         # Writing data to a file
         f.write(s)
 
 def write_POLE_embeddings(graph, int_to_node_mapping,
-                          filename="temp.txt",
+                          input_filename="POLE_input_ile.txt",
                           path_to_POLE="/POLE/src/embedding.py"):
-    create_POLE_input_file(graph, filename)
+    create_POLE_input_file(graph, input_filename)
     path_to_POLE=os.path.join(dir_to_base, path_to_POLE)
-    command = f"python {path_to_POLE} --graph { os.path.join(dir_to_large,filename)} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
-    os.system(command)
+
+    print(os.path.join(dir_to_large,input_filename))
+    print(os.getcwd())
+    command = f"python {path_to_POLE} --graph { os.path.join(dir_to_large,input_filename)} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
+    # os.system(command)
+
+    stream = os.popen(command)
+    output = stream.read()
+    print(output)
 
     # read the POLE emmbeddings
     file1 = open(os.path.join(dir_to_large,'POLE.emb'), 'r')
