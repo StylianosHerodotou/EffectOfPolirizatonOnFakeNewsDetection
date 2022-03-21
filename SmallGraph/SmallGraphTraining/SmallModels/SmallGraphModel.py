@@ -5,7 +5,9 @@ import os
 import torch
 import ray
 
-from Utilities.InitGlobalVariables import device
+from Utilities.InitGlobalVariables import device, dir_to_ray_checkpoints
+
+
 class SmallGraphModel(ABC):
     def __init__(self):
         self.model=None
@@ -58,7 +60,7 @@ class SmallGraphModel(ABC):
                       f'Test Acc: {test_acc:.5f}, Best accuracy so far: {best_acc:.5f}')
 
             if (in_hyper_parameter_search):
-                with ray.tune.checkpoint_dir((fold_number * epochs) + epoch) as checkpoint_dir:
+                with ray.tune.checkpoint_dir(os.path.join(dir_to_ray_checkpoints,(fold_number * epochs) + epoch)) as checkpoint_dir:
                     path = os.path.join(checkpoint_dir, "checkpoint")
                     torch.save((self.model.state_dict(), self.optimizer.state_dict()), path)
 
