@@ -19,18 +19,23 @@ def write_POLE_embeddings(graph, int_to_node_mapping,
                           path_to_POLE="/POLE/src/embedding.py"):
     create_POLE_input_file(graph, input_filename)
     path_to_POLE=os.path.join(dir_to_base, path_to_POLE)
+    path_to_POLE_input = os.path.join(dir_to_large,input_filename)
+    path_to_POLE_embeddings=os.path.join(dir_to_large,'POLE.emb')
 
-    print(os.path.join(dir_to_large,input_filename))
-    print(os.getcwd())
-    command = f"python {path_to_POLE} --graph { os.path.join(dir_to_large,input_filename)} --embedding {os.path.join(dir_to_large,'POLE.emb')}"
+    print("current dir", os.getcwd())
+    print("path_to_POLE", path_to_POLE)
+    print("path_to_POLE_input", path_to_POLE_input)
+    print("path_to_POLE_embeddings", path_to_POLE_embeddings)
+
+    command = f"python {path_to_POLE} --graph { path_to_POLE_input} --embedding {path_to_POLE_embeddings}"
     # os.system(command)
 
     stream = os.popen(command)
     output = stream.read()
-    print(output)
+    print("this is the output:\n",output)
 
     # read the POLE emmbeddings
-    file1 = open(os.path.join(dir_to_large,'POLE.emb'), 'r')
+    file1 = open(path_to_POLE_embeddings, 'r')
     Lines = file1.readlines()
     file1.close()
 
