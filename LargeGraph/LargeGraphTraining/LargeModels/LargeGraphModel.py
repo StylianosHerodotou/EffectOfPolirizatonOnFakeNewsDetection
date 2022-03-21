@@ -75,7 +75,7 @@ class LargeGraphModel(ABC):
                   f'F1: {f1:.4f}, best f1 so far: {best_f1_so_far:.4f}, best auc so far {best_auc_so_far:.4f} ')
 
             if in_hyper_parameter_search:
-                with ray.tune.checkpoint_dir(os.path.join(dir_to_ray_checkpoints, (fold_number * train_dic["epochs"]) + epoch)) as checkpoint_dir:
+                with ray.tune.checkpoint_dir(os.path.join(dir_to_ray_checkpoints, str((fold_number * train_dic["epochs"]) + epoch))) as checkpoint_dir:
                     path = os.path.join(checkpoint_dir, "checkpoint")
                     torch.save((self.model.state_dict(), self.optimizer.state_dict()), path)
                 ray.tune.report(f1=f1)
