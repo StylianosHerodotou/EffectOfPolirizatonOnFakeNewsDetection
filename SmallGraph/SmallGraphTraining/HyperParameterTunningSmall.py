@@ -32,7 +32,7 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         if torch.cuda.is_available():
             if torch.cuda.device_count() > 1:
                 model = torch.nn.DataParallel(model)
-        model.model.to(device)
+        model.to(device)
 
         optimizer = torch.optim.Adam(model.model.parameters(), lr=hyperparameters["learning_rate"])
         model.optimizer=optimizer

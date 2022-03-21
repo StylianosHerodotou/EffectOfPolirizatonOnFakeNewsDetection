@@ -5,29 +5,9 @@ import torch.nn.functional as F
 
 from SmallGraph.SmallGraphTraining.SmallModels.SmallGraphModel import SmallGraphModel
 
+class GATModel(torch.nn.Module):
 
-class GAT(torch.nn.Module):
-
-    def __init__(self,model_hyperparameters):
-        self.num_layers=None;
-        self.convs=None;
-        self.pools=None;
-        self.lin1=None;
-        self.lin2 = None;
-        self.lin3 = None;
-
-
-        sample = model_hyperparameters["train_set"][0]
-        self.actual_init(in_channels=sample.x.size()[1],
-                            output_size=model_hyperparameters["num_classes"],
-                            edge_dim=sample.edge_attr.size()[1],
-                            hidden_size=model_hyperparameters["hidden_size"],
-                            heads=model_hyperparameters["heads"],
-                            dropout=model_hyperparameters["dropout"],
-                            pooling_ratio=model_hyperparameters["pooling_ratio"],
-                            num_layers=model_hyperparameters["num_layers"])
-
-    def actual_init(self, in_channels,output_size,edge_dim,
+    def __init__(self, in_channels,output_size,edge_dim,
                  hidden_size=128, heads=8, dropout=0.2,pooling_ratio=0.8, num_layers=1 ):
         super().__init__()
         self.num_layers=num_layers
@@ -71,3 +51,18 @@ class GAT(torch.nn.Module):
         x = F.log_softmax(self.lin3(x), dim=-1)
 
         return x
+
+class GAT(SmallGraphModel):
+    def __init__(self, model_hyperparameters):
+        sample = model_hyperparameters["train_set"][0]
+        self.model= GATModel(in_channels=sample.x.size()[1],
+                         output_size=model_hyperparameters["num_classes"],
+                         edge_dim=sample.edge_attr.size()[1],
+                         hidden_size=model_hyperparameters["hidden_size"],
+                         heads=model_hyperparameters["heads"],
+                         dropout=model_hyperparameters["dropout"],
+                         pooling_ratio=model_hyperparameters["pooling_ratio"],
+                         num_layers=model_hyperparameters["num_layers"])
+
+    def forward(self, data):
+        return self.model(data)
