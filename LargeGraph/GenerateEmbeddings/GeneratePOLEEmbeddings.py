@@ -19,7 +19,8 @@ def write_POLE_embeddings(graph, int_to_node_mapping,
                           input_filename="POLE_input_ile.txt",
                           relative_path_to_POLE="/POLE/src/embedding.py"):
     create_POLE_input_file(graph, input_filename)
-    path_to_POLE=os.path.join(dir_to_base, relative_path_to_POLE)
+    
+    path_to_POLE=        os.path.join(dir_to_base,relative_path_to_POLE)
     path_to_POLE_input = os.path.join(dir_to_large,input_filename)
     path_to_POLE_embeddings=os.path.join(dir_to_large,'POLE.emb')
 
