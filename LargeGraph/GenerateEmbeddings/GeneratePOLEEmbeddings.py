@@ -24,6 +24,7 @@ def write_POLE_embeddings(graph, int_to_node_mapping,
     path_to_POLE_embeddings=os.path.join(dir_to_large,'POLE.emb')
 
     print("current dir", os.getcwd())
+    print("dir_to_base", dir_to_base)
     print("path_to_POLE", path_to_POLE)
     print("path_to_POLE_input", path_to_POLE_input)
     print("path_to_POLE_embeddings", path_to_POLE_embeddings)
