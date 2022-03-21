@@ -11,6 +11,7 @@ from functools import partial
 
 from Utilities.InitGlobalVariables import device
 from Utilities.InitGlobalVariables import gpus_per_trial
+from Utilities.InitGlobalVariables import dir_to_base
 
 def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=True):
     splits = KFold(n_splits=hyperparameters["number_of_splits"], shuffle=True, random_state=42)
@@ -43,8 +44,11 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
 def hyper_parameter_tuning_small(config, checkpoint_dir=None):
     k_fold_training_small(config, config["train_set"])
 
-def train_and_write_best_model(best_config, train_set, hyperparameters, threshold,
-                               path_to_save="/content/drive/MyDrive/ThesisProject/fake_news_in_time/", name_of_file="sample.txt"):
+def train_and_write_best_model(best_config, train_set, hyperparameters,
+                               path_to_save=None, name_of_file="sample.txt"):
+        if(path_to_save==None):
+            path_to_save=dir_to_base
+
         splits = KFold(n_splits=best_config["number_of_splits"], shuffle=True, random_state=42)
         sum = 0
         for fold, (train_idx, val_idx) in enumerate(splits.split(np.arange(len(train_set)))):
@@ -80,7 +84,7 @@ def train_and_write_best_model(best_config, train_set, hyperparameters, threshol
 
         avg = sum / best_config["number_of_splits"]
 
-        s = str(threshold) + "__diff__" + str(avg) + "\n"
+        s = str(hyperparameters["threshold"]) + "__diff__" + str(avg) + "\n"
         with open(os.path.join(path_to_save, name_of_file), "a") as file_object:
             # Append 'hello' at the end of file
             file_object.write(s)
