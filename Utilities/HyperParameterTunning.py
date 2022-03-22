@@ -29,9 +29,9 @@ def run_hyper_parameter_tuning(hyperparameters, tuning_hyperparameters):
 
     best_trial = result.get_best_trial(tuning_hyperparameters["asha_metric"], tuning_hyperparameters["asha_mode"],
                                        "last")
-    print("Best trial config: {}".format(best_trial.config))
-    print("Best trial final validation f1: {}".format(
-        best_trial.last_result[tuning_hyperparameters["asha_metric"]]))
+    # print("Best trial config: {}".format(best_trial.config))
+    # print("Best trial final validation f1: {}".format(
+    #     best_trial.last_result[tuning_hyperparameters["asha_metric"]]))
 
     # return the best model config:
     return best_trial.config

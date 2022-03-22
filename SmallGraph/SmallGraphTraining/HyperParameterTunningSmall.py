@@ -22,7 +22,7 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         eval_sampler = SubsetRandomSampler(val_idx)
 
         train_loader = {"size":len(train_idx)}
-        eval_loader = {"size": len(eval_sampler)}
+        eval_loader = {"size": len(val_idx)}
 
         train_loader["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"], sampler=train_sampler)
         eval_loader ["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"], sampler=eval_sampler)
@@ -86,5 +86,4 @@ def train_and_write_best_model(best_config, train_set, hyperparameters,
 
         s = str(hyperparameters["threshold"]) + "__diff__" + str(avg) + "\n"
         with open(os.path.join(path_to_save, name_of_file), "a") as file_object:
-            # Append 'hello' at the end of file
             file_object.write(s)

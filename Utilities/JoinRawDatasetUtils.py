@@ -53,7 +53,7 @@ def read_int_to_node_mapping(dir_path):
 #       count=count+1
 # print(count)
 
-def join_dataset(dir_to_articles= "/content/drive/MyDrive/ThesisProject/fake_news_in_time/articles", 
+def join_dataset(dir_to_articles= "/content/drive/MyDrive/ThesisProject/fake_news_in_time/articles",
                  dir_to_small= "/content/drive/MyDrive/ThesisProject/fake_news_in_time/micro_sags_small",
                  dir_to_save="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset",
                  save_file_name= "joined_dataset_no_preprosessing.csv",
@@ -76,7 +76,7 @@ def join_dataset(dir_to_articles= "/content/drive/MyDrive/ThesisProject/fake_new
 
     list_of_columns_names=["path","label", "graph", "article", "int_to_node_mapping"]
 
-    if overwrite or not os.path.isfile(path_to_save) :
+    if overwrite or not os.path.isfile(path_to_save):
       temp_df = pd.DataFrame(columns =list_of_columns_names)
       temp_df.to_csv(path_to_save, index=False)
       found_first=True

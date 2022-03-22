@@ -39,12 +39,15 @@ def copy_df(df):
     to_return = pd.DataFrame(list(zip(paths, labels, graphs, articles, mappings)), columns=df.columns.tolist())
     return to_return
 
+
 class BaseDataset(ABC):
 
     def __init__(self, df):
         self.df = df
         self.mapping_column_name = "int_to_node_mapping"
         self.graph_column_name = "graph"
+        self.article_column_name="article"
+
 
     def turn_json_to_mapping(self,mapping_column_name):
         mappings = self.df[mapping_column_name].tolist()
@@ -82,5 +85,10 @@ class BaseDataset(ABC):
         for index, row in self.df.iterrows():
             node_to_int_mappings.append(switch_values_and_keys(row[self.int_to_node_column]))
         self.df["node_to_int_mapping"] = node_to_int_mappings
+
+
+
+    def add_roberta_features(self):
+        pass
 
 

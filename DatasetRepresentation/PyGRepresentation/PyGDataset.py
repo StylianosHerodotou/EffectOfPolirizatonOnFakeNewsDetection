@@ -27,6 +27,7 @@ class PyGDataset(BaseDataset):
     def __init__(self, df):
         super().__init__(df)
 
+
     def turn_pyg_graphs_to_dicts(self):
         graphs = self.df[self.graph_column_name].tolist()
         new_graphs = list()
@@ -65,3 +66,4 @@ class PyGDataset(BaseDataset):
         self.turn_pyg_graphs_to_dicts()
         self.turn_mapping_to_json()
         self.df.to_csv(path_to_save, index=False)
+

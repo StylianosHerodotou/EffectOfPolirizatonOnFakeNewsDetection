@@ -12,13 +12,15 @@ class SmallGraphModel(ABC):
     def __init__(self):
         self.model=None
         self.optimizer=None
+        self.is_part_of_ensemble=False
 
     @abstractmethod
     def forward(self,train_dic):
         pass
 
+    @abstractmethod
     def find_loss(self, output, data):
-        return F.nll_loss(output, data.y)
+        pass
 
     def train_step_small(self, train_loader):
 

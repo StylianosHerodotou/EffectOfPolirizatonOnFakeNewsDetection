@@ -16,16 +16,15 @@ def generate_and_save_results_for_small_models(networkx_dataset, hyperparameters
 
     networkx_dataset.add_large_node_embeddings_to_df(large_embedings,
                                                      large_emb_names=hyperparameters["large_emb_names"])
-
     # turn graphs to pyg
     pyg_dataset = make_networkx_to_pyg_df(networkx_dataset)
 
     train_df, test_df = train_test_split(pyg_dataset.df, test_size=1 - hyperparameters["train_size"], random_state=42,
                                          shuffle=True, stratify=None)
     # eval_df, test_df= train_test_split(test_df, test_size=eval_test_split, random_state=42, shuffle=True, stratify=None)
-    train_set = create_training_set(train_df, hyperparameters, False)
+    train_set = create_training_set(train_df, hyperparameters)
     # eval_set=create_training_set(eval_df,hyperparameters,add_lstm_representation)
-    test_set = create_training_set(test_df, hyperparameters, False)
+    # test_set = create_training_set(test_df, hyperparameters)
 
     hyperparameters["train_set"] = train_set
 
