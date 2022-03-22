@@ -30,7 +30,7 @@ class GATModel(torch.nn.Module):
 
         if(is_part_of_ensemble==False):
             self.classifier =MLP(in_channels=2*hidden_size*heads,output_size=output_size, nodes_per_hidden_layer=MLP_arguments["nodes_per_hidden_layer"],
-                 dropout=MLP_arguments["dropout"])
+                 number_of_hidden_layers=MLP_arguments["number_of_hidden_layers"],dropout=MLP_arguments["dropout"])
         # self.lin1 = torch.nn.Linear(2*hidden_size*heads, 128)
         # self.lin2 = torch.nn.Linear(128, 64)
         # self.lin3 = torch.nn.Linear(64, output_size)

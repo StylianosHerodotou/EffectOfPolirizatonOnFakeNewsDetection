@@ -34,7 +34,8 @@ def trainRNN(dir_to_dataset = "/data/pandemic_misinformation/CodeBase/EffectOfPo
 
     MLP_arguments = {
         "nodes_per_hidden_layer": mlp_nodes_per_layer,
-        "dropout": tune.uniform(0.01, 0.4)
+        "dropout": tune.uniform(0.01, 0.4),
+
     }
 
     model_hyperparameters_small = dict(model_function=LSTMBagOfWords,

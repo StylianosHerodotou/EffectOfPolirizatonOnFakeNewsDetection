@@ -3,7 +3,7 @@ import torch.nn.functional as F
 
 
 class MLP(torch.nn.Module):
-    def __init__(self, in_channels, output_size, nodes_per_hidden_layer: list,
+    def __init__(self, in_channels, output_size, nodes_per_hidden_layer: list, number_of_hidden_layers: int,
                  dropout=0, activation_function=F.relu, final_activation_function=F.log_softmax):
         super().__init__()
         self.dropout = dropout
@@ -11,7 +11,6 @@ class MLP(torch.nn.Module):
         self.final_activation_function = final_activation_function
         self.lin = torch.nn.ModuleList()
 
-        number_of_hidden_layers = len(nodes_per_hidden_layer)
         if nodes_per_hidden_layer == 0:
             self.lin.append(torch.nn.Linear(in_channels, output_size))
         else:

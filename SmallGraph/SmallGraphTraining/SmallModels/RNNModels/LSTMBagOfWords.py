@@ -22,7 +22,7 @@ class LSTMBagOfWordsModel(torch.nn.Module):
         if (is_part_of_ensemble == False):
             self.classifier = MLP(in_channels=hidden_dim, output_size=output_size,
                                   nodes_per_hidden_layer=MLP_arguments["nodes_per_hidden_layer"],
-                                  dropout=MLP_arguments["dropout"])
+                                  number_of_hidden_layers=MLP_arguments["number_of_hidden_layers"],dropout=MLP_arguments["dropout"])
 
     def forward(self, data):
 

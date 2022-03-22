@@ -69,7 +69,7 @@ def stem_text(words: list):
     stemmed_words = [stemmer.stem(word) for word in words]
     return stemmed_words
 
-
+#TODO: Add Entiyy recognition
 def clean_article(text):
     number_representation = '^'
 
