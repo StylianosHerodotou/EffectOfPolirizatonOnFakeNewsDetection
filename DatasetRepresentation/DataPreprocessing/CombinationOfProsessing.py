@@ -3,7 +3,7 @@ from tensorflow.keras.preprocessing.text import one_hot
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 def get_bag_of_words_embeddings_for_training_set(train_df, hyperparameters,
-                                                 clean_column_name="cleaned_article"):
+                                                 clean_column_name="clean_article"):
 
     corpus = list(train_df[clean_column_name])
     onehot_rep = [one_hot(words, hyperparameters["vocab_size"]) for words in corpus]

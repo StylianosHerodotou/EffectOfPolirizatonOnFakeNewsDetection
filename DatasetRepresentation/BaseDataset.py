@@ -30,7 +30,7 @@ def copy_df(df):
     toAdd = None
     for index, row in df.iterrows():
         for column in columns:
-            #two special cases: 
+            #two special cases:
             if column == "graph":
                 try:
                     toAdd = row[column].copy()
