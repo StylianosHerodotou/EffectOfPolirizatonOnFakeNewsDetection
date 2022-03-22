@@ -13,7 +13,7 @@ class LSTMBagOfWordsModel(torch.nn.Module):
         self.is_part_of_ensemble = is_part_of_ensemble
 
         self.word_embeddings = torch.nn.Embedding(vocab_size, embedding_dim)
-        
+
 
         # The LSTM takes word embeddings as inputs, and outputs hidden states
         # with dimensionality hidden_dim.

@@ -20,23 +20,30 @@ def switch_values_and_keys(dic: dict):
         new_dict[value] = key
     return new_dict
 
-def copy_df(df):
-    graphs = list()
-    labels = list()
-    articles = list()
-    paths = list()
-    mappings = list()
-    for index, row in df.iterrows():
-        try:
-            graphs.append(row["graph"].copy())
-        except:
-            graphs.append(row["graph"].clone())
-        labels.append(row["label"])
-        articles.append(row["article"])
-        paths.append(row["path"])
-        mappings.append(row["int_to_node_mapping"].copy())
 
-    to_return = pd.DataFrame(list(zip(paths, labels, graphs, articles, mappings)), columns=df.columns.tolist())
+def copy_df(df):
+    columns = df.columns.tolist()
+    dic = {}
+    for column in columns:
+        dic[column] = []
+
+    toAdd = None
+    for index, row in df.iterrows():
+        for column in columns:
+            #two special cases: 
+            if column == "graph":
+                try:
+                    toAdd = row[column].copy()
+                except:
+                    toAdd = row[column].clone()
+            elif column == "int_to_node_mapping":
+                toAdd = row[column].copy()
+            else:
+                toAdd = row[column]
+
+            dic[column].append(toAdd)
+
+    to_return = df = pd.DataFrame.from_dict(dic, orient='index').transpose()
     return to_return
 
 
