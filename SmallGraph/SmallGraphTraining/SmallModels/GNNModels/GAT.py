@@ -14,7 +14,7 @@ class GATModel(torch.nn.Module):
         super().__init__()
         self.num_layers=num_layers
         self.is_part_of_ensemble=is_part_of_ensemble
-
+        generate_and_save_results_for_small_models
         self.convs = torch.nn.ModuleList()
         self.pools= torch.nn.ModuleList()
 
