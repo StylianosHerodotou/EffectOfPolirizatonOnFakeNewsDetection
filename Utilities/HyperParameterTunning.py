@@ -4,7 +4,7 @@ from ray.tune.schedulers import ASHAScheduler
 from functools import partial
 import torch
 
-from Utilities.InitGlobalVariables import gpus_per_trial
+from Utilities.InitGlobalVariables import gpus_per_trial, dir_to_ray_results
 from Utilities.InitGlobalVariables import device
 
 def run_hyper_parameter_tuning(hyperparameters, tuning_hyperparameters):
@@ -25,7 +25,9 @@ def run_hyper_parameter_tuning(hyperparameters, tuning_hyperparameters):
         config=hyperparameters,
         num_samples=tuning_hyperparameters["num_samples"],
         scheduler=scheduler,
-        progress_reporter=reporter)
+        progress_reporter=reporter,
+        local_dir =dir_to_ray_results
+    )
 
     best_trial = result.get_best_trial(tuning_hyperparameters["asha_metric"], tuning_hyperparameters["asha_mode"],
                                        "last")
