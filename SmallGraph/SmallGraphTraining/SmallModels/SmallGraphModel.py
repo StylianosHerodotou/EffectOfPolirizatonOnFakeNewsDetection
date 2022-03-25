@@ -29,7 +29,7 @@ class SmallGraphModel(ABC):
         for data in train_loader["loader"]:
             data = data.to(device)
             self.optimizer.zero_grad()
-            output = self.model(data)
+            output = self.forward(data)
             loss =self.find_loss(output, data)
             loss.backward()
             loss_all += data.num_graphs * loss.item()
