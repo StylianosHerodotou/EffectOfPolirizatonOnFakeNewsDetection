@@ -48,9 +48,9 @@ class GATModel(torch.nn.Module):
           cont += torch.cat([gmp(x, batch), gap(x, batch)], dim=1)
 
         x = cont
-        if(self):
+        if(self.is_part_of_ensemble):
             return x
-
+    
         return self.classifier.forward(x)
         # x = F.relu(self.lin1(x))
         # x = F.dropout(x, p=0.5, training=self.training)
