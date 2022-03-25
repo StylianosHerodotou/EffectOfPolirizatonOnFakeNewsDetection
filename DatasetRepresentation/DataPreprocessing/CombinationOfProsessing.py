@@ -3,6 +3,7 @@ from tensorflow.keras.preprocessing.text import one_hot
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from transformers import RobertaTokenizer
 
+
 def create_training_set(train_df, hyperparameters=None):
     # san hyperparameters tha exo mia lista apo epipleon features to add.
     # kathe item tis listas ine string to function pair.

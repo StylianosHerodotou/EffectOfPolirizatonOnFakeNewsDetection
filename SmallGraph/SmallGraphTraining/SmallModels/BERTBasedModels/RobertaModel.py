@@ -1,4 +1,6 @@
 from transformers.modeling_outputs  import SequenceClassifierOutput
+
+from DatasetRepresentation.DataPreprocessing.BERTProcessing import roberta_column_name
 from SmallGraph.SmallGraphTraining.SmallModels.SmallGraphModel import SmallGraphModel
 from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 import torch
@@ -62,7 +64,8 @@ class Roberta(SmallGraphModel):
         self.model = RobertaModel(is_part_of_ensemble=is_part_of_ensemble)
 
     def forward(self, data):
-        return self.model(**data.robert_rep)
+        data= data.extra_inputs[roberta_column_name]
+        return self.model(**data)
 
     def find_loss(self, logits, data):
         labels = data.y
