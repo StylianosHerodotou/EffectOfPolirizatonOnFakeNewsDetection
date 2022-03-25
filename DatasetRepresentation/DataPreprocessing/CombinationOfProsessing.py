@@ -14,8 +14,8 @@ def create_training_set(train_df, hyperparameters=None):
     y_train = y_train.reshape(y_train.size(0), 1)
 
     added_features = {}
-    for feature_key in hyperparameters["input_types"]:
-        added_features[feature_key] = hyperparameters[feature_key](train_df, hyperparameters)
+    for feature_key in hyperparameters["input_types"].keys():
+        added_features[feature_key] = hyperparameters["input_types"][feature_key](train_df, hyperparameters)
 
     for index in range(len(train_set)):
         train_set[index].y = y_train[index]

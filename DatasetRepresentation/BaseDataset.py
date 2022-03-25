@@ -53,7 +53,6 @@ class BaseDataset(ABC):
         self.df = df
         self.mapping_column_name = "int_to_node_mapping"
         self.graph_column_name = "graph"
-        self.article_column_name="article"
 
 
     def turn_json_to_mapping(self,mapping_column_name):
