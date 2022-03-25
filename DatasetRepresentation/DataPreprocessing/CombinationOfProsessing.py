@@ -8,7 +8,6 @@ def create_training_set(train_df, hyperparameters=None):
     # san hyperparameters tha exo mia lista apo epipleon features to add.
     # kathe item tis listas ine string to function pair.
 
-
     train_set = train_df["graph"].tolist()
     y_train = train_df["label"].tolist()
     y_train = torch.LongTensor(y_train)
@@ -21,7 +20,7 @@ def create_training_set(train_df, hyperparameters=None):
     for index in range(len(train_set)):
         train_set[index].y = y_train[index]
         train_set[index].edge_index = train_set[index].edge_index.long()
-        train_set[index].extra_inputs= {}
+        train_set[index].extra_inputs = {}
         for key in added_features:
-            train_set[index].extra_inputs[key]= added_features[key][index]
+            train_set[index].extra_inputs[key] = added_features[key][index]
     return train_set

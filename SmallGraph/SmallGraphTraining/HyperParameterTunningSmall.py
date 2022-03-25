@@ -21,8 +21,8 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         train_sampler = SubsetRandomSampler(train_idx)
         eval_sampler = SubsetRandomSampler(val_idx)
 
-        train_loader = {"size":len(train_idx)}
-        eval_loader = {"size": len(val_idx)}
+        train_loader = {"size":len(train_sampler)}
+        eval_loader = {"size": len(eval_sampler)}
 
         train_loader["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"], sampler=train_sampler)
         eval_loader ["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"], sampler=eval_sampler)
@@ -57,7 +57,7 @@ def train_and_write_best_model(best_config, train_set, hyperparameters,
             train_sampler = SubsetRandomSampler(train_idx)
             eval_sampler = SubsetRandomSampler(val_idx)
 
-            train_loader = {"size": len(train_idx)}
+            train_loader = {"size": len(train_sampler)}
             eval_loader = {"size": len(eval_sampler)}
 
             train_loader["loader"] = DataLoader(train_set, batch_size=hyperparameters["batch_size"],

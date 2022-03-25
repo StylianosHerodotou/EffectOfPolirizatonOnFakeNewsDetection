@@ -14,7 +14,7 @@ class GATModel(torch.nn.Module):
         super().__init__()
         self.num_layers=num_layers
         self.is_part_of_ensemble=is_part_of_ensemble
-        self.convs = torch.nn.ModuleList()
+        self.cogenerate_and_save_results_for_small_modelsnvs = torch.nn.ModuleList()
         self.pools= torch.nn.ModuleList()
 
         conv1 = GATv2Conv(in_channels, hidden_size, heads=heads, dropout=dropout,edge_dim=edge_dim)
