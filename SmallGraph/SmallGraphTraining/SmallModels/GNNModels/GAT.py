@@ -50,7 +50,7 @@ class GATModel(torch.nn.Module):
         x = cont
         if(self.is_part_of_ensemble):
             return x
-    
+
         return self.classifier.forward(x)
         # x = F.relu(self.lin1(x))
         # x = F.dropout(x, p=0.5, training=self.training)
