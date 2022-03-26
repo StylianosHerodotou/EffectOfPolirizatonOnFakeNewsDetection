@@ -59,7 +59,7 @@ class RobertaModel(torch.nn.Module):
 
 
 class Roberta(SmallGraphModel):
-    def __init__(self, is_part_of_ensemble=False):
+    def __init__(self, model_hyperparameters, is_part_of_ensemble=False):
         super().__init__()
         self.model = RobertaModel(is_part_of_ensemble=is_part_of_ensemble)
 
