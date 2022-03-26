@@ -67,3 +67,6 @@ class SmallGraphModel(ABC):
                     torch.save((self.model.state_dict(), self.optimizer.state_dict()), path)
 
                 ray.tune.report(accuracy=test_acc)
+
+    #TODO create an eval method that is going to do an in depth evaluation of the model,
+    #find statistics like recall, f1 score, that table exc.

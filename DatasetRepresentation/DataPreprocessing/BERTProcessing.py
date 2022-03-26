@@ -13,8 +13,8 @@ def generate_roberta_embeddings_for_training_set(train_df,text_name=None):
             sentense,  # Sentence to encode.
             add_special_tokens=True,  # Add '[CLS]' and '[SEP]'
             truncation=True,
-            max_length=10,  # Pad & truncate all sentences.
-            pad_to_max_length=True,
+            max_length=None ,  # Pad & truncate all sentences.
+            padding='max_length',
             return_attention_mask=True,  # Construct attn. masks.
             return_tensors='pt',  # Return pytorch tensors.
         )
