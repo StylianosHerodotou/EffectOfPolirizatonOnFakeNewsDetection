@@ -30,7 +30,7 @@ class SmallGraphModel(ABC):
             data = data.to(device)
             self.optimizer.zero_grad()
             output = self.forward(data)
-            loss =self.find_loss(output, data)
+            loss = self.find_loss(output, data)
             loss.backward()
             loss_all += data.num_graphs * loss.item()
             self.optimizer.step()
@@ -42,7 +42,7 @@ class SmallGraphModel(ABC):
         correct = 0
         for data in test_loader["loader"]:
             data = data.to(device)
-            pred = self.model(data).max(dim=1)[1]
+            pred = self.forward(data).max(dim=1)[1]
             correct += pred.eq(data.y).sum().item()
         return correct / test_loader["size"]
 
