@@ -13,7 +13,6 @@ def generate_bag_of_words_embeddings_for_training_set(train_df, hyperparameters)
     return bag_of_words_representation
 
 def get_bag_of_words_embeddings_for_training_set(train_df, hyperparameters):
-    return generate_bag_of_words_embeddings_for_training_set(train_df, hyperparameters,
-                                                 clean_column_name)
+    return generate_bag_of_words_embeddings_for_training_set(train_df, hyperparameters)
 
 

@@ -68,5 +68,5 @@ class SmallGraphModel(ABC):
 
                 ray.tune.report(accuracy=test_acc)
 
-    #TODO create an eval method that is going to do an in depth evaluation of the model,
+    #TODO create an deep eval method that is going to do an in depth evaluation of the model,
     #find statistics like recall, f1 score, that table exc.
