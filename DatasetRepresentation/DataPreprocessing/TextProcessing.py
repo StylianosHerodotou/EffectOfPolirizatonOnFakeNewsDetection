@@ -5,10 +5,9 @@ import contractions
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
+from DatasetRepresentation.DataPreprocessing.RNNProcessing import clean_column_name as clean_article_column_name
 
 article_column_name="article"
-clean_article_column_name = "clean_" + article_column_name
-
 #init items needed for some of the following functions
 stemmer = PorterStemmer()
 nlp = spacy.load('en_core_web_sm')
@@ -114,7 +113,7 @@ def clean_article(text):
     text = ' '.join(text.split())
     return text
 
-def clean_articles_in_df(df, article_column_name):
+def add_clean_articles_in_df(df, article_column_name):
     clean_articles = list()
     for index, row in df.iterrows():
         dirty = row[article_column_name]
