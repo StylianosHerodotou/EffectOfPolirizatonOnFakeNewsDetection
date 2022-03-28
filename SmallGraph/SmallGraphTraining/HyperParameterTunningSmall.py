@@ -75,7 +75,7 @@ def train_and_write_best_model(best_config, train_set, hyperparameters,
             best_trained_model.model.to(device)
 
             best_trained_model.train_fold_small(train_loader, eval_loader,
-                             epochs=hyperparameters["epochs"],
+                             epochs=hyperparameters["final_training_epochs"],
                              in_hyper_parameter_search=False)
 
             test_acc = best_trained_model.test_small(eval_loader)
