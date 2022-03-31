@@ -76,6 +76,34 @@ def remove_nodes_from_gragh_not_in_large(graph, all_large_names, nodes_to_delete
     return graph
 
 
+def remove_edges_from_graph_not_in_large(graph, edges_to_delete_names, int_to_node_mapping):
+    node_to_int_mapping = switch_values_and_keys(int_to_node_mapping)
+
+    # find all nodes in small
+    all_small_nodes = node_to_int_mapping.keys()
+
+    # list with edges to delete.
+    edges_to_delete_ids = []
+
+    # find all edges to be deleted
+    for edge_with_name in edges_to_delete_names:
+        from_node_name = edge_with_name[0]
+        to_node_name = edge_with_name[1]
+        # check if these nodes exist in small graph
+        if from_node_name in all_small_nodes and to_node_name in all_small_nodes:
+            from_node = node_to_int_mapping[edge_with_name[0]]
+            to_node = node_to_int_mapping[edge_with_name[1]]
+            # if this edges doest exist, then put it in the list to be removed
+            if graph.has_edge(from_node, to_node):
+                edges_to_delete_ids.append((from_node, to_node))
+
+    # remove them from the graph
+    # print("number of edges before ", graph.number_of_edges())
+    graph.remove_edges_from(edges_to_delete_ids)
+    graph.remove_nodes_from(list(nx.isolates(graph)))
+    # print("number of edges after ", graph.number_of_edges())
+
+    return graph
 
 # dir_to_raw="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset"
 # raw_filename="joined_dataset_no_preprosessing.csv"
