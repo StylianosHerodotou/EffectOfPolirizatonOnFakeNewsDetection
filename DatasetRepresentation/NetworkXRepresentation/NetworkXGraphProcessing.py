@@ -105,6 +105,39 @@ def remove_edges_from_graph_not_in_large(graph, edges_to_delete_names, int_to_no
 
     return graph
 
+
+def find_node_names_in_graph(graph, int_to_node_mapping):
+  node_names = set()
+  for node in graph.nodes():
+    node_names.add(int_to_node_mapping[node])
+  return node_names
+
+def remove_nodes_from_gragh_not_in_large_without_specific_list_of_nodes(small_graph, int_to_node_mapping,
+                                                                        large_nodes_names):
+    # get small nodes names
+    small_nodes_names = find_node_names_in_graph(small_graph, int_to_node_mapping)
+
+    # to remain = small interconnection large
+    to_remain_nodes_names = small_nodes_names.intersection(large_nodes_names)
+
+    # to delete = small - to remain
+    to_delete_nodes_names = small_nodes_names.difference(to_remain_nodes_names)
+
+    # print("small ", len(small_nodes_names), " large ",len(large_nodes_names),
+    #       " mazi ", len(to_remain_nodes_names), "to delete ", len(to_delete_nodes_names))
+
+    # find to remove ids
+    small_nodes_ids_to_remove = []
+    node_to_int_mapping = switch_values_and_keys(int_to_node_mapping)
+
+    for node_name in to_delete_nodes_names:
+        small_nodes_ids_to_remove.append(node_to_int_mapping[node_name])
+
+    # remove from graph
+    # print("before ", small_graph.number_of_nodes())
+    small_graph.remove_nodes_from(small_nodes_ids_to_remove)
+    # print("after ", small_graph.number_of_nodes())
+
 # dir_to_raw="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset"
 # raw_filename="joined_dataset_no_preprosessing.csv"
 # path_to_raw_file=os.path.join(dir_to_raw, raw_filename)

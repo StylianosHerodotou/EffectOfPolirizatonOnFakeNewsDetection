@@ -6,7 +6,8 @@ import networkx as nx
 from DatasetRepresentation.BaseDataset import BaseDataset, turn_str_keys_to_int, get_nodes_wiki_id_using_mapping
 from .NetworkXGraphProcessing import remove_nodes_from_gragh_not_in_large, add_centrality_node_features_to_graph, \
     add_identidy_node_feature_to_graph, add_identidy_fellowship_node_feature_to_graph, \
-    add_large_node_embeddings_to_graph, remove_edges_from_graph_not_in_large
+    add_large_node_embeddings_to_graph, remove_edges_from_graph_not_in_large, \
+    remove_nodes_from_gragh_not_in_large_without_specific_list_of_nodes, find_node_names_in_graph
 from Utilities import JoinRawDatasetUtils
 
 from Utilities.InitGlobalVariables import dir_to_large
@@ -91,13 +92,18 @@ class NetworkXDataset(BaseDataset):
             if row[self.graph_column_name].number_of_nodes() == 0 or row[self.graph_column_name].number_of_edges() == 0:
                 self.df.drop(index, inplace=True)
 
-    def remove_edges_not_in_large(self, edges_to_delete_names,
-                                  ):
+    def remove_edges_not_in_large(self, edges_to_delete_names,large_graph,int_to_node_mapping_large):
+        large_nodes_names=find_node_names_in_graph(large_graph,int_to_node_mapping_large)
 
         for index, row in self.df.iterrows():
             # before = row[self.graph_column_name].number_of_edges()
-            self.df.at[index, self.graph_column_name] = remove_edges_from_graph_not_in_large(row[self.graph_column_name], edges_to_delete_names,
+            self.df.at[index, self.graph_column_name] = remove_edges_from_graph_not_in_large(row[self.graph_column_name],edges_to_delete_names,
                                                                                    row[self.mapping_column_name])
+
+            self.df.at[index, self.graph_column_name] = remove_nodes_from_gragh_not_in_large_without_specific_list_of_nodes(
+                                                                        row[self.graph_column_name], row[self.mapping_column_name],
+                                                                        large_nodes_names)
+
             # after =row[self.graph_column_name].number_of_edges()
             # if(before != after):
             #   print("before", before, "after ", after)
