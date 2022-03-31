@@ -137,6 +137,7 @@ def remove_nodes_from_gragh_not_in_large_without_specific_list_of_nodes(small_gr
     # print("before ", small_graph.number_of_nodes())
     small_graph.remove_nodes_from(small_nodes_ids_to_remove)
     # print("after ", small_graph.number_of_nodes())
+    return small_graph
 
 # dir_to_raw="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset"
 # raw_filename="joined_dataset_no_preprosessing.csv"
