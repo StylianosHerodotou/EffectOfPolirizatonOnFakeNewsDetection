@@ -95,12 +95,12 @@ class NetworkXDataset(BaseDataset):
                                   ):
 
         for index, row in self.df.iterrows():
-            before = row[self.graph_column_name].number_of_edges()
+            # before = row[self.graph_column_name].number_of_edges()
             self.df.at[index, self.graph_column_name] = remove_edges_from_graph_not_in_large(row[self.graph_column_name], edges_to_delete_names,
                                                                                    row[self.mapping_column_name])
-            after =row[self.graph_column_name].number_of_edges()
-            if(before != after):
-              print("before", before, "after ", after)
+            # after =row[self.graph_column_name].number_of_edges()
+            # if(before != after):
+            #   print("before", before, "after ", after)
 
         for index, row in self.df.iterrows():
             if row[self.graph_column_name].number_of_nodes() == 0 or row[self.graph_column_name].number_of_edges() == 0:
