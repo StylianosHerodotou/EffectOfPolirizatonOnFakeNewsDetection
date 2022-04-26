@@ -8,7 +8,6 @@ from Utilities import JoinRawDatasetUtils
 from Utilities.InitGlobalVariables import dir_to_large
 
 
-
 def get_embedings_node_feature(graph, embeddings, int_to_node_map, emb_names=None):
     node_features = dict()
     list_of_emb_types = []
@@ -180,7 +179,7 @@ def get_large_node_ids(dir_to_large, threshold=None):
 def add_centrality_node_features_to_graph(graph, features=None):
   if features is None:
       features = ["degree_centrality", "betweenness_centrality",
-                  "closeness_centrality", "clustering_coefficinet",
+                  "closeness_centrality", "clustering_coefficient",
                   "hits"]
   if "betweenness_centrality" in features:
       betweenness_centrality = nx.betweenness_centrality(graph)
@@ -196,7 +195,7 @@ def add_centrality_node_features_to_graph(graph, features=None):
 
   if "clustering_coefficinet" in features:
       clustering_coefficinet = nx.clustering(graph)
-      nx.set_node_attributes(graph, clustering_coefficinet, "clustering_coefficinet")
+      nx.set_node_attributes(graph, clustering_coefficinet, "clustering_coefficient")
 
   if "hits" in features:
       hits = nx.hits(graph)

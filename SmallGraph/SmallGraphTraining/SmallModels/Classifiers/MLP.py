@@ -22,12 +22,17 @@ class MLP(torch.nn.Module):
     def forward(self, data):
         number_of_layers = len(self.lin)
         if number_of_layers == 1:
-            return self.final_activation_function(self.lin[0](data))
+            data = self.lin[0](data)
+            if self.final_activation_function is not None:
+                data = self.final_activation_function(data)
+            return data
 
         data=self.activation_function(self.lin[0](data))
         for index in range(1,number_of_layers - 1):
             data = F.dropout(data, p=self.dropout, training=self.training)
             data = self.activation_function(self.lin[index](data))
 
-        output = self.final_activation_function(self.lin[number_of_layers - 1](data), dim=-1)
-        return output
+        data = self.lin[number_of_layers - 1](data)
+        if self.final_activation_function is not None:
+            data = self.final_activation_function(data,dim=-1)
+        return data

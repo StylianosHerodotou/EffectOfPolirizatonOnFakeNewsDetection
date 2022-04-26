@@ -52,7 +52,7 @@ class GATModel(torch.nn.Module):
             return x
 
         return self.classifier.forward(x)
-        # x = F.relu(self.lin1(x))
+        # x = F.relu(self.lin1(x)
         # x = F.dropout(x, p=0.5, training=self.training)
         # x = F.relu(self.lin2(x))
         # x = F.log_softmax(self.lin3(x), dim=-1)
