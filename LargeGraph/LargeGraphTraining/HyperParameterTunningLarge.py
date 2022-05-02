@@ -1,4 +1,4 @@
-from LargeGraph.LargeGraphTraining.LargeModels.LargeGraphModel import get_train_eval_indexes
+from Utilities.SignedGraphUtils import get_train_eval_indexes
 from LargeGraph.Utils import turn_data_to_positive_and_negative_edges
 from sklearn.model_selection import KFold
 import numpy as np
@@ -6,7 +6,6 @@ import torch
 
 
 global temp_model
-from Utilities.InitGlobalVariables import gpus_per_trial
 from Utilities.InitGlobalVariables import device
 # gpus_per_trial=0
 def k_fold_training_large(model_hyperparameters, graph,

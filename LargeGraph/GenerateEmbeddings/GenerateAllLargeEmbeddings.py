@@ -10,7 +10,6 @@ global temp_model
 def generate_all_large_embeddings(large_graph, int_to_node_mapping, hyperparameters, model_hyperparameters, tuning_hyperparameters):
     # train embeddings on this large graph
     # --> find best hyperparameters for each model
-
     # add features if desired.
     if (hyperparameters["add_centrality_node_features_to_large"]):
         add_centrality_node_features_to_graph_to_large(large_graph)

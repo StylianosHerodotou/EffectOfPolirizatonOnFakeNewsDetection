@@ -1,28 +1,7 @@
 import torch
 from abc import ABC, abstractmethod
 import ray
-import os
-from Utilities.InitGlobalVariables import dir_to_ray_checkpoints
 
-def get_train_eval_indexes(edge_index, train_idx, val_idx):
-    train = list()
-    eval = list()
-
-    edge_index = torch.transpose(edge_index, 0, 1)
-
-    for index in train_idx:
-        train.append(edge_index[index])
-
-    for index in val_idx:
-        eval.append(edge_index[index])
-
-    train = torch.stack(train)
-    eval = torch.stack(eval)
-
-    train = torch.transpose(train, 0, 1)
-    eval = torch.transpose(eval, 0, 1)
-
-    return train, eval
 
 class LargeGraphModel(ABC):
     def __init__(self):
@@ -37,7 +16,7 @@ class LargeGraphModel(ABC):
         return self.model.loss(output, train_dic["pos_index"], train_dic["neg_index"])
 
     def test(self, output, test_dic):
-        return self.model.test(output, test_dic["test_pos_index"], test_dic["test_neg_index"])
+        return self.model.test(output, test_dic["pos_index"], test_dic["neg_index"])
 
 
     def train_step_large(self, train_dic):

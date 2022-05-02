@@ -1,6 +1,6 @@
 from KFoldTraining.KFoldTrainersForSignedNetworks.AbstractKFoldTrainerForSignedNetwork import \
     AbstractKFoldTrainerForSignedNetwork
-from LargeGraph.LargeGraphTraining.LargeModels.SignedGCN import SignedGCNModel
+from ML_Models.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNModel
 import torch
 
 
@@ -11,7 +11,8 @@ class SignedGCNKFoldTrainer(AbstractKFoldTrainerForSignedNetwork):
         self.model_function = SignedGCNModel
         self.temp_model = None
 
-    def set_new_model_parameters(self, model, model_hyperparameters, data, pre_processed_data, train_data, eval_data):
+    def set_new_model_parameters(self, model, training_hyperparameters, graph_hyperparameters, model_hyperparameters,
+                                 data, pre_processed_data, train_data, eval_data):
         # only spectral information
         train_pos = train_data["pos_index"]
         train_neg = train_data["neg_index"]

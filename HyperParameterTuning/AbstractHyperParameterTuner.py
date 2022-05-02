@@ -19,23 +19,29 @@ class AbstractHyperParameterTuner(ABC):
         self.num_samples = tuning_hyperparameters["num_samples"]
         self.metric = tuning_hyperparameters["asha_metric"]
         self.mode = tuning_hyperparameters["asha_mode"]
+        self.trainer = None
 
     @abstractmethod
-    def tuning_function(self):
-        pass
+    def tuning_function(self, config):
+        trainer = self.trainer(config["number_of_splits"])
+        training_hyperparameters=config["training_hyperparameters"]
+        graph_hyperparameters=config["graph_hyperparameters"]
+        model_hyperparameters=config["model_hyperparameters"]
+        data = config["data"]
+        trainer.train(training_hyperparameters, graph_hyperparameters,  model_hyperparameters, data)
 
-    def get_best_trial_configurations(self,hyperparameters, print_results=False):
+    def get_best_trial_configurations(self, config, print_results=False):
         result = ray.tune.run(
             partial(self.tuning_function),
             # resources_per_trial={"cpu": 8, "gpu": gpus_per_trial},
-            config=hyperparameters,
+            config=config,
             num_samples=self.num_samples,
             scheduler=self.scheduler,
             progress_reporter=self.reporter,
             local_dir=dir_to_ray_results
         )
 
-        best_trial = result.get_best_trial(self.metric, self.asha_mode,"last")
+        best_trial = result.get_best_trial(self.metric, self.mode,"last")
         if print_results:
             print("Best trial config: {}".format(best_trial.config))
             print("Best trial final validation f1: {}".format(

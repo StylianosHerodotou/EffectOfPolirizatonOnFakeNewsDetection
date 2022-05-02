@@ -21,17 +21,19 @@ class AbstractKFoldTrainer(ABC):
         pass
 
     @abstractmethod
-    def set_new_model_parameters(self, model, model_hyperparameters, data, pre_processed_data, train_data, eval_data):
+    def set_new_model_parameters(self, model, training_hyperparameters, graph_hyperparameters, model_hyperparameters,
+                                 data, pre_processed_data, train_data, eval_data):
         pass
 
-    def train(self, model_hyperparameters, data, in_hyper_parameter_search=True):
+    def train(self, training_hyperparameters, graph_hyperparameters, model_hyperparameters, data, in_hyper_parameter_search=True):
         pre_processed_data = self.preprocess_data(data)
         splits = KFold(n_splits=self.number_of_splits, shuffle=True, random_state=self.random_state)
-
         data_for_each_split = self.create_data_for_each_split(splits, pre_processed_data)
         for fold_number, data_for_fold in enumerate(data_for_each_split):
             train_data, eval_data = self.create_train_eval_data_for_fold(data_for_fold, pre_processed_data)
             model = self.model_function(model_hyperparameters)
-            self.set_new_model_parameters(model, model_hyperparameters, data, pre_processed_data, train_data, eval_data)
-            model.train_fold(train_data, eval_data, fold_number=fold_number, epochs=data["epochs"],
+            self.set_new_model_parameters(model, training_hyperparameters, graph_hyperparameters, model_hyperparameters,
+                                 data, pre_processed_data, train_data, eval_data)
+            model.train_fold(training_hyperparameters, graph_hyperparameters, model_hyperparameters,
+                             train_data, eval_data, fold_number=fold_number,
                              in_hyper_parameter_search=in_hyper_parameter_search)
