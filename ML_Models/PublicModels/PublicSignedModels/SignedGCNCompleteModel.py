@@ -54,12 +54,12 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel, ABC):
     def performance_metric_to_string(self, performance_metric):
         string = ""
         for key, value in performance_metric.items():
-            string += key + ": " + value + "\n"
+            string += key + ": " + "{:.2f}".format(value)  + "\n"
         return string
 
     def performance_string(self, performance):
         auc, f1 = performance
-        return "auc: " + auc + " f1 score: " + f1
+        return "auc: " + "{:.2f}".format(auc) + " f1 score: " + "{:.2f}".format(f1)
 
     def get_report_score(self, performance):
         auc, f1 = performance
