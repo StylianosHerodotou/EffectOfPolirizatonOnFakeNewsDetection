@@ -20,7 +20,7 @@ def run_hyper_parameter_tuning(hyperparameters, tuning_hyperparameters):
         metric_columns=tuning_hyperparameters["reporter_metric_columns"])
 
     result = ray.tune.run(
-        partial(tuning_hyperparameters["tunning_function"]),
+        partial(tuning_hyperparameters["tuning_function"]),
         # resources_per_trial={"cpu": 8, "gpu": gpus_per_trial},
         config=hyperparameters,
         num_samples=tuning_hyperparameters["num_samples"],

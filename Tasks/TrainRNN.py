@@ -58,7 +58,7 @@ def trainRNN(dir_to_dataset = "/data/pandemic_misinformation/CodeBase/EffectOfPo
         "reduction_factor": 2,
         "reporter_metric_columns": [asha_metric_small, "training_iteration"],
         "num_samples": 2,
-        "tunning_function": hyper_parameter_tuning_small
+        "tuning_function": hyper_parameter_tuning_small
     }
 
     generate_and_save_results_for_small_models(dataset,

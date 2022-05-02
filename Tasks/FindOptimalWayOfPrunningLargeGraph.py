@@ -4,7 +4,7 @@ from LargeGraph.GenerateEmbeddings.GenerateAllLargeEmbeddings import generate_al
 from LargeGraph.LargeGraphTraining.HyperParameterTunningLarge import hyper_parameter_tuning_large
 from LargeGraph.LargeGraphTraining.LargeModels.SignedGCN import SignedGCNModel
 from SmallGraph.SmallGraphTraining.HyperParameterTunningSmall import hyper_parameter_tuning_small
-from SmallGraph.SmallGraphTraining.SmallModels.GNNModels.GAT import GAT
+from SmallGraph.SmallGraphTraining.SmallModels.GNNModels import GAT
 from SmallGraph.SmallGraphTraining.TrainSmallModel import generate_and_save_results_for_small_models
 from Utilities.JoinRawDatasetUtils import read_int_to_node_mapping, read_graph_file
 import networkx as nx
@@ -102,7 +102,7 @@ def findOptimalWayOfPrunningLargeOne(dir_to_dataset = "/data/pandemic_misinforma
         "reporter_metric_columns": [asha_metric_large, "training_iteration"],
         #     "num_samples": 2,
         "num_samples": 4,
-        "tunning_function": hyper_parameter_tuning_large
+        "tuning_function": hyper_parameter_tuning_large
     }
 
     # if torch.cuda.is_available():
@@ -148,7 +148,7 @@ def findOptimalWayOfPrunningLargeOne(dir_to_dataset = "/data/pandemic_misinforma
         "reduction_factor": 2,
         "reporter_metric_columns": [asha_metric_small, "training_iteration"],
         "num_samples": 2,
-        "tunning_function": hyper_parameter_tuning_small
+        "tuning_function": hyper_parameter_tuning_small
 
     }
 

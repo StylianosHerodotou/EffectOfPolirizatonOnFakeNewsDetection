@@ -1,6 +1,6 @@
 from DatasetRepresentation.Utils import make_networkx_to_pyg_graph
 from LargeGraph.GenerateEmbeddings import GeneratePOLEEmbeddings
-from LargeGraph.GenerateEmbeddings.GenerateGNNEmbeddings import get_best_model_embeddings_large, write_emd_to_file
+from LargeGraph.GenerateEmbeddings.GenerateGNNEmbeddings_old import get_best_model_embeddings_large, write_emd_to_file
 from LargeGraph.Utils import add_centrality_node_features_to_graph_to_large, add_identidy_node_feature_to_graph_large
 import copy
 
