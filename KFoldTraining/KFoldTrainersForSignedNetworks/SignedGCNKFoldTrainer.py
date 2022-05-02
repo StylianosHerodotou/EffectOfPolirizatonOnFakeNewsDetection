@@ -17,6 +17,7 @@ class SignedGCNKFoldTrainer(AbstractKFoldTrainerForSignedNetwork):
         train_pos = train_data["pos_index"]
         train_neg = train_data["neg_index"]
         x_features = data.x
+        model_hyperparameters["size_of_x_features"] = x_features.size()[1]
 
         if (model_hyperparameters["spectral_features_type"] == 0):
             train_data["SIGNED_features"] = model.model.create_spectral_features(train_pos, train_neg)
