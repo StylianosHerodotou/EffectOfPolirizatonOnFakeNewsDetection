@@ -21,7 +21,6 @@ class AbstractHyperParameterTuner(ABC):
         self.mode = tuning_hyperparameters["asha_mode"]
         self.trainer = None
 
-    @abstractmethod
     def tuning_function(self, config):
         trainer = self.trainer(config["number_of_splits"])
         training_hyperparameters=config["training_hyperparameters"]
