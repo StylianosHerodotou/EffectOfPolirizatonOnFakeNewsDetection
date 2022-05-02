@@ -32,5 +32,7 @@ class SignedGCNKFoldTrainer(AbstractKFoldTrainerForSignedNetwork):
             print("size of input", x_features.size(), "size of model input",
                   model_hyperparameters["size_of_x_features"])
 
+        eval_data["SIGNED_features"]=train_data["SIGNED_features"]
+
 
 

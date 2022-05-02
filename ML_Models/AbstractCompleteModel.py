@@ -77,5 +77,4 @@ class AbstractCompleteModel(ABC):
                     # with ray.tune.checkpoint_dir(os.path.join(dir_to_ray_checkpoints, str((fold_number * train_dic["epochs"]) + epoch))) as checkpoint_dir:
                     #     path = os.path.join(checkpoint_dir, "checkpoint")
                     #     torch.save((self.model.state_dict(), self.optimizer.state_dict()), path)
-                    print("WHAAAAAZAAAAAAP", self.get_report_score(performance_test))
-                    # ray.tune.report(score=self.get_report_score(performance_test))
+                    ray.tune.report(score=self.get_report_score(performance_test))
