@@ -1,6 +1,6 @@
 from KFoldTraining.KFoldTrainersForSignedNetworks.AbstractKFoldTrainerForSignedNetwork import \
     AbstractKFoldTrainerForSignedNetwork
-from ML_Models.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNModel
+from ML_Models.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNCompleteModel
 import torch
 
 
@@ -8,7 +8,7 @@ class SignedGCNKFoldTrainer(AbstractKFoldTrainerForSignedNetwork):
 
     def __init__(self, number_of_splits, random_state=42):
         super().__init__(number_of_splits, random_state)
-        self.model_function = SignedGCNModel
+        self.model_function = SignedGCNCompleteModel
         self.temp_model = None
 
     def set_new_model_parameters(self, model, training_hyperparameters, graph_hyperparameters, model_hyperparameters,

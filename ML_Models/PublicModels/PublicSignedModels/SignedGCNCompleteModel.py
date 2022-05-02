@@ -1,9 +1,12 @@
+from abc import ABC
+
+from ML_Models.AbstractCompleteModel import AbstractCompleteModel
 from ML_Models.PublicModels.LargeGraphModel import LargeGraphModel
 from torch_geometric.nn import SignedGCN
 import torch
 
 
-class SignedGCNCompleteModel(LargeGraphModel):
+class SignedGCNCompleteModel(AbstractCompleteModel, ABC):
     def __init__(self, model_hyperparameters):
         super().__init__()
         model = SignedGCN(in_channels=model_hyperparameters["size_of_x_features"],
