@@ -22,12 +22,11 @@ class AbstractHyperParameterTuner(ABC):
         self.trainer = None
 
     def tuning_function(self, config):
-        trainer = self.trainer(config["number_of_splits"])
         training_hyperparameters=config["training_hyperparameters"]
         graph_hyperparameters=config["graph_hyperparameters"]
         model_hyperparameters=config["model_hyperparameters"]
         data = config["data"]
-        trainer.train(training_hyperparameters, graph_hyperparameters,  model_hyperparameters, data)
+        self.trainer.train(training_hyperparameters, graph_hyperparameters,  model_hyperparameters, data)
 
     def get_best_trial_configurations(self, config, print_results=False):
         result = ray.tune.run(
