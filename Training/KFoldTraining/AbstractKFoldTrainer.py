@@ -3,7 +3,7 @@ from sklearn.model_selection import KFold
 from ..AbstractTrainer import AbstractTrainer
 
 
-class AbstractKFoldTrainer(AbstractTrainer):
+class AbstractKFoldTrainer(AbstractTrainer,ABC):
     def __init__(self, number_of_splits, random_state=42):
         super().__init__()
         self.number_of_splits = number_of_splits
