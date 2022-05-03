@@ -8,7 +8,6 @@ class AbstractSimpleTrainer(AbstractTrainer, ABC):
         super().__init__()
         self.model = None
 
-    @abstractmethod
     def create_model(self, model_hyperparameters):
         self.model = self.model_function(model_hyperparameters)
 
