@@ -13,6 +13,7 @@ from Utilities.InitGlobalVariables import device
 from Utilities.InitGlobalVariables import gpus_per_trial
 from Utilities.InitGlobalVariables import dir_to_base
 
+
 def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=True):
     splits = KFold(n_splits=hyperparameters["number_of_splits"], shuffle=True, random_state=42)
     for fold, (train_idx, val_idx) in enumerate(splits.split(np.arange(len(train_set)))):
