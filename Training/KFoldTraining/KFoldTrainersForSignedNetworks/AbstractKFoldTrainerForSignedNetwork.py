@@ -6,7 +6,7 @@ from Training.KFoldTraining import AbstractKFoldTrainer
 import numpy as np
 from Utilities.SignedGraphUtils import get_train_eval_indexes, turn_data_to_positive_and_negative_edges
 
-class AbstractKFoldTrainerForSignedNetwork(AbstractKFoldTrainer,AbstractTrainer, ABC):
+class AbstractKFoldTrainerForSignedNetwork(AbstractKFoldTrainer,ABC):
     def __init__(self, number_of_splits, random_state=42):
         super().__init__(number_of_splits, random_state)
 
