@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from Training.AbstractTrainer import AbstractTrainer
 
 
-class AbstractSimpleTrainer(AbstractTrainer):
+class AbstractSimpleTrainer(AbstractTrainer, ABC):
     def __init__(self):
         super().__init__()
         self.model = None
