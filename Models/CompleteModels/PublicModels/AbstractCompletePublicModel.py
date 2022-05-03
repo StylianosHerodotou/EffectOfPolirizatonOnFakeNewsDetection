@@ -1,7 +1,7 @@
 import torch
 from abc import ABC
 
-from ML_Models.AbstractCompleteModel import AbstractCompleteModel
+from Models.CompleteModels.AbstractCompleteModel import AbstractCompleteModel
 
 
 class AbstractCompletePublicModel(AbstractCompleteModel, ABC):

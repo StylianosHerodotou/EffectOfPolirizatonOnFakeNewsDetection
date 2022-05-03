@@ -1,6 +1,4 @@
-from abc import ABC
-
-from ML_Models.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNCompleteModel
+from ML_Models.CompleteModels.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNCompleteModel
 import torch
 
 from Training.SimpleTraining.SimpleTrainersForSignedNetworks.AbstractSimpleTrainerForSignedNetwork import \

@@ -1,6 +1,4 @@
-from abc import ABC
-
-from ML_Models.PublicModels.AbstractCompletePublicModel import AbstractCompletePublicModel
+from ML_Models.CompleteModels.PublicModels.AbstractCompletePublicModel import AbstractCompletePublicModel
 from torch_geometric.nn import SignedGCN
 import torch
 

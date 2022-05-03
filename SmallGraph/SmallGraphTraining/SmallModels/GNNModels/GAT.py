@@ -3,7 +3,7 @@ from torch_geometric.nn import GATv2Conv, TopKPooling
 from torch_geometric.nn import global_mean_pool as gap, global_max_pool as gmp
 import torch.nn.functional as F
 
-from ML_Models.Classifiers.MLP import MLP
+from ML_Models.NNModels.Classifiers import MLP
 from SmallGraph.SmallGraphTraining.SmallModels.SmallGraphModel import SmallGraphModel
 
 class GATModel(torch.nn.Module):

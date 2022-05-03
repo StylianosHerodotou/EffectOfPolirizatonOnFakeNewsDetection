@@ -1,5 +1,5 @@
 from .AbstractKFoldTrainerForSignedNetwork import AbstractKFoldTrainerForSignedNetwork
-from ML_Models.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNCompleteModel
+from ML_Models.CompleteModels.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNCompleteModel
 import torch
 
 class SignedGCNKFoldTrainer(AbstractKFoldTrainerForSignedNetwork):
