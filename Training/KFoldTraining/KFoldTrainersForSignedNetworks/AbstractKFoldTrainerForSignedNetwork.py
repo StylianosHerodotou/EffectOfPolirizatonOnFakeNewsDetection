@@ -1,7 +1,7 @@
 from abc import ABC
 
 from Training.AbstractTrainer import AbstractTrainer
-from Training.KFoldTraining import AbstractKFoldTrainer
+from Training.KFoldTraining.AbstractKFoldTrainer import AbstractKFoldTrainer
 import numpy as np
 from Utilities.SignedGraphUtils import get_train_eval_indexes, turn_data_to_positive_and_negative_edges
 
