@@ -49,7 +49,7 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel, ABC):
         loss.backward()
 
     def loss_to_string(self, loss):
-        return str(loss.item)
+        return str(loss.item())
 
     def performance_metric_to_string(self, performance_metric):
         string = ""

@@ -1,5 +1,4 @@
-from Utilities.SignedGraphUtils import get_train_eval_indexes
-from LargeGraph.Utils import turn_data_to_positive_and_negative_edges
+from Utilities.SignedGraphUtils import get_train_eval_indexes, turn_data_to_positive_and_negative_edges
 from sklearn.model_selection import KFold
 import numpy as np
 import torch

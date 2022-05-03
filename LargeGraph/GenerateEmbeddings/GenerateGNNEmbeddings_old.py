@@ -1,4 +1,4 @@
-from LargeGraph.Utils import turn_data_to_positive_and_negative_edges
+from Utilities.SignedGraphUtils import turn_data_to_positive_and_negative_edges
 import torch
 import os
 

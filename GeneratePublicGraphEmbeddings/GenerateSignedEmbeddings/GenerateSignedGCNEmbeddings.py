@@ -1,4 +1,4 @@
-from LargeGraph.Utils import turn_data_to_positive_and_negative_edges
+from Utilities.SignedGraphUtils import turn_data_to_positive_and_negative_edges
 import torch
 import os
 
@@ -27,7 +27,7 @@ def get_best_model_embeddings_large(graph,hyperparameters,tuning_hyperparameters
   if torch.cuda.is_available():
       if gpus_per_trial > 1:
           best_trained_model.model = torch.nn.DataParallel(best_trained_model.model)
-  # device="cpu"
+  # device="cpu"turn_data_to_positive_and_negative_edges
   best_trained_model.model.to(device)
 
   x_features=graph.x
