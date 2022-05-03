@@ -18,7 +18,7 @@ class AbstractEmbeddingsGenerator(ABC):
         self.simple_trainer.create_model(model_hyperparameters)
         self.simple_trainer.train(training_hyperparameters, graph_hyperparameters, model_hyperparameters, data,
                              in_hyper_parameter_search=False)
-        embeddings= self.simple_trainer.model.generate_embeddings(training_hyperparameters, graph_hyperparameters,
+        embeddings= self.simple_trainer.generate_embeddings(training_hyperparameters, graph_hyperparameters,
                                                                   model_hyperparameters, data)
         return embeddings
 
