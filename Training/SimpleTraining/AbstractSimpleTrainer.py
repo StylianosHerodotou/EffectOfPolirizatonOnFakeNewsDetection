@@ -16,14 +16,14 @@ class AbstractSimpleTrainer(AbstractTrainer, ABC):
         pass
 
     @abstractmethod
-    def create_train_eval_data(self, data_object, pre_processed_data):
+    def create_train_eval_data(self, data_object, pre_processed_data, training_hyperparameters):
         pass
 
     def train(self, training_hyperparameters, graph_hyperparameters, model_hyperparameters, data,
               in_hyper_parameter_search=True):
         pre_processed_data = self.preprocess_data(data)
         data_object = self.create_data_object(pre_processed_data)
-        train_data, eval_data = self.create_train_eval_data(data_object, pre_processed_data)
+        train_data, eval_data = self.create_train_eval_data(data_object, pre_processed_data,training_hyperparameters)
         self.set_new_model_parameters(self.model, training_hyperparameters, graph_hyperparameters,
                                       model_hyperparameters,
                                       data, pre_processed_data, train_data, eval_data)
