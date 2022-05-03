@@ -2,17 +2,18 @@ import torch
 from abc import ABC, abstractmethod
 import ray
 
+
 class AbstractCompleteModel(ABC):
     def __init__(self):
-        self.model=None
-        self.optimizer=None
+        self.model = None
+        self.optimizer = None
 
     @abstractmethod
-    def forward(self,train_dic):
+    def forward(self, train_dic):
         pass
 
     @abstractmethod
-    def find_loss(self, output,train_dic ):
+    def find_loss(self, output, train_dic):
         pass
 
     @abstractmethod
@@ -20,7 +21,7 @@ class AbstractCompleteModel(ABC):
         pass
 
     @abstractmethod
-    def loss_backward(self,loss):
+    def loss_backward(self, loss):
         pass
 
     @abstractmethod
@@ -55,23 +56,23 @@ class AbstractCompleteModel(ABC):
     def get_report_score(self, performance):
         pass
 
-    def train_fold(self,training_hyperparameters, graph_hyperparameters, model_hyperparameters,
-                        train_data, eval_data, fold_number,
-                        in_hyper_parameter_search):
+    def train_fold(self, training_hyperparameters, train_data, eval_data, fold_number,
+                   in_hyper_parameter_search):
 
-        performance_metric =self.init_performance_metric()
+        performance_metric = self.init_performance_metric()
         for epoch in range(training_hyperparameters["epochs"]):
 
             loss = self.train_step(train_data)
-            if "print_every" in training_hyperparameters.keys() and epoch%training_hyperparameters["print_every"] == 0:
+            if "print_every" in training_hyperparameters.keys() and epoch % training_hyperparameters[
+                "print_every"] == 0:
                 performance_test = self.test(eval_data)
                 performance_train = self.test(train_data)
                 performance_metric = self.get_best_performance_metric_so_far(performance_metric, performance_test)
 
-                print(f'Epoch: {epoch:03d}, Loss: {self.loss_to_string(loss)}, '
+                print(f'Fold number: {fold_number:02d}, Epoch: {epoch:03d}, Loss: {self.loss_to_string(loss)}, '
                       f'Train performance: {self.performance_string(performance_train)}, '
                       f'Test performance: {self.performance_string(performance_test)}, '
-                      f'best metric so far: q {self.performance_metric_to_string(performance_metric)}')
+                      f'best metric so far: {self.performance_metric_to_string(performance_metric)}')
 
                 if in_hyper_parameter_search:
                     # with ray.tune.checkpoint_dir(os.path.join(dir_to_ray_checkpoints, str((fold_number * train_dic["epochs"]) + epoch))) as checkpoint_dir:
