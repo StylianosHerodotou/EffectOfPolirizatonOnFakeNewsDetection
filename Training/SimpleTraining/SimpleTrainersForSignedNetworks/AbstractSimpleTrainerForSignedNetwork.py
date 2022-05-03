@@ -19,15 +19,21 @@ class AbstractSimpleTrainerForSignedNetwork(AbstractSimpleTrainer, ABC):
 
     def create_train_eval_data(self, data_object, pre_processed_data,training_hyperparameters):
         positive_index, negative_index = pre_processed_data
-        pos_train_idx, pos_val_idx = train_test_split(np.arange(positive_index.size()[1]),
-                                                      test_size = training_hyperparameters["test_size"],
-                                                      random_state=42, shuffle=True)
-        neg_train_idx, neg_val_idx = train_test_split(np.arange(negative_index.size()[1]),
-                                                      test_size = training_hyperparameters["test_size"],
-                                                      random_state=42, shuffle=True)
+        if(training_hyperparameters["test_size"]==0):
+            train_pos=positive_index
+            eval_pos=positive_index
+            train_neg=negative_index
+            eval_neg= positive_index
+        else:
+            pos_train_idx, pos_val_idx = train_test_split(np.arange(positive_index.size()[1]),
+                                                          test_size = training_hyperparameters["test_size"],
+                                                          random_state=42, shuffle=True)
+            neg_train_idx, neg_val_idx = train_test_split(np.arange(negative_index.size()[1]),
+                                                          test_size = training_hyperparameters["test_size"],
+                                                          random_state=42, shuffle=True)
 
-        train_pos, eval_pos = get_train_eval_indexes(positive_index, pos_train_idx, pos_val_idx)
-        train_neg, eval_neg = get_train_eval_indexes(negative_index, neg_train_idx, neg_val_idx)
+            train_pos, eval_pos = get_train_eval_indexes(positive_index, pos_train_idx, pos_val_idx)
+            train_neg, eval_neg = get_train_eval_indexes(negative_index, neg_train_idx, neg_val_idx)
 
         train_data = {
             "pos_index": train_pos,
