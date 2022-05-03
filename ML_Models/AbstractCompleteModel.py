@@ -13,6 +13,10 @@ class AbstractCompleteModel(ABC):
         pass
 
     @abstractmethod
+    def generate_embeddings(self, train_dic):
+        pass
+
+    @abstractmethod
     def find_loss(self, output, train_dic):
         pass
 

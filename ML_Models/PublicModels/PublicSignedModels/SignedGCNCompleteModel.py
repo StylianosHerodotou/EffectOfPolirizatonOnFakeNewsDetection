@@ -25,6 +25,9 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
         neg_edge_index = train_dic["neg_index"]
         return self.model(signed_x, pos_edge_index, neg_edge_index)
 
+    def generate_embeddings(self, train_dic):
+        return self.forward(train_dic)
+
     def find_loss(self, output, train_dic):
         return self.model.loss(output, train_dic["pos_index"], train_dic["neg_index"])
 
