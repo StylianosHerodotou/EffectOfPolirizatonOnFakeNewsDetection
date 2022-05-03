@@ -40,6 +40,9 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
     def zero_grad_optimizer(self):
         self.optimizer.zero_grad()
 
+    def optimizer_step(self):
+        self.optimizer.step()
+
     def set_model_parameters_to_training_mode(self):
         self.model.train()
 

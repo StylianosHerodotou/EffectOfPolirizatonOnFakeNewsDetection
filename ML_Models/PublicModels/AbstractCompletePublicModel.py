@@ -14,7 +14,7 @@ class AbstractCompletePublicModel(AbstractCompleteModel, ABC):
         output = self.forward(train_dic)
         loss = self.find_loss(output, train_dic)
         self.loss_backward(loss)
-        self.optimizer.step()
+        self.optimizer_step()
         return loss
 
     def test(self, test_dic):
