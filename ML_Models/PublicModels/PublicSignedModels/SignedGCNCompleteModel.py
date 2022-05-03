@@ -5,7 +5,7 @@ from torch_geometric.nn import SignedGCN
 import torch
 
 
-class SignedGCNCompleteModel(AbstractCompletePublicModel, ABC):
+class SignedGCNCompleteModel(AbstractCompletePublicModel):
     def __init__(self, model_hyperparameters):
         super().__init__()
         model = SignedGCN(in_channels=model_hyperparameters["size_of_x_features"],

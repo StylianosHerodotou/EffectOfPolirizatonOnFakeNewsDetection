@@ -18,10 +18,14 @@ class AbstractSimpleTrainerForSignedNetwork(AbstractSimpleTrainer, ABC):
         return pre_processed_data
 
     def create_train_eval_data(self, data_object, pre_processed_data):
+        positive_index, negative_index = pre_processed_data
+        pos_train_idx, pos_val_idx = train_test_split(np.arange(positive_index.size()[1]), test_size=test_size,
+                                                      random_state=42, shuffle=True)
+        neg_train_idx, neg_val_idx = train_test_split(np.arange(negative_index.size()[1]), test_size=test_size,
+                                                      random_state=42, shuffle=True)
 
-
-        train_pos, eval_pos = get_train_eval_indexes(all_positive_index, pos_train_idx, pos_val_idx)
-        train_neg, eval_neg = get_train_eval_indexes(all_negative_index, neg_train_idx, neg_val_idx)
+        train_pos, eval_pos = get_train_eval_indexes(positive_index, pos_train_idx, pos_val_idx)
+        train_neg, eval_neg = get_train_eval_indexes(negative_index, neg_train_idx, neg_val_idx)
 
         train_data = {
             "pos_index": train_pos,
