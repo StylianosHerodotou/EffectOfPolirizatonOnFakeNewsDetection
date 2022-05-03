@@ -1,5 +1,4 @@
-from Training.KFoldTraining import \
-    AbstractKFoldTrainerForSignedNetwork
+from .AbstractKFoldTrainerForSignedNetwork import AbstractKFoldTrainerForSignedNetwork
 from ML_Models.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNCompleteModel
 import torch
 
