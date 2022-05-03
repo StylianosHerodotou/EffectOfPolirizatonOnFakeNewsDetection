@@ -14,7 +14,7 @@ class AbstractKFoldTrainerForSignedNetwork(AbstractKFoldTrainer):
         positive_index, negative_index = turn_data_to_positive_and_negative_edges(graph.edge_index, graph.edge_attr)
         return positive_index, negative_index
 
-    def create_data_for_each_split(self, splits, pre_processed_data):
+    def create_data_object_for_each_split(self, splits, pre_processed_data):
         positive_index, negative_index = pre_processed_data
         positive_splits = splits.split(np.arange(positive_index.size()[1]))
         negative_splits = splits.split(np.arange(negative_index.size()[1]))
