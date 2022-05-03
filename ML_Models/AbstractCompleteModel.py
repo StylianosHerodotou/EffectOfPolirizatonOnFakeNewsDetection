@@ -29,6 +29,22 @@ class AbstractCompleteModel(ABC):
         pass
 
     @abstractmethod
+    def zero_grad_optimizer(self):
+        pass
+
+    @abstractmethod
+    def optimizer_step(self):
+        pass
+
+    @abstractmethod
+    def set_model_parameters_to_training_mode(self):
+        pass
+
+    @abstractmethod
+    def set_model_parameters_to_test_mode(self):
+        pass
+
+    @abstractmethod
     def train_step(self, train_dic):
         pass
 

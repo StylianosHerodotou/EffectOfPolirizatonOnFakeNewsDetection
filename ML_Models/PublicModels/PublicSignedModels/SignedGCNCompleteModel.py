@@ -34,6 +34,18 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
     def find_performance(self, output, test_dic):
         return self.model.test(output, test_dic["pos_index"], test_dic["neg_index"])
 
+    def loss_backward(self, loss):
+        loss.backward()
+
+    def zero_grad_optimizer(self):
+        self.optimizer.zero_grad()
+
+    def set_model_parameters_to_training_mode(self):
+        self.model.train()
+
+    def set_model_parameters_to_test_mode(self):
+        self.model.eval()
+
     # the below are for recording purposes.
     def init_performance_metric(self):
         initial_performance_metric = {
@@ -47,9 +59,6 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
         current_performance_metric["f1"] = max(new_f1, current_performance_metric["f1"])
         current_performance_metric["f1"] = max(new_auc, current_performance_metric["f1"])
         return current_performance_metric
-
-    def loss_backward(self, loss):
-        loss.backward()
 
     def loss_to_string(self, loss):
         return str(loss.item())
