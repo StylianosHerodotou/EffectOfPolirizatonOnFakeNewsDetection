@@ -7,5 +7,3 @@ class SignedGCNEmbeddingsGenerator(AbstractEmbeddingsGenerator):
         super().__init__()
         self.tuner = SignedGCNTuner(tuning_hyperparameters,training_hyperparameters)
         self.simple_trainer = SignedGCNSimpleTrainer()
-        self.simple_trainer.create_model(model_hyperparameters)
-
