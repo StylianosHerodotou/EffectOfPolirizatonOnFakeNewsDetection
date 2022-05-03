@@ -3,6 +3,7 @@ from abc import ABC
 from Training.AbstractTrainer import AbstractTrainer
 from Training.KFoldTraining.AbstractKFoldTrainer import AbstractKFoldTrainer
 from Utilities.SignedGraphUtils import get_train_eval_indexes, turn_data_to_positive_and_negative_edges
+import numpy as np
 
 
 class AbstractKFoldTrainerForSignedNetwork(AbstractKFoldTrainer, ABC):
