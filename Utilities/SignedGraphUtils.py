@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-
+from torch_geometric.data import HeteroData
 def get_train_eval_indexes(edge_index, train_idx, val_idx):
     train = list()
     eval = list()
