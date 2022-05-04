@@ -1,5 +1,5 @@
-from ML_Models.NNModels.Decoders.MultiTaskDecoder import MultiTaskDecoder
-from ML_Models.NNModels.Encoders.NodeEncoders.NormalToHeteroGATEncoder import NormalToHeteroGATEncoder
+from Models.NNModels.Decoders.MultiTaskDecoder import MultiTaskDecoder
+from Models.NNModels.Encoders.NodeEncoders.NormalToHeteroGATEncoder import NormalToHeteroGATEncoder
 import torch
 
 

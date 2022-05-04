@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 
-from ML_Models.NNModels.Classifiers import MLP
+from Models.NNModels.Classifiers.MLP import MLP
 
 
 class EdgePredictionClassifier(nn.Module):
