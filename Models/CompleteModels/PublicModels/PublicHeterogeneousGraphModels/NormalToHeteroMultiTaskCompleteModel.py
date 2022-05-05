@@ -16,16 +16,14 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
                                              weight_decay=model_hyperparameters["encoder_hyperparameters"]["weight_decay"])
         self.optimizer["encoder_optimizer"]=encoder_optimizer
 
-    def forward(self, train_dic):
-        pyg_data = train_dic["pyg_data"]
-        return self.model.forward(pyg_data)
+    def forward(self, train_data):
+        return self.model.forward(train_data)
 
-    def generate_embeddings(self, train_dic):
-        encoder_output, decoder_output = self.forward(train_dic)
+    def generate_embeddings(self, train_data):
+        encoder_output, decoder_output = self.forward(train_data)
         return encoder_output
 
-    def find_loss(self, output, train_dic, regularize_loss=True):
-        pyg_data = train_dic["pyg_data"]
+    def find_loss(self, output, train_data, regularize_loss=True):
         encoder_output, decoder_output = output
         decoder = self.model.decoder
         loss_dict = dict()
@@ -33,18 +31,15 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
         for task_name, current_output in decoder_output.items():
             current_loss_function = decoder[task_name]["loss_function"]
             if task_name in decoder.loss_arguments.keys():
-                loss, metric = current_loss_function(current_output, pyg_data, decoder.loss_arguments["edge_type"],
+                loss, metric = current_loss_function(current_output, train_data, decoder.loss_arguments["edge_type"],
                                              decoder.loss_arguments["feature_name"])
             else:
-                loss ,metric = current_loss_function(current_output, pyg_data)
+                loss ,metric = current_loss_function(current_output, train_data)
             loss_dict[task_name] = loss
-
-        if
 
         return loss_dict
 
-    def find_performance(self, output, test_dic):
-        pyg_data = test_dic["pyg_data"]
+    def find_performance(self, output, test_data):
         encoder_output, decoder_output = output
         decoder = self.model.decoder
         performance_dict = dict()
@@ -52,10 +47,10 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
         for task_name, current_output in decoder_output.items():
             current_loss_function = decoder[task_name]["loss_function"]
             if task_name in decoder.loss_arguments.keys():
-                loss, metric = current_loss_function(current_output, pyg_data, decoder.loss_arguments["edge_type"],
+                loss, metric = current_loss_function(current_output, test_data, decoder.loss_arguments["edge_type"],
                                                      decoder.loss_arguments["feature_name"])
             else:
-                loss, metric = current_loss_function(current_output, pyg_data)
+                loss, metric = current_loss_function(current_output, test_data)
             performance_dict[task_name] = metric
         return performance_dict
 
