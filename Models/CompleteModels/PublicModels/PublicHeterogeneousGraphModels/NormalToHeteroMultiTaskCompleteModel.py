@@ -105,7 +105,7 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
 
     def loss_to_string(self, loss_dict):
         to_return = ""
-        for task_name, current_task_loss in loss_dict:
+        for task_name, current_task_loss in loss_dict.items():
             to_return += str(task_name) + ": " + str("{:.2f}".format(current_task_loss.item())) + " \n"
         return to_return
 
