@@ -26,5 +26,5 @@ class EdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
         edge_labels = pyg_data[edge_type][feature_name].float()
         return MAPE(edge_prediction, edge_labels)
 
-    def desired_metric_function(self, output, labels, *args):
-        return min
+    def desired_metric_function(self, new_value, old_value):
+        return min(new_value, old_value)

@@ -31,5 +31,5 @@ class EdgeClassificationTracker(AbstractPerformanceTracker):
 
         return sum / len(output.keys())
 
-    def desired_metric_function(self, output, labels, *args):
-        return max
+    def desired_metric_function(self, new_value, old_value):
+        return max(new_value, old_value)

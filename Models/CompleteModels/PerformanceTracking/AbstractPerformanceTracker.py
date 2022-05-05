@@ -14,7 +14,7 @@ class AbstractPerformanceTracker(ABC):
         pass
 
     @abstractmethod
-    def desired_metric_function(self, output, labels, *args):
+    def desired_metric_function(self, new_value, old_value):
         pass
 
     def track_performance(self, output, labels, *args):

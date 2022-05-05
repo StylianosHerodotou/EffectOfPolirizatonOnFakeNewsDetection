@@ -65,7 +65,7 @@ class AbstractCompleteModel(ABC):
         pass
 
     @abstractmethod
-    def performance_metric_to_string(self, performance_metric):
+    def best_performance_metric_to_string(self, performance_metric):
         pass
 
     @abstractmethod
@@ -92,7 +92,7 @@ class AbstractCompleteModel(ABC):
                 print(f'Fold number: {fold_number:02d}, Epoch: {epoch:03d}, Loss: {self.loss_to_string(loss)}, '
                       f'Train performance: {self.performance_string(performance_train)}, '
                       f'Test performance: {self.performance_string(performance_test)}, '
-                      f'best metric so far: {self.performance_metric_to_string(performance_metric)}')
+                      f'best metric so far: {self.best_performance_metric_to_string(performance_metric)}')
 
                 if in_hyper_parameter_search:
                     # with ray.tune.checkpoint_dir(os.path.join(dir_to_ray_checkpoints, str((fold_number * train_dic["epochs"]) + epoch))) as checkpoint_dir:

@@ -38,6 +38,8 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
                                                                          current_decoder.loss_arguments["feature_name"])
             else:
                 loss = current_decoder.performance_tracker.loss_function(current_output, train_data)
+
+            loss *= current_decoder.metric_weight
             loss_dict[task_name] = loss
 
         return loss_dict
@@ -51,8 +53,10 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
             current_decoder = task_decoders[task_name]
             if current_decoder.loss_arguments is not None:
                 metric = current_decoder.performance_tracker.metric_function(current_output, test_data,
-                                                                     current_decoder.loss_arguments["edge_type"],
-                                                                     current_decoder.loss_arguments["feature_name"])
+                                                                             current_decoder.loss_arguments[
+                                                                                 "edge_type"],
+                                                                             current_decoder.loss_arguments[
+                                                                                 "feature_name"])
             else:
                 metric = current_decoder.performance_tracker.metric_function(current_output, test_data)
             performance_dict[task_name] = metric
@@ -88,25 +92,34 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
             initial_performance_metric[task_name] = 0
         return initial_performance_metric
 
-    def get_best_performance_metric_so_far(self, current_performance_metric, new_performance):
-        new_auc, new_f1 = new_performance
-        current_performance_metric["f1"] = max(new_f1, current_performance_metric["f1"])
-        current_performance_metric["f1"] = max(new_auc, current_performance_metric["f1"])
-        return current_performance_metric
+    #for each
+    def get_best_performance_metric_so_far(self, current_performance_metric_dict, new_performance_doct):
+        best_performance = {}
+        for task_name, new_performance in new_performance_doct.items():
+            current_performance_tracker = self.model.decoder.task_decoders[task_name].performance_tracker
+            old_performance = current_performance_metric_dict[task_name]
+            best_performance[task_name] = current_performance_tracker.desired_metric_function(new_performance,
+                                                                                              old_performance)
+        return best_performance
 
-    def loss_to_string(self, loss):
-        return str(loss.item())
+    def loss_to_string(self, loss_dict):
+        to_return = ""
+        for task_name, current_task_loss in loss_dict:
+            to_return += str(task_name) + ": " + str("{:.2f}".format(current_task_loss.item())) + " \n"
+        return to_return
 
-    def performance_metric_to_string(self, performance_metric):
-        string = ""
-        for key, value in performance_metric.items():
-            string += key + ": " + "{:.2f}".format(value) + "\n"
-        return string
+    def best_performance_metric_to_string(self, performance_metric_dict):
+        best_performance_metric_string = str("{:.2f}".format(self.get_report_score(performance_metric_dict)))
+        return best_performance_metric_string
 
-    def performance_string(self, performance):
-        auc, f1 = performance
-        return "auc: " + "{:.2f}".format(auc) + " f1 score: " + "{:.2f}".format(f1)
+    def performance_string(self, performance_metric_dict):
+        to_return = ""
+        for task_name, current_task_metric in performance_metric_dict.items():
+            to_return += str(task_name) + ": " + str("{:.2f}".format(current_task_metric)) + " \n"
+        return to_return
 
-    def get_report_score(self, performance):
-        auc, f1 = performance
-        return f1
+    def get_report_score(self, performance_metric_dict):
+        combined_performance = 0;
+        for task_name, task_decoder in self.model.decoder.task_decoders.items():
+            combined_performance += performance_metric_dict[task_name] * task_decoder.metric_weight
+        return combined_performance

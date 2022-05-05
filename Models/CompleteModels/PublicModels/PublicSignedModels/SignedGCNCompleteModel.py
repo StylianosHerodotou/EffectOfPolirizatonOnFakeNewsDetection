@@ -64,7 +64,7 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
     def loss_to_string(self, loss):
         return str(loss.item())
 
-    def performance_metric_to_string(self, performance_metric):
+    def best_performance_metric_to_string(self, performance_metric):
         string = ""
         for key, value in performance_metric.items():
             string += key + ": " + "{:.2f}".format(value)  + "\n"
