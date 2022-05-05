@@ -27,17 +27,17 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
 
     def find_loss(self, output, train_data, regularize_loss=True):
         encoder_output, decoder_output = output
-        decoder = self.model.decoder
+        task_decoders = self.model.decoder.task_decoders
         loss_dict = dict()
 
         for task_name, current_output in decoder_output.items():
-            current_performance_tracker = decoder.task_decoders[task_name].performance_tracker
-            if task_name in decoder.loss_arguments.keys():
-                loss = current_performance_tracker.loss_function(current_output, train_data,
-                                                                         edge_type=decoder.loss_arguments["edge_type"],
-                                                                         feature_name=decoder.loss_arguments["feature_name"])
+            current_decoder = task_decoders[task_name]
+            if task_name in current_decoder.loss_arguments.keys():
+                loss = current_decoder.performance_tracker.loss_function(current_output, train_data,
+                                                                         edge_type=current_decoder.loss_arguments["edge_type"],
+                                                                         feature_name=current_decoder.loss_arguments["feature_name"])
             else:
-                loss = current_performance_tracker.loss_function(current_output, train_data)
+                loss = current_decoder.performance_tracker.loss_function(current_output, train_data)
             loss_dict[task_name] = loss
 
         return loss_dict
