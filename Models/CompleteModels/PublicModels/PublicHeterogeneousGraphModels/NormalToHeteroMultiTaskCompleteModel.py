@@ -34,8 +34,8 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
             current_decoder = task_decoders[task_name]
             if current_decoder.loss_arguments is not None:
                 loss = current_decoder.performance_tracker.loss_function(current_output, train_data,
-                                                                         edge_type=current_decoder.loss_arguments["edge_type"],
-                                                                         feature_name=current_decoder.loss_arguments["feature_name"])
+                                                                         current_decoder.loss_arguments["edge_type"],
+                                                                         current_decoder.loss_arguments["feature_name"])
             else:
                 loss = current_decoder.performance_tracker.loss_function(current_output, train_data)
             loss_dict[task_name] = loss
@@ -44,17 +44,17 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
 
     def find_performance(self, output, test_data):
         encoder_output, decoder_output = output
-        decoder = self.model.decoder
+        task_decoders = self.model.decoder.task_decoders
         performance_dict = dict()
 
         for task_name, current_output in decoder_output.items():
-            current_performance_tracker = decoder.task_decoders[task_name].performance_tracker
-            if task_name in decoder.loss_arguments.keys():
-                metric = current_performance_tracker.metric_function(current_output, test_data,
-                                                                 edge_type=decoder.loss_arguments["edge_type"],
-                                                                 feature_name=decoder.loss_arguments["feature_name"])
+            current_decoder = task_decoders[task_name]
+            if current_decoder.loss_arguments is not None:
+                metric = current_decoder.performance_tracker.metric_function(current_output, test_data,
+                                                                     current_decoder.loss_arguments["edge_type"],
+                                                                     current_decoder.loss_arguments["feature_name"])
             else:
-                metric = current_performance_tracker.metric_function(current_output, test_data)
+                metric = current_decoder.performance_tracker.metric_function(current_output, test_data)
             performance_dict[task_name] = metric
         return performance_dict
 

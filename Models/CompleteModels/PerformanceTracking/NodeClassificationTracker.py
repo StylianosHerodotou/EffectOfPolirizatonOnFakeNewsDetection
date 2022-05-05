@@ -9,7 +9,7 @@ class NodeClassificationTracker(AbstractPerformanceTracker):
         super().__init__()
         self.criterion = torch.nn.CrossEntropyLoss()
 
-    def loss_function(self, output, pyg_data, **kwargs):
+    def loss_function(self, output, pyg_data, *args):
         loss = 0.0
         for node_type, node_prediction in output.items():
             node_labels = pyg_data[node_type].node_type_labels
@@ -17,7 +17,7 @@ class NodeClassificationTracker(AbstractPerformanceTracker):
             loss += self.criterion(node_prediction, node_labels)
         return loss
 
-    def metric_function(self, output, pyg_data, **kwargs):
+    def metric_function(self, output, pyg_data, *args):
         sum = 0
         for node_type, node_prediction in output.items():
             node_labels = pyg_data[node_type].node_type_labels
@@ -29,5 +29,5 @@ class NodeClassificationTracker(AbstractPerformanceTracker):
             sum += torch.sum(actual_predictions == actual_label) / actual_predictions.size(0)
         return sum / len(output.keys())
 
-    def desired_metric_function(self, output, labels, **kwargs):
+    def desired_metric_function(self, output, labels, *args):
         return max

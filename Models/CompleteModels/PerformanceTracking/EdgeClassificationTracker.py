@@ -9,7 +9,7 @@ class EdgeClassificationTracker(AbstractPerformanceTracker):
         super().__init__()
         self.criterion = torch.nn.CrossEntropyLoss()
 
-    def loss_function(self, output, pyg_data, **kwargs):
+    def loss_function(self, output, pyg_data, *args):
         loss = 0.0
         for edge_type, edge_prediction in output.items():
             edge_labels = pyg_data[edge_type].edge_type_labels
@@ -18,7 +18,7 @@ class EdgeClassificationTracker(AbstractPerformanceTracker):
             loss += self.criterion(edge_prediction, edge_labels)
         return loss, sum / len(output.keys())
 
-    def metric_function(self, output, pyg_data, **kwargs):
+    def metric_function(self, output, pyg_data, *args):
         sum = 0.0
         for edge_type, edge_prediction in output.items():
             edge_labels = pyg_data[edge_type].edge_type_labels
@@ -31,5 +31,5 @@ class EdgeClassificationTracker(AbstractPerformanceTracker):
 
         return sum / len(output.keys())
 
-    def desired_metric_function(self, output, labels, **kwargs):
+    def desired_metric_function(self, output, labels, *args):
         return max

@@ -6,18 +6,18 @@ class AbstractPerformanceTracker(ABC):
         self.criterion = None
 
     @abstractmethod
-    def loss_function(self, output, labels, **kwargs):
+    def loss_function(self, output, labels, *args):
         pass
 
     @abstractmethod
-    def metric_function(self, output, labels, **kwargs):
+    def metric_function(self, output, labels, *args):
         pass
 
     @abstractmethod
-    def desired_metric_function(self, output, labels, **kwargs):
+    def desired_metric_function(self, output, labels, *args):
         pass
 
-    def track_performance(self, output, labels, **kwargs):
-        loss = self.loss_function(output, labels, **kwargs)
-        metric = self.metric_function(output, labels, **kwargs)
+    def track_performance(self, output, labels, *args):
+        loss = self.loss_function(output, labels, *args)
+        metric = self.metric_function(output, labels, *args)
         return loss, metric
