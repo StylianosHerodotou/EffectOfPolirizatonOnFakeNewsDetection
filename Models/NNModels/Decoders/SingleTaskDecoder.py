@@ -23,7 +23,6 @@ class SingleTaskDecoder(torch.nn.Module):
                                                            "final_activation_function"]
                                                        )
             if "edge_type" in classifier_arguments.keys():
-                print("i am here")
                 self.loss_arguments = {"edge_type": classifier_arguments["edge_type"],
                                        "feature_name": classifier_arguments["feature_name"]}
         else:

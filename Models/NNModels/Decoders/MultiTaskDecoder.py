@@ -18,3 +18,11 @@ class MultiTaskDecoder(torch.nn.Module):
             output = task_decoder.forward(data, encoder_output)
             decoder_output[task_name] = output
         return decoder_output
+
+    def get_optimizers(self):
+        optimizers=dict()
+        for task_name, task_decoder in self.task_decoders.items():
+            optimizers[task_name]=task_decoder.optimizer
+        return optimizers
+
+
