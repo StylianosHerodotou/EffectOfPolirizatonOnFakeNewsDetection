@@ -38,4 +38,5 @@ class AbstractSimpleTrainerForHeterogeneousNetwork(AbstractSimpleTrainer, ABC):
         for edge_type in eval_data.edge_types:
             eval_data[edge_type].edge_index = eval_data[edge_type].edge_type_labels_index
 
-        return train_data, eval_data
+        ##dont forget to change this back!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return train_data, train_data
