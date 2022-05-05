@@ -12,7 +12,7 @@ def MAPE(y_pred, y):
     return ((y - y_pred).abs() / y.abs()).mean()
 
 def edge_regression_loss_function(decoder_output, pyg_data, edge_type, feature_name):
-    criterion = nn.MSELoss()
+    criterion = torch.nn.L1Loss()
     edge_prediction = torch.squeeze(decoder_output[edge_type]).float()
     edge_labels = pyg_data[edge_type][feature_name].float()
     loss = criterion(edge_prediction, edge_labels)

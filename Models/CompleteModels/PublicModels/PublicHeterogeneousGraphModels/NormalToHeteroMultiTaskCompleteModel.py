@@ -24,7 +24,7 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
         encoder_output, decoder_output = self.forward(train_dic)
         return encoder_output
 
-    def find_loss(self, output, train_dic):
+    def find_loss(self, output, train_dic, regularize_loss=True):
         pyg_data = train_dic["pyg_data"]
         encoder_output, decoder_output = output
         decoder = self.model.decoder
@@ -38,6 +38,9 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
             else:
                 loss ,metric = current_loss_function(current_output, pyg_data)
             loss_dict[task_name] = loss
+
+        if
+
         return loss_dict
 
     def find_performance(self, output, test_dic):
