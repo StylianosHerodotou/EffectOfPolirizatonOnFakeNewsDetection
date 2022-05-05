@@ -43,7 +43,7 @@ class SingleTaskDecoder(torch.nn.Module):
         self.metric_weight = classifier_arguments["metric_weight"]
 
     def forward(self, data, encoder_output):
-        if self.loss_arguments is None:
+        if self.loss_arguments is not None:
             output = self.classifier.forward(encoder_output, data)
         else:
             output = self.classifier.forward(encoder_output)

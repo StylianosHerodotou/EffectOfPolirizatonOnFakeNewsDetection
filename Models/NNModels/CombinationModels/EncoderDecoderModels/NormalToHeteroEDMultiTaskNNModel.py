@@ -12,7 +12,8 @@ class NormalToHeteroEDMultiTaskNNModel(torch.nn.Module):
                                                 heads=encoder_hyperparameters["heads"],
                                                 dropout=encoder_hyperparameters["dropout"],
                                                 num_layers=encoder_hyperparameters["num_layers"])
-        self.decoder = MultiTaskDecoder(in_channels=2 * encoder_hyperparameters["hidden_channels"] * encoder_hyperparameters["heads"],
+        self.decoder = MultiTaskDecoder(in_channels=2 * encoder_hyperparameters["hidden_channels"] *
+                                                    encoder_hyperparameters["heads"],
                                         pyg_data=decoder_hyperparameters["pyg_data"],
                                         classifier_per_task_arguments=decoder_hyperparameters["classifier_per_task_arguments"])
 
