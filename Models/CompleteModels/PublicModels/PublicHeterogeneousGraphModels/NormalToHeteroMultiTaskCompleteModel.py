@@ -12,9 +12,11 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
         self.model = model
 
         self.optimizer = self.model.decoder.get_optimizers()
-        encoder_optimizer = torch.optim.Adam(model.encoder.parameters(), lr=model_hyperparameters["encoder_hyperparameters"]["learning_rate"],
-                                             weight_decay=model_hyperparameters["encoder_hyperparameters"]["weight_decay"])
-        self.optimizer["encoder_optimizer"]=encoder_optimizer
+        encoder_optimizer = torch.optim.Adam(model.encoder.parameters(),
+                                             lr=model_hyperparameters["encoder_hyperparameters"]["learning_rate"],
+                                             weight_decay=model_hyperparameters["encoder_hyperparameters"][
+                                                 "weight_decay"])
+        self.optimizer["encoder_optimizer"] = encoder_optimizer
 
     def forward(self, train_data):
         return self.model.forward(train_data)
@@ -29,12 +31,13 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
         loss_dict = dict()
 
         for task_name, current_output in decoder_output.items():
-            current_loss_function = decoder[task_name]["loss_function"]
+            current_performance_tracker = decoder[task_name]["performance_tracker"]
             if task_name in decoder.loss_arguments.keys():
-                loss, metric = current_loss_function(current_output, train_data, decoder.loss_arguments["edge_type"],
-                                             decoder.loss_arguments["feature_name"])
+                loss = current_performance_tracker.loss_function(current_output, train_data,
+                                                                         edge_type=decoder.loss_arguments["edge_type"],
+                                                                         feature_name=decoder.loss_arguments["feature_name"])
             else:
-                loss ,metric = current_loss_function(current_output, train_data)
+                loss = current_performance_tracker.loss_function(current_output, train_data)
             loss_dict[task_name] = loss
 
         return loss_dict
@@ -45,12 +48,13 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
         performance_dict = dict()
 
         for task_name, current_output in decoder_output.items():
-            current_loss_function = decoder[task_name]["loss_function"]
+            current_performance_tracker = decoder[task_name]["performance_tracker"]
             if task_name in decoder.loss_arguments.keys():
-                loss, metric = current_loss_function(current_output, test_data, decoder.loss_arguments["edge_type"],
-                                                     decoder.loss_arguments["feature_name"])
+                metric = current_performance_tracker.metric_function(current_output, test_data,
+                                                                 edge_type=decoder.loss_arguments["edge_type"],
+                                                                 feature_name=decoder.loss_arguments["feature_name"])
             else:
-                loss, metric = current_loss_function(current_output, test_data)
+                metric = current_performance_tracker.metric_function(current_output, test_data)
             performance_dict[task_name] = metric
         return performance_dict
 
@@ -79,10 +83,9 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
 
     # the below are for recording purposes.
     def init_performance_metric(self):
-        initial_performance_metric = {
-            "f1": 0,
-            "auc": 0
-        }
+        initial_performance_metric = dict()
+        for task_name in self.model.decoder.task_decoders.keys():
+            initial_performance_metric[task_name] = 0
         return initial_performance_metric
 
     def get_best_performance_metric_so_far(self, current_performance_metric, new_performance):
