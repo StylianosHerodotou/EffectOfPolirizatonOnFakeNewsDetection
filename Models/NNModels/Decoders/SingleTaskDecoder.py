@@ -9,7 +9,7 @@ class SingleTaskDecoder(torch.nn.Module):
         super().__init__()
         self.loss_arguments = None
         if classifier_arguments["classifier_type"] == "edge":
-            self.classifier = EdgePredictionClassifier(in_channels=in_channels,
+            self.classifier = EdgePredictionClassifier(in_channels=2* in_channels,
                                                        output_size=classifier_arguments["output_size"],
                                                        nodes_per_hidden_layer=classifier_arguments[
                                                            "nodes_per_hidden_layer"],
