@@ -33,7 +33,9 @@ class AbstractSimpleTrainerForHeterogeneousNetwork(AbstractSimpleTrainer, ABC):
         print(dict(train_data[('entity', 'dislike', 'entity')]).keys())
         print(dict(eval_data[('entity', 'dislike', 'entity')]).keys())
 
-        train_data.edge_index= train_data.edge_type_labels_index
-        eval_data.edge_index = eval_data.edge_type_labels_index
+        for edge_type in train_data.edge_types:
+            train_data[edge_type].edge_index = train_data[edge_type].edge_type_labels_index
+        for edge_type in eval_data.edge_types:
+            eval_data[edge_type].edge_index = eval_data[edge_type].edge_type_labels_index
 
         return train_data, eval_data
