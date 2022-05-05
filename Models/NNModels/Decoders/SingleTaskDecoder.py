@@ -1,5 +1,5 @@
-from Models.NNModels.Classifiers import EdgePredictionClassifier
-from Models.NNModels.Classifiers import MLP
+from Models.NNModels.Classifiers.EdgePredictionClassifier import EdgePredictionClassifier
+from Models.NNModels.Classifiers.MLP import MLP
 import torch
 from torch_geometric.nn import to_hetero
 
@@ -32,7 +32,7 @@ class SingleTaskDecoder(torch.nn.Module):
                                   final_activation_function=classifier_arguments["final_activation_function"])
             self.classifier = to_hetero(self.classifier, pyg_data.metadata(),
                                         aggr=classifier_arguments["aggergation_function"])
-            self.loss_arguments=None
+            self.loss_arguments = None
 
         # in both cases this is this tasks optimizer.
         self.optimizer = torch.optim.Adam(self.classifier.parameters(),
@@ -42,7 +42,7 @@ class SingleTaskDecoder(torch.nn.Module):
         self.metric_weight = classifier_arguments["metric_weight"]
 
     def forward(self, data, encoder_output):
-        if self.loss_arguments==None:
+        if self.loss_arguments is None:
             output = self.classifier.forward(encoder_output, data)
         else:
             output = self.classifier.forward(encoder_output)
