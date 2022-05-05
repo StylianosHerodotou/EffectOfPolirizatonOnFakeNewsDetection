@@ -32,7 +32,7 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
 
         for task_name, current_output in decoder_output.items():
             current_decoder = task_decoders[task_name]
-            if task_name in current_decoder.loss_arguments.keys():
+            if current_decoder.loss_arguments is not None:
                 loss = current_decoder.performance_tracker.loss_function(current_output, train_data,
                                                                          edge_type=current_decoder.loss_arguments["edge_type"],
                                                                          feature_name=current_decoder.loss_arguments["feature_name"])
