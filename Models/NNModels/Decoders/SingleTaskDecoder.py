@@ -20,9 +20,10 @@ class SingleTaskDecoder(torch.nn.Module):
                                                        final_activation_function=classifier_arguments[
                                                            "final_activation_function"]
                                                        )
-            if "edge_type" in classifier_arguments.keys():
-                self.loss_arguments = {"edge_type": classifier_arguments["edge_type"],
-                                       "feature_name": classifier_arguments["feature_name"]}
+            # if "edge_type" in classifier_arguments.keys():
+            #     print("i am here")
+            self.loss_arguments = {"edge_type": classifier_arguments["edge_type"],
+                                   "feature_name": classifier_arguments["feature_name"]}
         else:
             self.classifier = MLP(in_channels=in_channels,
                                   output_size=classifier_arguments["output_size"],
