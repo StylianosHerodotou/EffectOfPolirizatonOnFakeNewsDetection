@@ -21,7 +21,8 @@ def get_single_normal_to_hetero_gat_layer(pyg_data, in_channels,
 
 class NormalToHeteroGATEncoder(torch.nn.Module):
     def __init__(self, in_channels, pyg_data,
-                 hidden_channels=128, heads=8, dropout=0.2, num_layers=1):
+                 hidden_channels=128, heads=8, dropout=0.2,
+                 num_layers=1):
         super().__init__()
         self.convs = torch.nn.ModuleList()
 
