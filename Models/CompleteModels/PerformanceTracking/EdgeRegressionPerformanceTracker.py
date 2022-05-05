@@ -3,7 +3,7 @@ import torch
 
 def MAPE(y_pred, y):
     metric= ((y - y_pred).abs() / y.abs()).mean()
-    metric = metric[0]
+    metric = metric.item()
     return metric
 
 class EdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
