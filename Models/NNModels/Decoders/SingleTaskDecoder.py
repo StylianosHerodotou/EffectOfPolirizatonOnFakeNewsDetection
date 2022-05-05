@@ -7,7 +7,7 @@ from torch_geometric.nn import to_hetero
 class SingleTaskDecoder(torch.nn.Module):
     def __init__(self, in_channels, pyg_data, classifier_arguments):
         super().__init__()
-
+        self.loss_arguments = None
         if classifier_arguments["classifier_type"] == "edge":
             self.classifier = EdgePredictionClassifier(in_channels=in_channels,
                                                        output_size=classifier_arguments["output_size"],
@@ -33,7 +33,6 @@ class SingleTaskDecoder(torch.nn.Module):
                                   final_activation_function=classifier_arguments["final_activation_function"])
             self.classifier = to_hetero(self.classifier, pyg_data.metadata(),
                                         aggr=classifier_arguments["aggergation_function"])
-            self.loss_arguments = None
 
         # in both cases this is this tasks optimizer.
         self.optimizer = torch.optim.Adam(self.classifier.parameters(),
@@ -43,7 +42,7 @@ class SingleTaskDecoder(torch.nn.Module):
         self.metric_weight = classifier_arguments["metric_weight"]
 
     def forward(self, data, encoder_output):
-        if self.loss_arguments is not None:
+        if self.loss_arguments is None:
             output = self.classifier.forward(encoder_output, data)
         else:
             output = self.classifier.forward(encoder_output)
