@@ -1,11 +1,10 @@
 from Models.CompleteModels.PerformanceTracking.AbstractPerformanceTracker import AbstractPerformanceTracker
-from pytorch_forecasting.metrics import MAPE
 import torch
 
-
 def MAPE(y_pred, y):
-    return ((y - y_pred).abs() / y.abs()).mean()
-
+    metric= ((y - y_pred).abs() / y.abs()).mean()
+    print("the metric is ", metric)
+    return metric
 
 class EdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
     def __init__(self):
