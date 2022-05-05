@@ -16,7 +16,7 @@ class EdgeClassificationTracker(AbstractPerformanceTracker):
             edge_labels = to_categorical(edge_labels, len(pyg_data.edge_types))
 
             loss += self.criterion(edge_prediction, edge_labels)
-        return loss, sum / len(output.keys())
+        return loss
 
     def metric_function(self, output, pyg_data, *args):
         sum = 0.0
