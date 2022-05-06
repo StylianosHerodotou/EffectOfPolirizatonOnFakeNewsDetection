@@ -33,7 +33,7 @@ class AbstractKFoldTrainerForHeterogeneousNetworks(AbstractKFoldTrainer, ABC):
             current_index_dict = dict()
             for edge_type in graph.edge_types:
                 current_generator = splits_dict[edge_type]
-                current_split_index_indexes = iter(current_generator)
+                current_split_index_indexes = next(current_generator)
                 current_index_dict[edge_type] = current_split_index_indexes
             splits_in_iterable_form.append(current_index_dict)
         return splits_in_iterable_form
