@@ -89,9 +89,9 @@ class AbstractCompleteModel(ABC):
                 performance_train = self.test(train_data)
                 performance_metric = self.get_best_performance_metric_so_far(performance_metric, performance_test)
 
-                print(f'Fold number: {fold_number:02d}, Epoch: {epoch:03d}, Loss: {self.loss_to_string(loss)}, '
-                      f'Train performance: {self.performance_string(performance_train)}, '
-                      f'Test performance: {self.performance_string(performance_test)}, '
+                print(f'Fold number: {fold_number:02d}, Epoch: {epoch:03d}, Loss: {self.loss_to_string(loss)}\n'
+                      f'Train performance: {self.performance_string(performance_train)}\n'
+                      f'Test performance: {self.performance_string(performance_test)}\n'
                       f'best metric so far: {self.best_performance_metric_to_string(performance_metric)}')
 
                 if in_hyper_parameter_search:
