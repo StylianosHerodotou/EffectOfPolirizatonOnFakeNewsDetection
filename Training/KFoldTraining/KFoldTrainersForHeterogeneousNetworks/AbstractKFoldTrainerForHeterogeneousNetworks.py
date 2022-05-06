@@ -22,7 +22,7 @@ class AbstractKFoldTrainerForHeterogeneousNetworks(AbstractKFoldTrainer, ABC):
         for edge_type in graph.edge_types:
             edge_index = graph[edge_type].edge_index
             current_edge_type_split = splits.split(np.arange(
-                self.get_closest_smaller_number_divided_by_given_number(edge_index.size()[1])))
+                self.get_closest_smaller_number_divided_by_given_number(edge_index.size()[1],splits.n_splits )))
             splits_dict[edge_type] = current_edge_type_split
         return splits_dict
 
