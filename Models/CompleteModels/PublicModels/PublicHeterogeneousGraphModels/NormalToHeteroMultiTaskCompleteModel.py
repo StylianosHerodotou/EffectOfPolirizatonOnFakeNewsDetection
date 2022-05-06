@@ -123,4 +123,4 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
         combined_performance = 0;
         for task_name, task_decoder in self.model.decoder.task_decoders.items():
             combined_performance += performance_metric_dict[task_name] * task_decoder.metric_weight
-        return combined_performance[0]
+        return combined_performance.item()
