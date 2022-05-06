@@ -37,16 +37,8 @@ class AbstractSimpleTrainerForHeterogeneousNetwork(AbstractSimpleTrainer, ABC):
                     if edge_feature_name == "edge_index":
                         continue
 
-                    train_list = list()
-                    eval_list = list()
-                    for index in train_idx:
-                        train_list.append(edge_feature_values[index])
-
-                    for index in val_idx:
-                        eval_list.append(edge_feature_values[index])
-
-                    train_list = torch.stack(train_list)
-                    eval_list = torch.stack(eval_list)
+                    train_list = edge_feature_values[train_idx]
+                    eval_list = edge_feature_values[val_idx]
 
                     train_dict[edge_type][edge_feature_name] = train_list
                     eval_dict[edge_type][edge_feature_name] = eval_list
