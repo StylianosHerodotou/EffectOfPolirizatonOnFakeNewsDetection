@@ -67,7 +67,7 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
     def best_performance_metric_to_string(self, performance_metric):
         string = ""
         for key, value in performance_metric.items():
-            string += key + ": " + "{:.2f}".format(value)  + "\n"
+            string += key + ": " + "{:.2f}".format(value)  + " ,"
         return string
 
     def performance_string(self, performance):

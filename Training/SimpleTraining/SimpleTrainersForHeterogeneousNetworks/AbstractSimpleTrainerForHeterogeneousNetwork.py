@@ -7,6 +7,7 @@ from Utilities.HeterogeneousGraphsUtils import find_reverse_edge_types
 from Utilities.SignedGraphUtils import get_train_eval_indexes, turn_data_to_positive_and_negative_edges
 from sklearn.model_selection import train_test_split
 from torch_geometric.transforms import RandomLinkSplit
+import copy
 
 
 class AbstractSimpleTrainerForHeterogeneousNetwork(AbstractSimpleTrainer, ABC):
@@ -20,23 +21,18 @@ class AbstractSimpleTrainerForHeterogeneousNetwork(AbstractSimpleTrainer, ABC):
         return pre_processed_data
 
     def create_train_eval_data(self, pyg_data, pre_processed_data, training_hyperparameters):
-        transform = RandomLinkSplit(
-            num_val=0.0,
-            num_test=training_hyperparameters["test_size"],
-            neg_sampling_ratio=0.0,
-            edge_types=pyg_data.edge_types,
-            rev_edge_types=[None] * len(pyg_data.edge_types),
-            key="edge_type_labels"
-        )
+        train_dict = copy.copy(pyg_data)
+        eval_dict = copy.copy(pyg_data)
+        if training_hyperparameters["test_size"] != 0:
+            for edge_type in pyg_data.edge_types:
+                edge_index = pyg_data[edge_type].edge_index
 
-        train_data, _, eval_data = transform(pyg_data)
-        print(dict(train_data[('entity', 'dislike', 'entity')]).keys())
-        print(dict(eval_data[('entity', 'dislike', 'entity')]).keys())
+                train_idx, val_idx = train_test_split(np.arange(edge_index.size()[1]),
+                                                              test_size=training_hyperparameters["test_size"],
+                                                              random_state=42, shuffle=True)
+                train_index, eval_index = get_train_eval_indexes(edge_index, train_idx, val_idx)
 
-        for edge_type in train_data.edge_types:
-            train_data[edge_type].edge_index = train_data[edge_type].edge_type_labels_index
-        for edge_type in eval_data.edge_types:
-            eval_data[edge_type].edge_index = eval_data[edge_type].edge_type_labels_index
+                train_dict[edge_type].edge_index= train_index
+                eval_dict[edge_type].edge_index = eval_index
 
-        ##dont forget to change this back!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        return train_data, train_data
+        return train_dict, eval_dict

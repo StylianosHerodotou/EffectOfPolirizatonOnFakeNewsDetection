@@ -106,7 +106,7 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
     def loss_to_string(self, loss_dict):
         to_return = ""
         for task_name, current_task_loss in loss_dict.items():
-            to_return += str(task_name) + ": " + str("{:.2f}".format(current_task_loss.item())) + " \n"
+            to_return += str(task_name) + ": " + str("{:.2f}".format(current_task_loss.item())) + " ,"
         return to_return
 
     def best_performance_metric_to_string(self, performance_metric_dict):
@@ -116,7 +116,7 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
     def performance_string(self, performance_metric_dict):
         to_return = ""
         for task_name, current_task_metric in performance_metric_dict.items():
-            to_return += str(task_name) + ": " + str("{:.2f}".format(current_task_metric)) + " \n"
+            to_return += str(task_name) + ": " + str("{:.2f}".format(current_task_metric)) + " ,"
         return to_return
 
     def get_report_score(self, performance_metric_dict):
