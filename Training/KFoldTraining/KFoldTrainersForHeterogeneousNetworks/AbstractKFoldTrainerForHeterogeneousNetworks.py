@@ -15,11 +15,14 @@ class AbstractKFoldTrainerForHeterogeneousNetworks(AbstractKFoldTrainer, ABC):
     def preprocess_data(self, graph):
         return graph
 
+    def get_closest_smaller_number_divided_by_given_number(self,num1,num2):
+        return int(num1/num2) * num2
     def get_splits_for_each_edge_type(self,splits, graph):
         splits_dict = dict()
         for edge_type in graph.edge_types:
             edge_index = graph[edge_type].edge_index
-            current_edge_type_split = splits.split(np.arange(edge_index.size()[1]))
+            current_edge_type_split = splits.split(np.arange(
+                self.get_closest_smaller_number_divided_by_given_number(edge_index.size()[1])))
             splits_dict[edge_type] = current_edge_type_split
         return splits_dict
 
