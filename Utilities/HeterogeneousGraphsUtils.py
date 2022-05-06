@@ -5,3 +5,4 @@ def find_reverse_edge_types(pyg_data):
         if possible_reverse_edge in pyg_data.edge_types:
             reverse_edge_types.append(edge_type)
     return reverse_edge_types
+
