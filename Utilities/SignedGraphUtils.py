@@ -2,23 +2,28 @@ import numpy as np
 import torch
 from torch_geometric.data import HeteroData
 def get_train_eval_indexes(edge_index, train_idx, val_idx):
-    train = list()
-    eval = list()
+    # train = list()
+    # eval = list()
+    #
+    # edge_index = torch.transpose(edge_index, 0, 1)
+    #
+    # for index in train_idx:
+    #     train.append(edge_index[index])
+    #
+    # for index in val_idx:
+    #     eval.append(edge_index[index])
+    #
+    # train = torch.stack(train)
+    # eval = torch.stack(eval)
+    #
+    # train = torch.transpose(train, 0, 1)
+    # eval = torch.transpose(eval, 0, 1)
+    #
+    # print(train.size())
+    # print(eval.size())
 
-    edge_index = torch.transpose(edge_index, 0, 1)
-
-    for index in train_idx:
-        print(edge_index[index].size())
-        train.append(edge_index[index])
-
-    for index in val_idx:
-        eval.append(edge_index[index])
-
-    train = torch.stack(train)
-    eval = torch.stack(eval)
-
-    train = torch.transpose(train, 0, 1)
-    eval = torch.transpose(eval, 0, 1)
+    train = edge_index[train_idx]
+    eval = edge_index[val_idx]
 
     return train, eval
 
