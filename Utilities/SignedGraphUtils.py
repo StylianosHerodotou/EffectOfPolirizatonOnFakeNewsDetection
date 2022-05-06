@@ -8,6 +8,7 @@ def get_train_eval_indexes(edge_index, train_idx, val_idx):
     edge_index = torch.transpose(edge_index, 0, 1)
 
     for index in train_idx:
+        print(edge_index[index].size())
         train.append(edge_index[index])
 
     for index in val_idx:

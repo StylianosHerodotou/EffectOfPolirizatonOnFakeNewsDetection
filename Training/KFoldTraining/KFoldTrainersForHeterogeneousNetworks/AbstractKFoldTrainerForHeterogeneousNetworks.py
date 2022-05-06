@@ -44,7 +44,6 @@ class AbstractKFoldTrainerForHeterogeneousNetworks(AbstractKFoldTrainer, ABC):
         eval_dict = copy.copy(pre_processed_data)
         for edge_type in pre_processed_data.edge_types:
             train_idx, val_idx = fold_data[edge_type]
-            print(train_idx)
 
             edge_index = pre_processed_data[edge_type].edge_index
             train_index, eval_index = get_train_eval_indexes(edge_index, train_idx, val_idx)
