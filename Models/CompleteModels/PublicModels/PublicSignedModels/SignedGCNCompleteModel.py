@@ -58,7 +58,7 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
     def get_best_performance_metric_so_far(self, current_performance_metric, new_performance):
         new_auc, new_f1 = new_performance
         current_performance_metric["f1"] = max(new_f1, current_performance_metric["f1"])
-        current_performance_metric["f1"] = max(new_auc, current_performance_metric["f1"])
+        current_performance_metric["auc"] = max(new_auc, current_performance_metric["auc"])
         return current_performance_metric
 
     def loss_to_string(self, loss):
@@ -76,4 +76,4 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
 
     def get_report_score(self, performance):
         auc, f1 = performance
-        return f1
+        return f1 + auc/2
