@@ -76,4 +76,4 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
 
     def get_report_score(self, performance):
         auc, f1 = performance
-        return f1 + auc/2
+        return (f1 + auc) /2
