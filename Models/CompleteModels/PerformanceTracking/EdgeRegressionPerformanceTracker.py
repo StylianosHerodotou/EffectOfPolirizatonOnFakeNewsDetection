@@ -14,6 +14,7 @@ class EdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
     def loss_function(self, output, pyg_data, *args):
         edge_type = args[0]
         feature_name = args[1]
+        print(edge_type, feature_name)
         edge_prediction = torch.squeeze(output[edge_type]).float()
         edge_labels = pyg_data[edge_type][feature_name].float()
         loss = self.criterion(edge_prediction, edge_labels)
