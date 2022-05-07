@@ -9,13 +9,20 @@ from SmallGraph.SmallGraphTraining.HyperParameterTunningSmall import train_and_w
 from Utilities.HyperParameterTunning import run_hyper_parameter_tuning
 
 
+
+def read_embedings_from_files(file_names):
+    embeddings=dict()
+    for file_name in file_names:
+        emb_name= file_name.split('.')[0]
+        embeddings[emb_name] = read_embedings_file(file_name)
+    return embeddings
+
+
 def generate_and_save_results_for_small_models(networkx_dataset, hyperparameters, model_hyperparameters,
                                                tuning_hyperparameters):
     # create graph that contains node embeddings from the above.
-    large_embedings = read_embedings_file(dir_to_large)
-
-    networkx_dataset.add_large_node_embeddings_to_df(large_embedings,
-                                                     large_emb_names=hyperparameters["large_emb_names"])
+    large_embedings = read_embedings_from_files(large_emb_names=hyperparameters["large_emb_names"])
+    networkx_dataset.add_large_node_embeddings_to_df(large_embedings)
     # turn graphs to pyg
     pyg_dataset = make_networkx_to_pyg_df(networkx_dataset)
 

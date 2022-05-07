@@ -8,26 +8,12 @@ from Utilities import JoinRawDatasetUtils
 from Utilities.InitGlobalVariables import dir_to_large
 
 
-def get_embedings_node_feature(graph, embeddings, int_to_node_map, emb_names=None):
+def get_embedings_node_feature(graph, embeddings, int_to_node_map):
     node_features = dict()
-    list_of_emb_types = []
-
-    if emb_names is None:
-        for model_name in embeddings.keys():
-            node_features[model_name] = dict()
-            list_of_emb_types.append(model_name)
-    else:
-        for model_name in embeddings.keys():
-            if model_name in emb_names:
-                node_features[model_name] = dict()
-                list_of_emb_types.append(model_name)
 
     for node in graph.nodes:
         key = int_to_node_map[node]
-        for model_name in list_of_emb_types:
-            # print(model_name)
-            current_emb = embeddings[model_name][key]
-            node_features[model_name][node] = current_emb
+        node_features[key]= embeddings[key]
     return node_features
 
 
@@ -213,7 +199,7 @@ def add_identidy_fellowship_node_feature_to_graph(graph, int_to_node_small,node_
   nx.set_node_attributes(graph, identidy, "identidy_fellowship")
 
 
-def add_large_node_embeddings_to_graph(graph, int_to_node_small,large_embedings, large_emb_names=["POLE", "signed"]):
-  large_node_feature=get_embedings_node_feature(graph, large_embedings, int_to_node_small,large_emb_names)
+def add_large_node_embeddings_to_graph(graph, int_to_node_small,large_embedings):
+  large_node_feature=get_embedings_node_feature(graph, large_embedings, int_to_node_small)
   for key in large_node_feature.keys():
     nx.set_node_attributes(graph, large_node_feature[key], "large_" + key)

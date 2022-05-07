@@ -126,10 +126,10 @@ class NetworkXDataset(BaseDataset):
             add_identidy_fellowship_node_feature_to_graph(row[self.graph_column_name], row[self.mapping_column_name],
                                                           node_to_int_large_fellowship)
 
-    def add_large_node_embeddings_to_df(self, large_embedings, large_emb_names=["POLE", "signed"]):
+    def add_large_node_embeddings_to_df(self, large_embedings):
         for index, row in self.df.iterrows():
             add_large_node_embeddings_to_graph(row[self.graph_column_name], row[self.mapping_column_name],
-                                               large_embedings, large_emb_names=large_emb_names)
+                                               large_embedings)
 
     def remove_empty_graphs(self):
       for index, row in self.df.iterrows():
