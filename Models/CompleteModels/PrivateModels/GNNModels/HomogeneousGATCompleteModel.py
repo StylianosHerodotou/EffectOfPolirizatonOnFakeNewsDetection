@@ -3,7 +3,6 @@ import torch
 from Models.NNModels.CombinationModels.EncoderDecoderModels.HomogeneousGATEDMLPModel import HomogeneousGATEDMLPModel
 import torch.nn.functional as F
 
-
 class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePrivateModel):
     def __init__(self, model_hyperparameters):
         super().__init__()
