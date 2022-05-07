@@ -1,6 +1,7 @@
 import json
 import os
 
+from DatasetRepresentation.BaseDataset import switch_values_and_keys
 from Utilities.InitGlobalVariables import dir_to_large
 from Utilities.JoinRawDatasetUtils import read_node_to_int_mapping, read_int_to_node_mapping
 
@@ -36,3 +37,12 @@ def write_emd_to_file(graph,emb_dic,  to_write_path=None, overwrite_prev_embeddi
     f = open(file_name, "a")
   json.dump(to_write, f)
   f.close()
+
+def removeNodesFromGraph(setOfNodeNamesToRemove, graph, int_to_node_mapping):
+    node_to_int_mapping = switch_values_and_keys(int_to_node_mapping)
+    setOfNodeIdsToRemove = set();
+
+    for node_name in setOfNodeNamesToRemove:
+      node_id = node_to_int_mapping[node_name]
+      setOfNodeIdsToRemove.add(node_id)
+    graph.remove_nodes_from(setOfNodeIdsToRemove)
