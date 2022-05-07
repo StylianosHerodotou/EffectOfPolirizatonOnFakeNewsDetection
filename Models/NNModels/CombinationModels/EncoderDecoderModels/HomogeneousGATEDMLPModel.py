@@ -6,7 +6,7 @@ import torch
 class HomogeneousGATEDMLPModel(torch.nn.Module):
     def __init__(self, encoder_hyperparameters, decoder_hyperparameters):
         super().__init__()
-        self.encoder = HomogeneousGAT(in_channels=encoder_hyperparameters["temp"],
+        self.encoder = HomogeneousGAT(in_channels=encoder_hyperparameters["in_channels"],
                                       edge_dim=encoder_hyperparameters["edge_dim"],
                                       hidden_size=encoder_hyperparameters["hidden_size"],
                                       heads=encoder_hyperparameters["heads"],
