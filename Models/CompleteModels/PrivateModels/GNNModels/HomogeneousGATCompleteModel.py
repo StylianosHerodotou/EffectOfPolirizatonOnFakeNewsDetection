@@ -3,7 +3,8 @@ import torch
 from Models.NNModels.CombinationModels.EncoderDecoderModels.HomogeneousGATEDMLPModel import HomogeneousGATEDMLPModel
 import torch.nn.functional as F
 
-class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePrivateModel):
+
+class HomogeneousGATCompleteModel(AbstractCompletePrivateModel):
     def __init__(self, model_hyperparameters):
         super().__init__()
         model = HomogeneousGATEDMLPModel(model_hyperparameters["encoder_hyperparameters"],
@@ -43,4 +44,3 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePrivateModel):
     def set_model_parameters_to_test_mode(self):
         self.model.encoder.eval()
         self.model.decoder.eval()
-
