@@ -8,12 +8,30 @@ from Utilities import JoinRawDatasetUtils
 from Utilities.InitGlobalVariables import dir_to_large
 
 
+# def get_embedings_node_feature(graph, embeddings, int_to_node_map):
+#     node_features = dict()
+#
+#     for embeddings_type, embeddings_values in embeddings.items():
+#
+#         for node in graph.nodes:
+#             key = int_to_node_map[node]
+#             node_features[key]= embeddings[key]
+#         return node_features
+
 def get_embedings_node_feature(graph, embeddings, int_to_node_map):
     node_features = dict()
+    list_of_emb_types = []
+
+    for model_name in embeddings.keys():
+        node_features[model_name] = dict()
+        list_of_emb_types.append(model_name)
 
     for node in graph.nodes:
         key = int_to_node_map[node]
-        node_features[key]= embeddings[key]
+        for model_name in list_of_emb_types:
+            # print(model_name)
+            current_emb = embeddings[model_name][key]
+            node_features[model_name][node] = current_emb
     return node_features
 
 
