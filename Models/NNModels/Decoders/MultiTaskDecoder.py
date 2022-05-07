@@ -14,7 +14,7 @@ class MultiTaskDecoder(torch.nn.Module):
     def forward(self, data,encoder_output):
         decoder_output = dict()
         for task_name, task_decoder in self.task_decoders.items():
-            print("Now forwarding through ",task_name )
+            # print("Now forwarding through ",task_name )
             output = task_decoder.forward(data, encoder_output)
             decoder_output[task_name] = output
         return decoder_output
