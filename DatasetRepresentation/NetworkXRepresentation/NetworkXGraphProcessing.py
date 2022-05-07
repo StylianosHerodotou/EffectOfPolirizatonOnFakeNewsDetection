@@ -17,8 +17,7 @@ def get_embedings_node_feature(graph, embeddings, int_to_node_map):
     return node_features
 
 
-def read_embedings_file(path_to_dir):
-    file_name = os.path.join(path_to_dir, "emb.json")
+def read_embedings_file(file_name):
     f = open(file_name)
     read_dic = json.load(f)
     return read_dic
