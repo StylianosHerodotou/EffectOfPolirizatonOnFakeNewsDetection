@@ -35,7 +35,8 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         return scores
 
     def find_performance(self, output, data):
-        prediction = self.forward(data).max(dim=1)[1]
+        encoder_output, decoder_output = output
+        prediction = decoder_output.max(dim=1)[1]
         prediction = prediction.detach().numpy().tolist()
         true_labels = data.y.detach().numpy().tolist()
         return prediction, true_labels
