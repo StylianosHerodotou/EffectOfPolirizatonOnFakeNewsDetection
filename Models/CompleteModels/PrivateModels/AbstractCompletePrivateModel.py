@@ -112,6 +112,6 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
     def performance_string(self, performance_metric_dict):
         to_return = ""
         for metric_name, current_metric in performance_metric_dict.items():
-            if metric_name != "confusion_matrix":
+            if metric_name != "confusion_matrix" and current_metric is not None:
                 to_return += str(metric_name) + ": " + str("{:.2f}".format(current_metric)) + " ,"
         return to_return
