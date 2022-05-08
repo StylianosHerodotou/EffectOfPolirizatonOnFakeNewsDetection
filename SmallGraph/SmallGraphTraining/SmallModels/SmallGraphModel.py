@@ -6,7 +6,9 @@ import torch
 import ray
 
 from Utilities.InitGlobalVariables import device, dir_to_ray_checkpoints
-
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_recall_fscore_support
 
 class SmallGraphModel(ABC):
     def __init__(self):
@@ -36,19 +38,63 @@ class SmallGraphModel(ABC):
             self.optimizer.step()
         return loss_all / train_loader["size"]
 
+    def find_performance(self, output, data):
+        prediction = output.max(dim=1)[1]
+        prediction = prediction.detach().numpy().tolist()
+        true_labels = data.y.detach().numpy().tolist()
+        return prediction, true_labels
+
+    def get_test_scores(self, all_predicted_values, all_true_labels):
+        current_accuracy = accuracy_score(all_true_labels, all_predicted_values)
+        current_precision, current_recall, current_fbeta_score, current_support = precision_recall_fscore_support(
+            all_true_labels, all_predicted_values, average='micro')
+
+        scores = {"accuracy": current_accuracy,
+                  "precision": current_precision,
+                  "recall": current_recall,
+                  "fbeta_score": current_fbeta_score}
+
+        return scores
+
+
     def test_small(self, test_loader):
 
         self.model.eval()
-        correct = 0
+        all_true_labels = list()
+        all_predicted_values = list()
         for data in test_loader["loader"]:
             data = data.to(device)
-            pred = self.forward(data).max(dim=1)[1]
-            correct += pred.eq(data.y).sum().item()
-        return correct / test_loader["size"]
+            output = self.forward(data)
+            prediction, true_labels = self.find_performance(output, data)
+            all_predicted_values.extend(prediction)
+            all_true_labels.extend(true_labels)
+        return self.get_test_scores(all_predicted_values, all_true_labels)
 
+    # def test_small(self, test_loader):
+    #
+    #     self.model.eval()
+    #     correct = 0
+    #     for data in test_loader["loader"]:
+    #         data = data.to(device)
+    #         pred = self.forward(data).max(dim=1)[1]
+    #         correct += pred.eq(data.y).sum().item()
+    #     return correct / test_loader["size"]
+
+    def metric_dict_to_string(self, dic):
+        to_return = ""
+        for key, value in dic:
+            to_return+= key + ": " +  str(dic[key]) + ", "
+
+        to_return+= "\n"
+        return to_return
     def train_fold_small(self, train_loader, eval_loader, fold_number=-1, checkpoint_dir="",
                          epochs=100, print_acc_every=1, in_hyper_parameter_search=True):
-        best_acc = 0
+        best_dict = {
+            "accuracy": 0,
+            "precision": 0,
+            "recall": 0,
+            "fbeta_score": 0
+        }
 
         for epoch in range(1, epochs + 1):
             loss = self.train_step_small(train_loader)
@@ -56,10 +102,14 @@ class SmallGraphModel(ABC):
             if (epoch % print_acc_every == 0):
                 train_acc = self.test_small( train_loader)
                 test_acc = self.test_small(eval_loader)
-                best_acc = max(best_acc, test_acc)
 
-                print(f'Epoch: {epoch:03d}, Loss: {loss:.5f}, Train Acc: {train_acc:.5f}, '
-                      f'Test Acc: {test_acc:.5f}, Best accuracy so far: {best_acc:.5f}')
+                for key,value in test_acc:
+                    best_dict[key]=max(best_dict[key],value)
+
+
+                print(f'Epoch: {epoch:03d}, Loss: {loss:.5f}, Train: {self.metric_dict_to_string(train_acc)}'
+                      f'Test Acc: {self.metric_dict_to_string(test_acc)}'
+                      f', Best accuracy so far: {self.metric_dict_to_string(best_dict)}')
 
             if (in_hyper_parameter_search):
                 # with ray.tune.checkpoint_dir(os.path.join(dir_to_ray_checkpoints,str((fold_number * epochs) + epoch))) as checkpoint_dir:

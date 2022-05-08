@@ -51,7 +51,12 @@ def train_and_write_best_model(best_config, train_set, hyperparameters,
             path_to_save=dir_to_base
 
         splits = KFold(n_splits=best_config["number_of_splits"], shuffle=True, random_state=42)
-        sum = 0
+        sum_dict ={
+            "accuracy": 0,
+            "precision": 0,
+            "recall": 0,
+            "fbeta_score": 0
+        }
         for fold, (train_idx, val_idx) in enumerate(splits.split(np.arange(len(train_set)))):
             print('Fold {}\n\n'.format(fold + 1))
 
@@ -79,11 +84,17 @@ def train_and_write_best_model(best_config, train_set, hyperparameters,
                              epochs=hyperparameters["final_training_epochs"],
                              in_hyper_parameter_search=False)
 
-            test_acc = best_trained_model.test_small(eval_loader)
-            sum += test_acc
+            test_dict = best_trained_model.test_small(eval_loader)
+            for key, value in test_dict.items():
+                sum_dict[key]+=value
 
-        avg = sum / best_config["number_of_splits"]
+        for key, value in sum_dict.items():
+            sum_dict[key] = value/best_config["number_of_splits"]
 
-        s = str(hyperparameters["threshold"]) + "__diff__" + str(avg) + "\n"
+        s=""
+        for key, value in sum_dict.items():
+            s+= key + str(value) + ", "
+        s+='\n'
+
         with open(os.path.join(path_to_save, name_of_file), "a") as file_object:
             file_object.write(s)
