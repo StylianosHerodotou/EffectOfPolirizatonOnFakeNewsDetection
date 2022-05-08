@@ -111,7 +111,7 @@ def train_and_write_best_model(best_config, train_set, hyperparameters,
         for key, value in sum_dict.items():
             sum_dict[key] = value/best_config["number_of_splits"]
 
-        s=""
+        s=hyperparameters["large_emb_names"] + "\n"
         for key, value in sum_dict.items():
             s+= key +": "+ str(value) + ", "
         s+='\n'
