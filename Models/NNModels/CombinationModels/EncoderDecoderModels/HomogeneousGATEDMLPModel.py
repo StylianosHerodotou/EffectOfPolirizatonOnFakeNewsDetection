@@ -23,5 +23,5 @@ class HomogeneousGATEDMLPModel(torch.nn.Module):
                               final_activation_function=decoder_hyperparameters["final_activation_function"])
     def forward(self, data):
         encoder_output = self.encoder.forward(data)
-        decoder_output = self.decoder.forward(data, encoder_output)
+        decoder_output = self.decoder.forward(encoder_output)
         return encoder_output, decoder_output
