@@ -82,7 +82,7 @@ class SmallGraphModel(ABC):
 
     def metric_dict_to_string(self, dic):
         to_return = ""
-        for key, value in dic:
+        for key, value in dic.items():
             to_return+= key + ": " +  str(dic[key]) + ", "
 
         to_return+= "\n"
@@ -103,7 +103,7 @@ class SmallGraphModel(ABC):
                 train_acc = self.test_small( train_loader)
                 test_acc = self.test_small(eval_loader)
 
-                for key,value in test_acc:
+                for key,value in test_acc.items():
                     best_dict[key]=max(best_dict[key],value)
 
 
