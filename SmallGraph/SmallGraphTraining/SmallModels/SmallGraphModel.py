@@ -103,9 +103,8 @@ class SmallGraphModel(ABC):
                 train_acc = self.test_small( train_loader)
                 test_acc = self.test_small(eval_loader)
 
-                for key,value in test_acc.items():
-                    best_dict[key]=max(best_dict[key],value)
-
+                if(test_acc["fbeta_score"]> best_dict["fbeta_score"]):
+                    best_dict=test_acc
 
                 print(f'Epoch: {epoch:03d}, Loss: {loss:.5f}, Train: {self.metric_dict_to_string(train_acc)}'
                       f'Test Acc: {self.metric_dict_to_string(test_acc)}'
@@ -117,6 +116,10 @@ class SmallGraphModel(ABC):
                 #     torch.save((self.model.state_dict(), self.optimizer.state_dict()), path)
 
                 ray.tune.report(accuracy=test_acc["fbeta_score"])
+
+        s= f"fold_number: {fold_number}\n {self.metric_dict_to_string(best_dict)}"
+        with open("results per fold", "a") as file_object:
+            file_object.write(s)
 
     #TODO create an deep eval method that is going to do an in depth evaluation of the model,
     #find statistics like recall, f1 score, that table exc.
