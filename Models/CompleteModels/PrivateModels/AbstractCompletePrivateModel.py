@@ -50,6 +50,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
             self.zero_grad_optimizer()
             output = self.forward(data)
             loss = self.find_loss(output, data)
+            print("this is the immidiate loss", loss)
             loss_all = self.update_total_loss(loss, loss_all, data)
             self.loss_backward(loss)
             self.optimizer_step()
