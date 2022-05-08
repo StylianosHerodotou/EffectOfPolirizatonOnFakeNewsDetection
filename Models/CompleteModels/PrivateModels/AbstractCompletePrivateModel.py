@@ -35,7 +35,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
 
         #TODO DELETE
         for key,value in scores.items():
-            if value==None:
+            if value is None:
                 print("one of my results has None", key)
 
         return scores
