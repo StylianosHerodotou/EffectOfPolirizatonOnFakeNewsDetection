@@ -25,7 +25,7 @@ class HomogeneousGATCompleteModel(AbstractCompletePrivateModel):
 
     def find_loss(self, output, train_data):
         encoder_output, decoder_output = output
-        return F.loss_function(decoder_output, train_data.y)
+        return self.loss_function(decoder_output, train_data.y)
 
     def loss_backward(self, loss):
         loss.backward()
