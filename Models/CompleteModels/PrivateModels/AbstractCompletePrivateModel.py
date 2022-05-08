@@ -86,6 +86,14 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         for key in current_performance_metric_dict.keys():
             if key == "confusion_matrix" or key == self.prefered_metric_value:
                 continue
+
+        num1= current_performance_metric_dict[key]
+        num2= new_performance_doct[key]
+        if num1 is None:
+            print("num1 is None")
+
+        if num2 is None:
+            print("num2 is None")
         current_performance_metric_dict[key] = max(current_performance_metric_dict[key],
                                                    new_performance_doct[key])
 
