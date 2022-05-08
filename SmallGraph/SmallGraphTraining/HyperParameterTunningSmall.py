@@ -15,6 +15,13 @@ from Utilities.InitGlobalVariables import dir_to_base
 
 
 def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=True):
+    sum_dict = {
+        "accuracy": 0,
+        "precision": 0,
+        "recall": 0,
+        "fbeta_score": 0
+    }
+
     splits = KFold(n_splits=hyperparameters["number_of_splits"], shuffle=True, random_state=42)
     for fold, (train_idx, val_idx) in enumerate(splits.split(np.arange(len(train_set)))):
         print('Fold {}\n\n'.format(fold + 1))
@@ -39,9 +46,22 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         optimizer = hyperparameters["optimizer"](model.model.parameters(),lr=hyperparameters["learning_rate"])
         model.optimizer=optimizer
 
-        model.train_fold_small(train_loader, eval_loader, epochs=hyperparameters["epochs"],
+        results_dict = model.train_fold_small(train_loader, eval_loader, epochs=hyperparameters["epochs"],
                          in_hyper_parameter_search=in_hyper_parameter_search)
 
+        for key, value in results_dict.items():
+            sum_dict[key] += value
+
+        for key, value in sum_dict.items():
+            sum_dict[key] = value/hyperparameters["number_of_splits"]
+
+        s=""
+        for key, value in sum_dict.items():
+            s+= key +": "+ str(value) + ", "
+        s+='\n'
+
+        with open(os.path.join(dir_to_base, "best from kfold"), "a") as file_object:
+            file_object.write(s)
 def hyper_parameter_tuning_small(config, checkpoint_dir=None):
     k_fold_training_small(config, config["train_set"])
 
@@ -93,7 +113,7 @@ def train_and_write_best_model(best_config, train_set, hyperparameters,
 
         s=""
         for key, value in sum_dict.items():
-            s+= key + str(value) + ", "
+            s+= key +": "+ str(value) + ", "
         s+='\n'
 
         with open(os.path.join(path_to_save, name_of_file), "a") as file_object:

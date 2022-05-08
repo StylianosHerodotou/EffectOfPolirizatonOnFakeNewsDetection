@@ -118,9 +118,10 @@ class SmallGraphModel(ABC):
 
                 ray.tune.report(accuracy=test_acc["fbeta_score"])
 
-        s= f"fold_number: {fold_number}\n {self.metric_dict_to_string(best_dict)}"
-        with open(os.path.join(dir_to_base, "results per fold"), "a") as file_object:
-            file_object.write(s)
+        return best_dict
+        # s= f"fold_number: {fold_number}\n {self.metric_dict_to_string(best_dict)}"
+        # with open(os.path.join(dir_to_base, "results per fold"), "a") as file_object:
+        #     file_object.write(s)
 
     #TODO create an deep eval method that is going to do an in depth evaluation of the model,
     #find statistics like recall, f1 score, that table exc.
