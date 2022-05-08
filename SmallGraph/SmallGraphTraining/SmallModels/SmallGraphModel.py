@@ -116,7 +116,7 @@ class SmallGraphModel(ABC):
                 #     path = os.path.join(checkpoint_dir, "checkpoint")
                 #     torch.save((self.model.state_dict(), self.optimizer.state_dict()), path)
 
-                ray.tune.report(accuracy=test_acc)
+                ray.tune.report(accuracy=test_acc["fbeta_score"])
 
     #TODO create an deep eval method that is going to do an in depth evaluation of the model,
     #find statistics like recall, f1 score, that table exc.
