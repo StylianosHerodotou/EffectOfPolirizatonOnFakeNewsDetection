@@ -60,6 +60,7 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
             s+= key +": "+ str(value) + ", "
         s+='\n'
 
+        print("I AM HERE!!!!!!!!!!!!")
         with open(os.path.join(dir_to_base, "best from kfold"), "a") as file_object:
             file_object.write(s)
 def hyper_parameter_tuning_small(config, checkpoint_dir=None):
