@@ -33,11 +33,6 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
                   "fbeta_score": current_fbeta_score,
                   "support": current_support}
 
-        #TODO DELETE
-        for key,value in scores.items():
-            if value is None:
-                print("one of my results has None", key)
-
         return scores
 
     def find_performance(self, output, data):
@@ -93,15 +88,13 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
             if key == "confusion_matrix" or key == self.prefered_metric_value:
                 continue
 
-        num1= current_performance_metric_dict[key]
-        num2= new_performance_doct[key]
-        if num1 is None:
-            print("num1 is None", key)
+            old_value= current_performance_metric_dict[key]
+            new_value= new_performance_doct[key]
 
-        if num2 is None:
-            print("num2 is None", key)
-        current_performance_metric_dict[key] = max(current_performance_metric_dict[key],
-                                                   new_performance_doct[key])
+            if new_value is None:
+                continue
+
+            current_performance_metric_dict[key] = max(old_value,new_value)
 
         return current_performance_metric_dict
 
