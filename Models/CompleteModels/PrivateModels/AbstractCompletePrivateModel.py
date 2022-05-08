@@ -32,6 +32,12 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
                   "recall": current_recall,
                   "fbeta_score": current_fbeta_score,
                   "support": current_support}
+
+        #TODO DELETE
+        for key,value in scores.items():
+            if value==None:
+                print("one of my results has None", key)
+
         return scores
 
     def find_performance(self, output, data):
@@ -90,10 +96,10 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         num1= current_performance_metric_dict[key]
         num2= new_performance_doct[key]
         if num1 is None:
-            print("num1 is None")
+            print("num1 is None", key)
 
         if num2 is None:
-            print("num2 is None")
+            print("num2 is None", key)
         current_performance_metric_dict[key] = max(current_performance_metric_dict[key],
                                                    new_performance_doct[key])
 
