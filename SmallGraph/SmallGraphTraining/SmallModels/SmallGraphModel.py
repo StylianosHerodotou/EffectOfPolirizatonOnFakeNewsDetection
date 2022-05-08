@@ -9,6 +9,7 @@ from Utilities.InitGlobalVariables import device, dir_to_ray_checkpoints
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_recall_fscore_support
+from Utilities.InitGlobalVariables import dir_to_base
 
 class SmallGraphModel(ABC):
     def __init__(self):
@@ -118,7 +119,7 @@ class SmallGraphModel(ABC):
                 ray.tune.report(accuracy=test_acc["fbeta_score"])
 
         s= f"fold_number: {fold_number}\n {self.metric_dict_to_string(best_dict)}"
-        with open("results per fold", "a") as file_object:
+        with open(os.path.join(dir_to_base, "results per fold"), "a") as file_object:
             file_object.write(s)
 
     #TODO create an deep eval method that is going to do an in depth evaluation of the model,
