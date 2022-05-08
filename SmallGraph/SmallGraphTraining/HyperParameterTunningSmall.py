@@ -49,8 +49,8 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         results_dict = model.train_fold_small(train_loader, eval_loader, epochs=hyperparameters["epochs"],
                          in_hyper_parameter_search=in_hyper_parameter_search)
 
-    for key, value in results_dict.items():
-        sum_dict[key] += value
+        for key, value in results_dict.items():
+            sum_dict[key] += value
 
     for key, value in sum_dict.items():
         sum_dict[key] = value/hyperparameters["number_of_splits"]
