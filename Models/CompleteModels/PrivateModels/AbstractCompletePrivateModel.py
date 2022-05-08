@@ -14,7 +14,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         self.prefered_metric_value = "fbeta_score"
 
     def update_total_loss(self, loss, loss_all, data):
-        loss_all += data.num_graphs * loss.item()
+        loss_all += data.num_graphs * loss
         return loss_all
 
     def get_mean_total_loss(self, loss_all, train_loader):
@@ -99,7 +99,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         return current_performance_metric_dict
 
     def loss_to_string(self, loss):
-        to_return = str("{:.2f}".format(loss.item()))
+        to_return = str("{:.2f}".format(loss))
         return to_return
 
     def get_report_score(self, performance_metric_dict):
