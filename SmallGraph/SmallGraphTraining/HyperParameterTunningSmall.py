@@ -55,7 +55,7 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         for key, value in sum_dict.items():
             sum_dict[key] = value/hyperparameters["number_of_splits"]
 
-        s=""
+        s=hyperparameters["large_emb_names"] + "\n"
         for key, value in sum_dict.items():
             s+= key +": "+ str(value) + ", "
         s+='\n'
