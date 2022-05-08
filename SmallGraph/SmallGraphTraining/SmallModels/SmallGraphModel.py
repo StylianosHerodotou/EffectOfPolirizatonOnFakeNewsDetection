@@ -43,6 +43,7 @@ class SmallGraphModel(ABC):
         prediction = output.max(dim=1)[1]
         prediction = prediction.detach().numpy().tolist()
         true_labels = data.y.detach().numpy().tolist()
+        print(prediction, true_labels)
         return prediction, true_labels
 
     def get_test_scores(self, all_predicted_values, all_true_labels):
@@ -54,7 +55,6 @@ class SmallGraphModel(ABC):
                   "precision": current_precision,
                   "recall": current_recall,
                   "fbeta_score": current_fbeta_score}
-        print(scores)
 
         return scores
 
