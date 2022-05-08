@@ -49,20 +49,20 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
         results_dict = model.train_fold_small(train_loader, eval_loader, epochs=hyperparameters["epochs"],
                          in_hyper_parameter_search=in_hyper_parameter_search)
 
-        for key, value in results_dict.items():
-            sum_dict[key] += value
+    for key, value in results_dict.items():
+        sum_dict[key] += value
 
-        for key, value in sum_dict.items():
-            sum_dict[key] = value/hyperparameters["number_of_splits"]
+    for key, value in sum_dict.items():
+        sum_dict[key] = value/hyperparameters["number_of_splits"]
 
-        s=str(hyperparameters["large_emb_names"]) + "\n"
-        for key, value in sum_dict.items():
-            s+= key +": "+ str(value) + ", "
-        s+='\n'
+    s=str(hyperparameters["large_emb_names"]) + "\n"
+    for key, value in sum_dict.items():
+        s+= key +": "+ str(value) + ", "
+    s+='\n'
 
-        print("I AM HERE!!!!!!!!!!!!")
-        with open(os.path.join(dir_to_base, "best_from_kfold.txt"), "a") as file_object:
-            file_object.write(s)
+    print("I AM HERE!!!!!!!!!!!!")
+    with open(os.path.join(dir_to_base, "best_from_kfold.txt"), "a") as file_object:
+        file_object.write(s)
 def hyper_parameter_tuning_small(config, checkpoint_dir=None):
     k_fold_training_small(config, config["train_set"])
 
