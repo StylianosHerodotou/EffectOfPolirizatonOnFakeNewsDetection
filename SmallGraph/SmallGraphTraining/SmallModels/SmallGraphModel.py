@@ -54,6 +54,7 @@ class SmallGraphModel(ABC):
                   "precision": current_precision,
                   "recall": current_recall,
                   "fbeta_score": current_fbeta_score}
+        print(scores)
 
         return scores
 
