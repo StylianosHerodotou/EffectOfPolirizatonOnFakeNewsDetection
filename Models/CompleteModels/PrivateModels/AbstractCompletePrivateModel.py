@@ -18,7 +18,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         return loss_all
 
     def get_mean_total_loss(self, loss_all, train_loader):
-        loss_all / train_loader["size"]
+        return loss_all / train_loader["size"]
 
     def get_test_scores(self, all_predicted_values, all_true_labels):
         current_confusion_matrix = confusion_matrix(all_true_labels, all_predicted_values)
@@ -73,6 +73,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
                   "recall": 0,
                   "fbeta_score": 0,
                   "support": 0}
+        return scores
 
     # for each
     def get_best_performance_metric_so_far(self, current_performance_metric_dict, new_performance_doct):
