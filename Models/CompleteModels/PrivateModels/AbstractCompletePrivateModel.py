@@ -46,13 +46,14 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         self.set_model_parameters_to_training_mode()
         loss_all = 0
         for data in train_loader["loader"]:
-            data = data.to(device)
+            # data = data.to(device)
             self.zero_grad_optimizer()
             output = self.forward(data)
             loss = self.find_loss(output, data)
-            loss_all = self.update_total_loss(loss, loss_all, data)
+            print(loss)
             self.loss_backward(loss)
             self.optimizer_step()
+            loss_all = self.update_total_loss(loss, loss_all, data)
         return self.get_mean_total_loss(loss_all, train_loader)
 
     def test(self, test_loader):
@@ -60,7 +61,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         all_true_labels = list()
         all_predicted_values = list()
         for data in test_loader["loader"]:
-            data = data.to(device)
+            # data = data.to(device)
             output = self.forward(data)
             prediction, true_labels = self.find_performance(output, data)
             all_predicted_values.extend(prediction)

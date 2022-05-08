@@ -37,9 +37,7 @@ class HomogeneousGATCompleteModel(AbstractCompletePrivateModel):
         self.optimizer.step()
 
     def set_model_parameters_to_training_mode(self):
-        self.model.encoder.train()
-        self.model.decoder.train()
+        self.model.train()
 
     def set_model_parameters_to_test_mode(self):
-        self.model.encoder.eval()
-        self.model.decoder.eval()
+        self.model.eval()

@@ -30,9 +30,7 @@ class GATModel(torch.nn.Module):
         if(is_part_of_ensemble==False):
             self.classifier =MLP(in_channels=2*hidden_size*heads,output_size=output_size, nodes_per_hidden_layer=MLP_arguments["nodes_per_hidden_layer"],
                  number_of_hidden_layers=MLP_arguments["number_of_hidden_layers"],dropout=MLP_arguments["dropout"])
-        # self.lin1 = torch.nn.Linear(2*hidden_size*heads, 128)
-        # self.lin2 = torch.nn.Linear(128, 64)
-        # self.lin3 = torch.nn.Linear(64, output_size)
+
 
     def forward(self, data):
         x, edge_index, edge_attr, batch = data.x, data.edge_index, data.edge_attr, data.batch
@@ -52,12 +50,7 @@ class GATModel(torch.nn.Module):
             return x
 
         return self.classifier.forward(x)
-        # x = F.relu(self.lin1(x)
-        # x = F.dropout(x, p=0.5, training=self.training)
-        # x = F.relu(self.lin2(x))
-        # x = F.log_softmax(self.lin3(x), dim=-1)
-        #
-        # return x
+
 
 class GAT(SmallGraphModel):
     def __init__(self, model_hyperparameters):
