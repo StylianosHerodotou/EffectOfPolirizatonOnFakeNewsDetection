@@ -14,7 +14,8 @@ from Utilities.InitGlobalVariables import gpus_per_trial
 from Utilities.InitGlobalVariables import dir_to_base
 
 
-def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=True):
+def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=True,
+                          filename="best_from_kfold.txt"):
     sum_dict = {
         "accuracy": 0,
         "precision": 0,
@@ -61,7 +62,7 @@ def k_fold_training_small(hyperparameters, train_set, in_hyper_parameter_search=
     s+='\n'
 
     print("I AM HERE!!!!!!!!!!!!")
-    with open(os.path.join(dir_to_base, "best_from_kfold.txt"), "a") as file_object:
+    with open(os.path.join(dir_to_base, filename), "a") as file_object:
         file_object.write(s)
 def hyper_parameter_tuning_small(config, checkpoint_dir=None):
     k_fold_training_small(config, config["train_set"])
