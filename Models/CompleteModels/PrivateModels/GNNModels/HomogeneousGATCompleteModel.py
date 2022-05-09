@@ -9,7 +9,7 @@ class HomogeneousGATCompleteModel(AbstractCompletePrivateModel):
         model = HomogeneousGATEDMLPModel(model_hyperparameters["encoder_hyperparameters"],
                                          model_hyperparameters["decoder_hyperparameters"])
         self.model = model
-        optimizer = torch.optim.Adam(model.parameters(),
+        optimizer = torch.optim.Adam(self.model.parameters(),
                                      lr=model_hyperparameters["learning_rate"],
                                      weight_decay=model_hyperparameters["weight_decay"])
         self.optimizer = optimizer

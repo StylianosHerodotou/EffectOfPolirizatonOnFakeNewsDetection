@@ -24,7 +24,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
         current_confusion_matrix = confusion_matrix(all_true_labels, all_predicted_values)
         current_accuracy = accuracy_score(all_true_labels, all_predicted_values)
         current_precision, current_recall, current_fbeta_score, current_support = precision_recall_fscore_support(
-            all_true_labels, all_predicted_values, average='micro')
+            all_true_labels, all_predicted_values, average='binary')
 
         scores = {"confusion_matrix": current_confusion_matrix,
                   "accuracy": current_accuracy,
@@ -50,7 +50,7 @@ class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
             self.zero_grad_optimizer()
             output = self.forward(data)
             loss = self.find_loss(output, data)
-            print(loss)
+            # print(loss)
             self.loss_backward(loss)
             self.optimizer_step()
             loss_all = self.update_total_loss(loss, loss_all, data)
