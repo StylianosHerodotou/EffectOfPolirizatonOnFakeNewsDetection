@@ -1,12 +1,14 @@
 from Models.CompleteModels.PrivateModels.AbstractCompletePrivateModel import AbstractCompletePrivateModel
 import torch
-from Models.NNModels.CombinationModels.EncoderDecoderModels.HomogeneousGATEDMLPModel import HomogeneousGATEDMLPModel
 import torch.nn.functional as F
 
-class HomogeneousGATCompleteModel(AbstractCompletePrivateModel):
+from Models.NNModels.CombinationModels.EncoderDecoderModels.LSTMBagOfWordsEDMLPModel import LSTMBagOfWordsEDMLPModel
+
+
+class LSTMBagOfWordsCompleteModel(AbstractCompletePrivateModel):
     def __init__(self, model_hyperparameters):
         super().__init__()
-        model = HomogeneousGATEDMLPModel(model_hyperparameters["encoder_hyperparameters"],
+        model = LSTMBagOfWordsEDMLPModel(model_hyperparameters["encoder_hyperparameters"],
                                          model_hyperparameters["decoder_hyperparameters"])
         self.model = model
         optimizer = torch.optim.Adam(self.model.parameters(),

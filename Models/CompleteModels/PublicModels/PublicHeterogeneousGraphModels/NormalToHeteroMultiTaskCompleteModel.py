@@ -13,9 +13,7 @@ class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
 
         self.optimizer = self.model.decoder.get_optimizers()
         encoder_optimizer = torch.optim.Adam(model.encoder.parameters(),
-                                             lr=model_hyperparameters["encoder_hyperparameters"]["learning_rate"],
-                                             weight_decay=model_hyperparameters["encoder_hyperparameters"][
-                                                 "weight_decay"])
+                                             lr=model_hyperparameters["encoder_hyperparameters"]["learning_rate"])
         self.optimizer["encoder_optimizer"] = encoder_optimizer
 
     def forward(self, train_data):

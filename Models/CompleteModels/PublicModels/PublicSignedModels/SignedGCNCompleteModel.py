@@ -13,8 +13,7 @@ class SignedGCNCompleteModel(AbstractCompletePublicModel):
                           )
         self.model = model
 
-        optimizer = torch.optim.Adam(model.parameters(), lr=model_hyperparameters["learning_rate"],
-                                     weight_decay=model_hyperparameters["weight_decay"])
+        optimizer = torch.optim.Adam(model.parameters(), lr=model_hyperparameters["learning_rate"])
         self.optimizer = optimizer
 
     def forward(self, train_dic):

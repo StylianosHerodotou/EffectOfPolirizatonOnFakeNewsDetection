@@ -38,8 +38,7 @@ class SingleTaskDecoder(torch.nn.Module):
 
         # in both cases this is this tasks optimizer.
         self.optimizer = torch.optim.Adam(self.classifier.parameters(),
-                                          lr=classifier_arguments["learning_rate"],
-                                          weight_decay=classifier_arguments["weight_decay"])
+                                          lr=classifier_arguments["learning_rate"])
         self.performance_tracker = classifier_arguments["performance_tracker"]()
         self.metric_weight = classifier_arguments["metric_weight"]
 
