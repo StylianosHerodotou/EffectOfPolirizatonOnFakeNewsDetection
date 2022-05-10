@@ -1,6 +1,6 @@
-from SmallGraph.SmallGraphTraining.SmallModels.SmallGraphModel import SmallGraphModel
 import torch
 import torch.nn.functional as F
+from DatasetRepresentation.DataPreprocessing.RNNProcessing import clean_column_name
 
 class LSTMBagOfWordsEncoder(torch.nn.Module):
 
@@ -18,7 +18,7 @@ class LSTMBagOfWordsEncoder(torch.nn.Module):
 
     def forward(self, data):
 
-        sentence = data.article_rep
+        sentence = data.extra_inputs[clean_column_name]
         batch_size = data.batch.max() + 1
         single_entry_size = int(len(sentence) / batch_size)
 
