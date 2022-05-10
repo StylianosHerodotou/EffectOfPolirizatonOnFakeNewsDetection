@@ -1,6 +1,8 @@
 import torch
 from abc import ABC, abstractmethod
 import ray
+import os
+from Utilities.InitGlobalVariables import dir_to_base
 
 
 class AbstractCompleteModel(ABC):
@@ -77,7 +79,7 @@ class AbstractCompleteModel(ABC):
         pass
 
     def train_fold(self, training_hyperparameters, train_data, eval_data, fold_number,
-                   in_hyper_parameter_search):
+                   in_hyper_parameter_search, print_fold_results=True, filename="best_from_kfold.txt"):
 
         performance_metric = self.init_performance_metric()
         for epoch in range(training_hyperparameters["epochs"]):
@@ -99,3 +101,8 @@ class AbstractCompleteModel(ABC):
                     #     path = os.path.join(checkpoint_dir, "checkpoint")
                     #     torch.save((self.model.state_dict(), self.optimizer.state_dict()), path)
                     ray.tune.report(score=self.get_report_score(performance_test))
+
+        if print_fold_results:
+            print("I AM HERE!!!!!!!!!!!!")
+            with open(os.path.join(dir_to_base, filename), "a") as file_object:
+                file_object.write(s)
