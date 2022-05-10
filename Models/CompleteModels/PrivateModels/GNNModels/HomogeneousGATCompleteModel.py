@@ -6,16 +6,16 @@ import torch.nn.functional as F
 class HomogeneousGATCompleteModel(AbstractCompletePrivateModel):
     def __init__(self, model_hyperparameters):
         super().__init__()
-        model = HomogeneousGATEDMLPModel(model_hyperparameters["encoder_hyperparameters"],
+        self.model=model = HomogeneousGATEDMLPModel(model_hyperparameters["encoder_hyperparameters"],
                                          model_hyperparameters["decoder_hyperparameters"])
-        self.model = model
-        optimizer = torch.optim.Adam(self.model.parameters(),
+        self.optimizer = dict()
+        self.optimizer["encoder"]=torch.optim.Adam(self.model.encoder.parameters(),
                                      lr=model_hyperparameters["learning_rate"],
                                      weight_decay=model_hyperparameters["weight_decay"])
-        self.optimizer = optimizer
-
+        self.optimizer["decoder"] = torch.optim.Adam(self.model.decoder.parameters(),
+                                                lr=model_hyperparameters["learning_rate"],
+                                                weight_decay=model_hyperparameters["weight_decay"])
         self.loss_function = F.nll_loss
-
     def forward(self, train_data):
         return self.model.forward(train_data)
 
@@ -31,13 +31,17 @@ class HomogeneousGATCompleteModel(AbstractCompletePrivateModel):
         loss.backward()
 
     def zero_grad_optimizer(self):
-        self.optimizer.zero_grad()
+        for optimizer_name, optimizer in self.optimizer.items():
+            optimizer.zero_grad()
 
     def optimizer_step(self):
-        self.optimizer.step()
+        for optimizer_name, optimizer in self.optimizer.items():
+            optimizer.step()
 
     def set_model_parameters_to_training_mode(self):
-        self.model.train()
+        self.model.encoder.train()
+        self.model.decoder.train()
 
     def set_model_parameters_to_test_mode(self):
-        self.model.eval()
+        self.model.encoder.eval()
+        self.model.decoder.eval()
