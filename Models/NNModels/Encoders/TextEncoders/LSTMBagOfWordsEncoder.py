@@ -31,3 +31,4 @@ class LSTMBagOfWordsEncoder(torch.nn.Module):
         # lstm_out= lstm_out.view(len(sentence), -1)
         lstm_out = lstm_out[:, -1, :]
         return lstm_out
+HomogeneousGAT_AND_LSTMBagOfWords_D_MLPModel
