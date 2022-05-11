@@ -11,7 +11,7 @@ from sklearn.metrics import precision_recall_fscore_support
 class AbstractCompletePrivateModel(AbstractCompleteModel, ABC):
     def __init__(self):
         super().__init__()
-        self.prefered_metric_value = "fbeta_score"
+        self.prefered_metric_value = "accuracy"
 
     def update_total_loss(self, loss, loss_all, data):
         loss_all += data.num_graphs * loss

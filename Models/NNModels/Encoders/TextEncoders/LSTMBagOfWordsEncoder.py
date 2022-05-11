@@ -19,6 +19,7 @@ class LSTMBagOfWordsEncoder(torch.nn.Module):
     def forward(self, data):
 
         sentence = data.extra_inputs[clean_column_name]
+        ###TODO CHECK WHETHER IT works better if you batch like ROberta
         batch_size = data.batch.max() + 1
         single_entry_size = int(len(sentence) / batch_size)
 
