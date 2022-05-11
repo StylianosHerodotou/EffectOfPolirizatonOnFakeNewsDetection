@@ -6,15 +6,6 @@ class AbstractTrainer(ABC):
         self.model_function = None
 
     @abstractmethod
-    def preprocess_data(self, data):
-        pass
-
-    @abstractmethod
-    def set_new_model_parameters(self, model, training_hyperparameters,
-                                 model_hyperparameters,
-                                 data, pre_processed_data, train_data, eval_data):
-        pass
-    @abstractmethod
     def train(self, training_hyperparameters, model_hyperparameters, data,
               in_hyper_parameter_search=True):
         pass

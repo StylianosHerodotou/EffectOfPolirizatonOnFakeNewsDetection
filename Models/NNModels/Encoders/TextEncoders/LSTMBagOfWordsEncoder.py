@@ -11,24 +11,34 @@ class LSTMBagOfWordsEncoder(torch.nn.Module):
         self.dropout = dropout
         self.word_embeddings = torch.nn.Embedding(vocab_size, embedding_dim)
 
-        # The LSTM takes word embeddings as inputs, and outputs hidden states
+        # The LSTM takes word embeddings as inputs, and outpuLSTMBagOfWordsCompleteModelts hidden states
         # with dimensionality hidden_dim.
         self.lstm = torch.nn.LSTM(embedding_dim, hidden_dim, num_layers=num_layers, batch_first=True)
 
+    class LSTMBagOfWordsEncoder(torch.nn.Module):
 
-    def forward(self, data):
+        def __init__(self, embedding_dim, hidden_dim, vocab_size,
+                     num_layers=2, dropout=0.2):
+            super(LSTMBagOfWordsEncoder, self).__init__()
+            self.hidden_dim = hidden_dim
+            self.dropout = dropout
+            self.word_embeddings = torch.nn.Embedding(vocab_size, embedding_dim)
 
-        sentence = data.extra_inputs[clean_column_name]
-        ###TODO CHECK WHETHER IT works better if you batch like ROberta
-        batch_size = data.batch.max() + 1
-        single_entry_size = int(len(sentence) / batch_size)
+            # The LSTM takes word embeddings as inputs, and outputs hidden states
+            # with dimensionality hidden_dim.
+            self.lstm = torch.nn.LSTM(embedding_dim, hidden_dim, num_layers=num_layers, batch_first=True)
 
-        embeds = self.word_embeddings(sentence)
-        embeds = F.dropout(embeds, p=self.dropout, training=self.training)
+        def forward(self, data):
+            lstm_input = data.extra_inputs[clean_column_name]
+            batch_size = data.batch.max() + 1
+            lstm_input = lstm_input.view(batch_size, -1)
 
-        lstm_out, _ = self.lstm(embeds.view(batch_size, single_entry_size, -1))
-        lstm_out = F.dropout(lstm_out, p=self.dropout, training=self.training)
+            embeds = self.word_embeddings(lstm_input)
+            embeds = F.dropout(embeds, p=self.dropout, training=self.training)
 
-        # lstm_out= lstm_out.view(len(sentence), -1)
-        lstm_out = lstm_out[:, -1, :]
-        return lstm_out
+            lstm_out, _ = self.lstm(embeds)
+            lstm_out = F.dropout(lstm_out, p=self.dropout, training=self.training)
+
+            # lstm_out= lstm_out.view(len(sentence), -1)
+            lstm_out = lstm_out[:, -1, :]
+            return lstm_out

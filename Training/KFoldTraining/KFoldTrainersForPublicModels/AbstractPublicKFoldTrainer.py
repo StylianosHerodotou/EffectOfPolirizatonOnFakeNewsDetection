@@ -1,20 +1,32 @@
 from abc import ABC, abstractmethod
 from sklearn.model_selection import KFold
-from ..AbstractTrainer import AbstractTrainer
 
+from Training.AbstractTrainer import AbstractTrainer
 
-class AbstractKFoldTrainer(AbstractTrainer, ABC):
+class AbstractPublicKFoldTrainer(AbstractTrainer, ABC):
     def __init__(self, number_of_splits, random_state=42):
         super().__init__()
         self.number_of_splits = number_of_splits
         self.random_state = random_state
 
+
     @abstractmethod
-    def create_data_object_for_each_split(self, splits, data):
+    def preprocess_data(self, data):
         pass
 
     @abstractmethod
-    def create_train_eval_data_for_fold(self, fold_data, pre_processed_data):
+    def set_new_model_parameters(self, model, training_hyperparameters,
+                                 model_hyperparameters,
+                                 data, pre_processed_data, train_data, eval_data):
+        pass
+
+
+    @abstractmethod
+    def create_data_object_for_each_split(self,splits, pre_processed_data):
+        pass
+
+    @abstractmethod
+    def create_train_eval_data_for_fold(self,data_for_fold, pre_processed_data)
         pass
 
     def train(self, training_hyperparameters, model_hyperparameters, data,

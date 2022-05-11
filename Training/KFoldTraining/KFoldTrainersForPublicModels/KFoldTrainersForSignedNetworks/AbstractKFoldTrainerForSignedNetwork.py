@@ -1,12 +1,11 @@
 from abc import ABC
 
-from Training.AbstractTrainer import AbstractTrainer
-from Training.KFoldTraining.AbstractKFoldTrainer import AbstractKFoldTrainer
+from Training.KFoldTraining.KFoldTrainersForPublicModels.AbstractPublicKFoldTrainer import AbstractPublicKFoldTrainer
 from Utilities.SignedGraphUtils import get_train_eval_indexes, turn_data_to_positive_and_negative_edges
 import numpy as np
 
 
-class AbstractKFoldTrainerForSignedNetwork(AbstractKFoldTrainer, ABC):
+class AbstractPublicKFoldTrainerForSignedNetwork(AbstractPublicKFoldTrainer, ABC):
     def __init__(self, number_of_splits, random_state=42):
         super().__init__(number_of_splits, random_state)
 

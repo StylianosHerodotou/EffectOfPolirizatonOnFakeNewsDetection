@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
-from Training.AbstractTrainer import AbstractTrainer
+from Training.AbstractPublicTrainer import AbstractPublicTrainer
 
 
-class AbstractSimpleTrainer(AbstractTrainer, ABC):
+class AbstractSimplePublicTrainer(AbstractPublicTrainer, ABC):
     def __init__(self):
         super().__init__()
         self.model = None

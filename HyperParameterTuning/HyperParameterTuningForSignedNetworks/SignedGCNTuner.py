@@ -1,5 +1,5 @@
 from HyperParameterTuning.AbstractHyperParameterTuner import AbstractHyperParameterTuner
-from Training.KFoldTraining.KFoldTrainersForSignedNetworks.SignedGCNKFoldTrainer import SignedGCNKFoldTrainer
+from Training.KFoldTraining.KFoldTrainersForPublicModels.KFoldTrainersForSignedNetworks import SignedGCNKFoldTrainer
 
 
 class SignedGCNTuner(AbstractHyperParameterTuner):

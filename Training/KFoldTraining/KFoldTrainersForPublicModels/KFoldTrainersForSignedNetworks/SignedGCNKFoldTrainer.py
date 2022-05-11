@@ -1,8 +1,8 @@
-from .AbstractKFoldTrainerForSignedNetwork import AbstractKFoldTrainerForSignedNetwork
+from .AbstractKFoldTrainerForSignedNetwork import AbstractPublicKFoldTrainerForSignedNetwork
 from Models.CompleteModels.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNCompleteModel
 import torch
 
-class SignedGCNKFoldTrainer(AbstractKFoldTrainerForSignedNetwork):
+class SignedGCNKFoldTrainer(AbstractPublicKFoldTrainerForSignedNetwork):
 
     def __init__(self, number_of_splits, random_state=42):
         super().__init__(number_of_splits, random_state)

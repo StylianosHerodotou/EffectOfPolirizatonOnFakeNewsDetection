@@ -1,9 +1,9 @@
-from .AbstractKFoldTrainerForHeterogeneousNetworks import AbstractKFoldTrainerForHeterogeneousNetworks
+from .AbstractKFoldTrainerForHeterogeneousNetworks import AbstractPublicKFoldTrainerForHeterogeneousNetworks
 from Models.CompleteModels.PublicModels.PublicHeterogeneousGraphModels.NormalToHeteroMultiTaskCompleteModel import \
     NormalToHeteroMultiTaskCompleteModel
 import torch
 
-class NormalToHeteroGATMultiTaskKFoldTrainer(AbstractKFoldTrainerForHeterogeneousNetworks):
+class NormalToHeteroGATMultiTaskKFoldTrainer(AbstractPublicKFoldTrainerForHeterogeneousNetworks):
 
     def __init__(self, number_of_splits, random_state=42):
         super().__init__(number_of_splits, random_state)

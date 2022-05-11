@@ -1,6 +1,6 @@
 from abc import ABC
 
-from Training.SimpleTraining.AbstractSimpleTrainer import AbstractSimpleTrainer
+from Training.SimpleTraining.AbstractSimpleTrainer import AbstractSimplePublicTrainer
 import numpy as np
 from Utilities.SignedGraphUtils import get_train_eval_indexes
 from sklearn.model_selection import train_test_split
@@ -8,7 +8,7 @@ import torch
 import copy
 
 
-class AbstractSimpleTrainerForHeterogeneousNetwork(AbstractSimpleTrainer, ABC):
+class AbstractSimpleTrainerForHeterogeneousNetwork(AbstractSimplePublicTrainer, ABC):
     def __init__(self):
         super().__init__()
 

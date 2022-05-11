@@ -1,12 +1,12 @@
 
 from abc import ABC
 
-from Training.SimpleTraining.AbstractSimpleTrainer import AbstractSimpleTrainer
+from Training.SimpleTraining.AbstractSimpleTrainer import AbstractSimplePublicTrainer
 import numpy as np
 from Utilities.SignedGraphUtils import get_train_eval_indexes, turn_data_to_positive_and_negative_edges
 from sklearn.model_selection import train_test_split
 
-class AbstractSimpleTrainerForSignedNetwork(AbstractSimpleTrainer, ABC):
+class AbstractSimpleTrainerForSignedNetwork(AbstractSimplePublicTrainer, ABC):
     def __init__(self):
         super().__init__()
 
