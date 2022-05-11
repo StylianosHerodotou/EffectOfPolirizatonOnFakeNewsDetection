@@ -1,5 +1,5 @@
 from transformers import RobertaTokenizer
-
+import torch
 from DatasetRepresentation.DataPreprocessing.TextProcessing import article_column_name
 
 roberta_column_name="roberta_column_name"
@@ -22,5 +22,5 @@ def generate_roberta_embeddings_for_training_set(train_df,text_name=None):
     return roberta_input
 
 def get_roberta_embeddings_for_training_set(train_df,hyperparameters):
-    return train_df[roberta_column_name].tolist()
+    return torch.from_numpy(train_df[roberta_column_name]).long()
 
