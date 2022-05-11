@@ -9,7 +9,7 @@ from torch_geometric.loader import DataLoader
 import os
 
 import numpy as np
-from Utilities.InitGlobalVariables import dir_to_base
+from Utilities.InitGlobalVariables import dir_to_results
 
 
 class AbstractPrivateKFoldTrainer(AbstractTrainer, ABC):
@@ -68,7 +68,7 @@ class AbstractPrivateKFoldTrainer(AbstractTrainer, ABC):
     def train(self, training_hyperparameters, model_hyperparameters, data,
               in_hyper_parameter_search=True,
               print_results=True,
-              dir_to_save=dir_to_base,
+              dir_to_save=dir_to_results,
               filename="kfold_results.txt",
               ):
 
