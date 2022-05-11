@@ -28,15 +28,16 @@ class AbstractPrivateKFoldTrainer(AbstractTrainer, ABC):
         return scores
 
     def update_fold_parameters(self, new_scores):
-        for key, value in new_scores.items():
+        for key in self.fold_score.keys():
+            value= new_scores[key]
             self.fold_score[key] += value
-        return self.fold_score
 
     def fold_score_tostring(self):
         s = self.fold_name + "\n"
         for key, value in self.fold_score.items():
             s += key + ": " + str(value) + ", "
         s += '\n'
+        return s
 
 
     def get_mean_of_scores(self, training_hyperparameters):
@@ -66,8 +67,9 @@ class AbstractPrivateKFoldTrainer(AbstractTrainer, ABC):
 
     def train(self, training_hyperparameters, model_hyperparameters, data,
               in_hyper_parameter_search=True,
+              print_results=True,
               dir_to_save=dir_to_base,
-              filename="kfold_results.txt"
+              filename="kfold_results.txt",
               ):
 
         pre_processed_data = self.preprocess_data(data)
@@ -84,5 +86,8 @@ class AbstractPrivateKFoldTrainer(AbstractTrainer, ABC):
 
         self.get_mean_of_scores(training_hyperparameters)
 
-        with open(os.path.join(dir_to_save, filename), "a") as file_object:
-            file_object.write(self.fold_score_tostring())
+        if print_results:
+            print("I AM HERE!!!!!!!!!!!!")
+            with open(os.path.join(dir_to_save, filename), "a") as file_object:
+                file_object.write(self.fold_score_tostring())
+        return self.fold_score
