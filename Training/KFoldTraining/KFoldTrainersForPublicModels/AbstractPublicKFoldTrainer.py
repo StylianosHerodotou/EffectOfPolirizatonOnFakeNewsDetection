@@ -26,7 +26,7 @@ class AbstractPublicKFoldTrainer(AbstractTrainer, ABC):
         pass
 
     @abstractmethod
-    def create_train_eval_data_for_fold(self,data_for_fold, pre_processed_data)
+    def create_train_eval_data_for_fold(self,data_for_fold, pre_processed_data):
         pass
 
     def train(self, training_hyperparameters, model_hyperparameters, data,
