@@ -22,5 +22,6 @@ def generate_roberta_embeddings_for_training_set(train_df,text_name=None):
     return roberta_input
 
 def get_roberta_embeddings_for_training_set(train_df,hyperparameters):
-    return torch.from_numpy(train_df[roberta_column_name].to_numpy()).long()
+    list_of_tensors= train_df[roberta_column_name].tolist()
+    return torch.stack(list_of_tensors)
 
