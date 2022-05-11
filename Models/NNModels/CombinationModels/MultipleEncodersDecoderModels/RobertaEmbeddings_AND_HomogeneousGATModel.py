@@ -30,6 +30,8 @@ class RobertaEmbeddings_AND_HomogeneousGATModel(torch.nn.Module):
     def forward(self, data):
         HomogeneousGAT_output = self.encoders["HomogeneousGAT"].forward(data)
         RobertaEmbeddings=data.extra_inputs[roberta_column_name]
+        RobertaEmbeddings= RobertaEmbeddings.repeat(HomogeneousGAT_output.size()[0], 1)
+
         decoder_input =torch.cat((HomogeneousGAT_output, RobertaEmbeddings), -1)
 
         decoder_output = self.decoder.forward(decoder_input)
