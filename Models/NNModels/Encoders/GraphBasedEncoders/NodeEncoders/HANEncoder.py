@@ -2,7 +2,7 @@ from torch_geometric.nn import HANConv
 from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.AbstractNodeGNNEncoder import AbstractNodeGNNEncoder
 
 
-class NormalToHeteroGCNEncoder(AbstractNodeGNNEncoder):
+class HANEncoder(AbstractNodeGNNEncoder):
 
     def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
         conv_layer = HANConv(in_channels=layer_hyperparameters["in_channels"],
