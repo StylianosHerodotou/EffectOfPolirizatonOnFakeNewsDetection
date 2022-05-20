@@ -22,7 +22,7 @@ class HANEncoder(AbstractNodeGNNEncoder):
                 layer_hyperparameters["in_channels"] = in_channels
             else:
                 prev_layer = hyperparameters_for_each_layer[-1]
-                layer_hyperparameters["in_channels"] = prev_layer["hidden_channels"] * prev_layer["heads"]
+                layer_hyperparameters["in_channels"] = prev_layer["hidden_channels"] 
             layer_hyperparameters["hidden_channels"] = current_hyperparameters["hidden_channels"]
             layer_hyperparameters["heads"] = current_hyperparameters["heads"]
             layer_hyperparameters["dropout"] = current_hyperparameters["dropout"]
