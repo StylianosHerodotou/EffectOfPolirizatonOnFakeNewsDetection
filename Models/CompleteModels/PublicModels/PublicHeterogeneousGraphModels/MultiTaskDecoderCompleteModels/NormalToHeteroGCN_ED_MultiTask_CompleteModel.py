@@ -1,7 +1,7 @@
 import torch
 from Models.CompleteModels.PublicModels.PublicHeterogeneousGraphModels.MultiTaskDecoderCompleteModels.AbstractMultiTaskDecoderCompleteModel import \
     AbstractMultiTaskDecoderCompleteModel
-from Models.NNModels.CombinationModels.EncoderDecoderModels.NormalToHeteroGCN_ED_MultiTask_NNModel import \
+from Models.NNModels.CombinationModels.EncoderDecoderModels.PublicGNNs.NormalToHeteroGCN_ED_MultiTask_NNModel import \
     NormalToHeteroGCN_ED_MultiTask_NNModel
 
 

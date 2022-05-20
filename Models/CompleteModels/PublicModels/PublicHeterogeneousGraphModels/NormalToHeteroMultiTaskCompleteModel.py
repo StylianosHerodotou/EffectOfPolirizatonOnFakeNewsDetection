@@ -1,6 +1,5 @@
 from Models.CompleteModels.PublicModels.AbstractCompletePublicModel import AbstractCompletePublicModel
 import torch
-from Models.NNModels.CombinationModels.EncoderDecoderModels.NormalToHeteroGCN_ED_MultiTask_NNModel import NormalToHeteroGCN_ED_MultiTask_NNModel
 
 
 class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
