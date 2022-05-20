@@ -28,7 +28,7 @@ class NormalToHeteroGATEncoder(AbstractNodeGNNEncoder):
             if (index == 0):
                 layer_hyperparameters["in_channels"] = in_channels
             else:
-                layer_hyperparameters["in_channels"] = hyperparameters_for_each_layer[index - 1]["out_channels"]
+                layer_hyperparameters["in_channels"] = hyperparameters_for_each_layer[index - 1]["hidden_channels"]
             layer_hyperparameters["hidden_channels"] = current_hyperparameters["hidden_channels"]
             layer_hyperparameters["heads"] = current_hyperparameters["heads"]
             layer_hyperparameters["dropout"] = current_hyperparameters["dropout"]
