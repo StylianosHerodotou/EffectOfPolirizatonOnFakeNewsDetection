@@ -1,4 +1,4 @@
-from torch_geometric.nn import GCNConv
+from torch_geometric.nn import SAGEConv
 from torch_geometric.nn import HeteroConv
 from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.AbstractNodeGNNEncoder import AbstractNodeGNNEncoder
 
@@ -8,7 +8,7 @@ class NormalToHeteroGCNEncoder(AbstractNodeGNNEncoder):
     def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
         conv_dict = dict()
         for edge_type in pyg_data.edge_types:
-            conv_dict[edge_type] = GCNConv(in_channels=layer_hyperparameters["in_channels"],
+            conv_dict[edge_type] = SAGEConv(in_channels=layer_hyperparameters["in_channels"],
                                            out_channels=layer_hyperparameters["hidden_channels"],
                                            improved=True)
         return HeteroConv(conv_dict, aggr=aggr_type)
