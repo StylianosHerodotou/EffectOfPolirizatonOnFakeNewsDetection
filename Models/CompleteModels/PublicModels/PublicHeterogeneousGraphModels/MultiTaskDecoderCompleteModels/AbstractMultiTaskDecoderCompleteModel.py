@@ -1,19 +1,9 @@
 from Models.CompleteModels.PublicModels.AbstractCompletePublicModel import AbstractCompletePublicModel
 import torch
-from Models.NNModels.CombinationModels.EncoderDecoderModels.NormalToHeteroGCN_ED_MultiTask_NNModel import NormalToHeteroGCN_ED_MultiTask_NNModel
 
-
-class NormalToHeteroMultiTaskCompleteModel(AbstractCompletePublicModel):
-    def __init__(self, model_hyperparameters):
+class AbstractMultiTaskDecoderCompleteModel(AbstractCompletePublicModel):
+    def __init__(self):
         super().__init__()
-        model = NormalToHeteroEDMultiTaskNNModel(model_hyperparameters["encoder_hyperparameters"],
-                                                 model_hyperparameters["decoder_hyperparameters"])
-        self.model = model
-
-        self.optimizer = self.model.decoder.get_optimizers()
-        encoder_optimizer = torch.optim.Adam(model.encoder.parameters(),
-                                             lr=model_hyperparameters["encoder_hyperparameters"]["learning_rate"])
-        self.optimizer["encoder_optimizer"] = encoder_optimizer
 
     def forward(self, train_data):
         return self.model.forward(train_data)
