@@ -13,7 +13,7 @@ class NormalToHeteroGATEncoder(AbstractNodeGNNEncoder):
                 edge_feature_dim = pyg_data[edge_type]["edge_attr"].size()[1]
 
             conv_dict[edge_type] = GATv2Conv(in_channels=layer_hyperparameters["in_channels"],
-                                             hidden_channels= layer_hyperparameters["hidden_channels"],
+                                             out_channels= layer_hyperparameters["hidden_channels"],
                                              heads=layer_hyperparameters["heads"],
                                              dropout=layer_hyperparameters["dropout"],
                                              edge_dim=edge_feature_dim,
@@ -29,6 +29,7 @@ class NormalToHeteroGATEncoder(AbstractNodeGNNEncoder):
                 layer_hyperparameters["in_channels"] = in_channels
             else:
                 layer_hyperparameters["in_channels"] = hyperparameters_for_each_layer[index - 1]["hidden_channels"]
+
             layer_hyperparameters["hidden_channels"] = current_hyperparameters["hidden_channels"]
             layer_hyperparameters["heads"] = current_hyperparameters["heads"]
             layer_hyperparameters["dropout"] = current_hyperparameters["dropout"]
