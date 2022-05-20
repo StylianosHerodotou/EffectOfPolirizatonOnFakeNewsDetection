@@ -8,10 +8,7 @@ class NormalToHeteroEDMultiTaskNNModel(torch.nn.Module):
         super().__init__()
         self.encoder = NormalToHeteroGATEncoder(in_channels=encoder_hyperparameters["in_channels"],
                                                 pyg_data=encoder_hyperparameters["pyg_data"],
-                                                hidden_channels=encoder_hyperparameters["hidden_channels"],
-                                                heads=encoder_hyperparameters["heads"],
-                                                dropout=encoder_hyperparameters["dropout"],
-                                                num_layers=encoder_hyperparameters["num_layers"])
+                                                model_parameters= encoder_hyperparameters["model_parameters"])
         self.decoder = MultiTaskDecoder(in_channels=encoder_hyperparameters["hidden_channels"] *
                                                     encoder_hyperparameters["heads"],
                                         pyg_data=decoder_hyperparameters["pyg_data"],
