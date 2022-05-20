@@ -1,7 +1,10 @@
 from DatasetRepresentation.NetworkXRepresentation.NetworkXGraphProcessing import add_centrality_node_features_to_graph
 
+
 def add_centrality_node_features_to_graph_to_large(base_large):
     add_centrality_node_features_to_graph(base_large)
+
+
 import networkx as nx
 
 
@@ -44,23 +47,22 @@ from collections import defaultdict
 import torch
 
 
-
 def map_nodes_from_old_to_new(G, node_attrs, type_name):
-    indexes_pet_type_mapping = {}
-    global_to_type_id_mapping = {}
+    indexes_per_type_mapping = dict()
+    global_to_type_id_mapping = dict()
 
     for node_type in node_attrs.keys():
-        indexes_pet_type_mapping[node_type] = 0
+        indexes_per_type_mapping[node_type] = 0
 
-    for global_index, node in enumerate(G.nodes(data=True)):
+    for node in G.nodes(data=True):
         # 1 is the index to the node features dictionary
+        global_index = node[0]
         current_node_type = node[1][type_name]
-        type_index = indexes_pet_type_mapping[current_node_type]
+
+        type_index = indexes_per_type_mapping[current_node_type]
+        indexes_per_type_mapping[current_node_type] += 1
 
         global_to_type_id_mapping[global_index] = type_index
-
-        indexes_pet_type_mapping[current_node_type] += 1
-
     return global_to_type_id_mapping
 
 
@@ -88,8 +90,9 @@ def find_edges_per_edge_type(G, edge_attrs, type_name, global_to_type_id_mapping
         edge_list = edges_per_type[current_edge_type]
 
         #####new
-        new_edge = [global_to_type_id_mapping[edge[0]], global_to_type_id_mapping[edge[1]]]
-        #         edge_list.append(edge[:2])
+        type_id_from=global_to_type_id_mapping[edge[0]]
+        type_id_to = global_to_type_id_mapping[edge[1]]
+        new_edge = [type_id_from, type_id_to]
         edge_list.append(new_edge)
     return edges_per_type
 
@@ -114,7 +117,7 @@ def create_edge_index_for_each_edge_type(edges_per_type, edge_type_old_to_new_ma
 
     for edge_type in edges_per_type.keys():
         edge_list = edges_per_type[edge_type]
-        if (len(edge_list) == 0):
+        if len(edge_list) == 0:
             continue
         edge_key = edge_type_old_to_new_mapping[edge_type]
         edge_index_for_type[edge_key] = torch.tensor(edge_list, dtype=torch.long).t().contiguous()
@@ -179,14 +182,14 @@ def add_edge_index_for_each_type_pyg_data(pyg_data, edge_index_for_type):
 def add_node_attributes_to_pyg_data(pyg_data, dict_data, node_attrs, type_name, add_node_features_as_labels=True):
     for node_type, type_attributes in node_attrs.items():
         # check if there are any node features for that node except type
-        if (type_attributes == set([type_name])):
+        if type_attributes == {type_name}:
             #             print("no node features for ", node_type)
             continue
 
         current_dict_data = dict_data[node_type]
         current_node_features = []
         for attribute in type_attributes:
-            if (attribute == type_name):
+            if attribute == type_name:
                 continue
             x = current_dict_data[attribute]
             x = x.view(-1, 1) if x.dim() <= 1 else x
@@ -203,7 +206,7 @@ def add_edge_attributes_to_pyg_data(pyg_data, dict_data, edge_attrs, type_name, 
                                     add_edge_features_as_labels=True):
     for old_edge_type, type_attributes in edge_attrs.items():
         # check if there are any edge features for that edge except type
-        if (type_attributes == set([type_name])):
+        if type_attributes == {type_name}:
             #             print("no edge features for ", old_edge_type)
             continue
 
@@ -212,13 +215,13 @@ def add_edge_attributes_to_pyg_data(pyg_data, dict_data, edge_attrs, type_name, 
 
         current_edge_features = []
         for attribute in type_attributes:
-            if (attribute == type_name):
+            if attribute == type_name:
                 continue
 
             x = current_dict_data[attribute]
             x = x.view(-1, 1) if x.dim() <= 1 else x
             ###add as label
-            if (add_edge_features_as_labels):
+            if add_edge_features_as_labels:
                 pyg_data[new_edge_type][attribute] = torch.squeeze(x)
             ###
             current_edge_features.append(x)
