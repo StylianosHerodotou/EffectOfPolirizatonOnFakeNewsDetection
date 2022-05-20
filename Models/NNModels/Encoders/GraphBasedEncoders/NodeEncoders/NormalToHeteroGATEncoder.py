@@ -23,12 +23,13 @@ class NormalToHeteroGATEncoder(AbstractNodeGNNEncoder):
 
     def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
         hyperparameters_for_each_layer = []
-        for index,current_hyperparameters in enumerate(model_parameters["hyper_parameters_for_each_layer"]):
+        for current_hyperparameters in model_parameters["hyper_parameters_for_each_layer"]:
             layer_hyperparameters = dict()
-            if (index == 0):
+            if len(hyperparameters_for_each_layer)== 0:
                 layer_hyperparameters["in_channels"] = in_channels
             else:
-                layer_hyperparameters["in_channels"] = hyperparameters_for_each_layer[index - 1]["hidden_channels"]
+                prev_layer = hyperparameters_for_each_layer[-1]
+                layer_hyperparameters["in_channels"] = prev_layer["hidden_channels"] * prev_layer["heads"]
 
             layer_hyperparameters["hidden_channels"] = current_hyperparameters["hidden_channels"]
             layer_hyperparameters["heads"] = current_hyperparameters["heads"]
