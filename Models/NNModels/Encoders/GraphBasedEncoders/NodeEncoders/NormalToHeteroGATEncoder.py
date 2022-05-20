@@ -38,12 +38,6 @@ class NormalToHeteroGATEncoder(AbstractNodeGNNEncoder):
             hyperparameters_for_each_layer.append(layer_hyperparameters)
         return hyperparameters_for_each_layer
 
-    def add_conv_layers(self, in_channels, pyg_data, model_parameters):
-        hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels, pyg_data,
-                                                                                           model_parameters)
-        for layer_hyperparameters in hyperparameters_for_each_layer:
-            new_conv_layer = self.generate_conv_layer(pyg_data, layer_hyperparameters)
-            self.convs.append(new_conv_layer)
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
