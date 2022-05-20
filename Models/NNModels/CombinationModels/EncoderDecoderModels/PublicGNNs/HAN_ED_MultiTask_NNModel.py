@@ -4,7 +4,7 @@ from Models.NNModels.Decoders.MultiTaskDecoder import MultiTaskDecoder
 from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.HANEncoder import HANEncoder
 
 
-class NormalToHeteroGCN_ED_MultiTask_NNModel(AbstractEncoderDecoderNNModel):
+class HAN_ED_MultiTask_NNModel(AbstractEncoderDecoderNNModel):
     def __init__(self, encoder_hyperparameters, decoder_hyperparameters):
         super().__init__(encoder_hyperparameters, decoder_hyperparameters)
         self.encoder = HANEncoder(in_channels=encoder_hyperparameters["in_channels"],
