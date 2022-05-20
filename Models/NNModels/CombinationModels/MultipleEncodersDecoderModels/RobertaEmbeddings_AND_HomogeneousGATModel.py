@@ -1,9 +1,8 @@
 from DatasetRepresentation.DataPreprocessing.BERTProcessing import roberta_column_name
 from Models.NNModels.Classifiers.MLP import MLP
-from Models.NNModels.Encoders.GraphEncoders.HomogeneousGAT import HomogeneousGAT
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HomogeneousGAT import HomogeneousGAT
 import torch
 
-from Models.NNModels.Encoders.TextEncoders.LSTMBagOfWordsEncoder import LSTMBagOfWordsEncoder
 
 class RobertaEmbeddings_AND_HomogeneousGATModel(torch.nn.Module):
     def __init__(self, encoders_hyperparameters, decoder_hyperparameters):

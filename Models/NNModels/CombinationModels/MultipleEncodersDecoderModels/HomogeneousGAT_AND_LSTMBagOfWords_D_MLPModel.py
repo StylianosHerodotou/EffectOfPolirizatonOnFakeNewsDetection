@@ -1,5 +1,5 @@
 from Models.NNModels.Classifiers.MLP import MLP
-from Models.NNModels.Encoders.GraphEncoders.HomogeneousGAT import HomogeneousGAT
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HomogeneousGAT import HomogeneousGAT
 import torch
 
 from Models.NNModels.Encoders.TextEncoders.LSTMBagOfWordsEncoder import LSTMBagOfWordsEncoder
