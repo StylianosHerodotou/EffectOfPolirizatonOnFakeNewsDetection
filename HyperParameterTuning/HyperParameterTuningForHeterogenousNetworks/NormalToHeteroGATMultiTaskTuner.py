@@ -1,8 +1,10 @@
 from HyperParameterTuning.AbstractHyperParameterTuner import AbstractHyperParameterTuner
+from HyperParameterTuning.HyperParameterTuningForHeterogenousNetworks.AbstractGNNHyperparameterTuner import \
+    AbstractGNNHyperparameterTuner
 from Training.KFoldTraining.KFoldTrainersForPublicModels.KFoldTrainersForHeterogeneousNetworks.NormalToHeteroGATMultiTaskKFoldTrainer import NormalToHeteroGATMultiTaskKFoldTrainer
 
 
-class NormalToHeteroGATMultiTaskTuner(AbstractHyperParameterTuner):
+class NormalToHeteroGATMultiTaskTuner(AbstractGNNHyperparameterTuner):
 
     def __init__(self, tuning_hyperparameters,training_hyperparameters):
         super().__init__(tuning_hyperparameters)

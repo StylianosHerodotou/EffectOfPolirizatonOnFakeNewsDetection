@@ -21,7 +21,11 @@ class AbstractHyperParameterTuner(ABC):
         self.mode = tuning_hyperparameters["asha_mode"]
         self.trainer = None
 
+    def adjust_training_hyperparameters(self,config):
+        pass
+
     def tuning_function(self, config):
+        self.adjust_training_hyperparameters(config)
         training_hyperparameters=config["training_hyperparameters"]
         model_hyperparameters=config["model_hyperparameters"]
         data = config["data"]
