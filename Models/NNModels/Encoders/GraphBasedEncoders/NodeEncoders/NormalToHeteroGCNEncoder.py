@@ -5,13 +5,13 @@ from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.AbstractNodeGNNEnc
 
 class NormalToHeteroGCNEncoder(AbstractNodeGNNEncoder):
 
-    def generate_conv_layer(self, pyg_data, layer_hyperparameters):
+    def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
         conv_dict = dict()
         for edge_type in pyg_data.edge_types:
             conv_dict[edge_type] = GCNConv(in_channels=layer_hyperparameters["in_channels"],
                                            out_channels=layer_hyperparameters["out_channels"],
                                            improved=True)
-        return HeteroConv(conv_dict)
+        return HeteroConv(conv_dict, aggr=aggr_type)
 
     def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
         hyperparameters_for_each_layer = []
