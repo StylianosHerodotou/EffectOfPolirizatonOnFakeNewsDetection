@@ -9,8 +9,7 @@ class NormalToHeteroGCNEncoder(AbstractNodeGNNEncoder):
         conv_dict = dict()
         for edge_type in pyg_data.edge_types:
             conv_dict[edge_type] = SAGEConv(in_channels=layer_hyperparameters["in_channels"],
-                                           out_channels=layer_hyperparameters["hidden_channels"],
-                                           improved=True)
+                                           out_channels=layer_hyperparameters["hidden_channels"])
         return HeteroConv(conv_dict, aggr=aggr_type)
 
     def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
