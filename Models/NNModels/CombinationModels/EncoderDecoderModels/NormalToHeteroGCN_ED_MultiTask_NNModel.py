@@ -6,7 +6,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.NormalToHeteroGCNE
 
 class NormalToHeteroGCN_ED_MultiTask_NNModel(AbstractEncoderDecoderNNModel):
     def __init__(self, encoder_hyperparameters, decoder_hyperparameters):
-        super().__init__()
+        super().__init__(encoder_hyperparameters, decoder_hyperparameters)
         self.encoder = NormalToHeteroGCNEncoder(in_channels=encoder_hyperparameters["in_channels"],
                                                 pyg_data=encoder_hyperparameters["pyg_data"],
                                                 model_parameters=encoder_hyperparameters["model_parameters"])
