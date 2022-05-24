@@ -1,7 +1,6 @@
 from HyperParameterTuning.AbstractHyperParameterTuner import AbstractHyperParameterTuner
 from Training.KFoldTraining.KFoldTrainersForPublicModels.KFoldTrainersForSignedNetworks import SignedGCNKFoldTrainer
 
-
 class SignedGCNTuner(AbstractHyperParameterTuner):
 
     def __init__(self, tuning_hyperparameters,training_hyperparameters):

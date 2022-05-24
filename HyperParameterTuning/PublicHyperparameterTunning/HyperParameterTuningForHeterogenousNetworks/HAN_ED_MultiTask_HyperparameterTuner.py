@@ -1,6 +1,6 @@
 from Training.KFoldTraining.KFoldTrainersForPublicModels.KFoldTrainersForHeterogeneousNetworks.HAN_ED_MultiTask_KFoldTrainer import \
     HAN_ED_MultiTask_KFoldTrainer
-from HyperParameterTuning.HyperParameterTuningForHeterogenousNetworks.AbstractGNNHyperparameterTuner import \
+from HyperParameterTuning.PublicHyperparameterTunning.HyperParameterTuningForHeterogenousNetworks import \
     AbstractGNNHyperparameterTuner
 
 
