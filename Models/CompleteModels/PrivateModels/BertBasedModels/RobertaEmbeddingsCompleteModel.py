@@ -2,9 +2,6 @@ from DatasetRepresentation.DataPreprocessing.BERTProcessing import roberta_colum
 from Models.CompleteModels.PrivateModels.AbstractCompletePrivateModel import AbstractCompletePrivateModel
 import torch
 import torch.nn.functional as F
-
-from Models.NNModels.CombinationModels.MultipleEncodersDecoderModels.RobertaEmbeddings_AND_HomogeneousGATModel import \
-    RobertaEmbeddings_AND_HomogeneousGATModel
 from Models.NNModels.CombinationModels.PretrainedEmbeddingsModels.RobertaEmbeddingsModel import RobertaEmbeddingsModel
 
 
@@ -47,3 +44,9 @@ class RobertaEmbeddingsCompleteModel(AbstractCompletePrivateModel):
 
     def set_model_parameters_to_test_mode(self):
         self.model.eval()
+
+    def find_performance(self, output, data):
+        prediction = output.max(dim=1)[1]
+        prediction = prediction.detach().numpy().tolist()
+        true_labels = data.y.detach().numpy().tolist()
+        return prediction, true_labels
