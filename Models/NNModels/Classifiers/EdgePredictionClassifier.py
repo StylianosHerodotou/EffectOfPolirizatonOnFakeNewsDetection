@@ -5,10 +5,10 @@ from Models.NNModels.Classifiers.MLP import MLP
 
 
 class EdgePredictionClassifier(torch.nn.Module):
-    def __init__(self, in_channels, output_size, nodes_per_hidden_layer: list, number_of_hidden_layers: int,
+    def __init__(self, in_channels, output_size, nodes_per_hidden_layer: list,
                  dropout=0, activation_function=F.relu, final_activation_function=F.log_softmax):
         super().__init__()
-        self.model = MLP(in_channels, output_size, nodes_per_hidden_layer, number_of_hidden_layers,
+        self.model = MLP(in_channels, output_size, nodes_per_hidden_layer,
                          dropout, activation_function, final_activation_function)
 
     def forward(self, encoder_output, pyg_data):

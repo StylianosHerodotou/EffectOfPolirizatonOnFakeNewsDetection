@@ -15,8 +15,6 @@ class SingleTaskDecoder(torch.nn.Module):
                                                        output_size=classifier_arguments["output_size"],
                                                        nodes_per_hidden_layer=classifier_arguments[
                                                            "nodes_per_hidden_layer"],
-                                                       number_of_hidden_layers=classifier_arguments[
-                                                           "number_of_hidden_layers"],
                                                        dropout=classifier_arguments["dropout"],
                                                        activation_function=classifier_arguments["activation_function"],
                                                        final_activation_function=classifier_arguments[
@@ -29,7 +27,6 @@ class SingleTaskDecoder(torch.nn.Module):
             self.classifier = MLP(in_channels=in_channels,
                                   output_size=classifier_arguments["output_size"],
                                   nodes_per_hidden_layer=classifier_arguments["nodes_per_hidden_layer"],
-                                  number_of_hidden_layers=classifier_arguments["number_of_hidden_layers"],
                                   dropout=classifier_arguments["dropout"],
                                   activation_function=classifier_arguments["activation_function"],
                                   final_activation_function=classifier_arguments["final_activation_function"])

@@ -2,7 +2,7 @@ from Models.CompleteModels.PrivateModels.AbstractCompletePrivateModel import Abs
 import torch
 import torch.nn.functional as F
 
-from Models.NNModels.CombinationModels.EncoderDecoderModels.LSTMBagOfWordsEDMLPModel import LSTMBagOfWordsEDMLPModel
+from Models.NNModels.CombinationModels.EncoderDecoderModels.PrivateGNNs.LSTMBagOfWordsEDMLPModel import LSTMBagOfWordsEDMLPModel
 
 
 class LSTMBagOfWordsCompleteModel(AbstractCompletePrivateModel):

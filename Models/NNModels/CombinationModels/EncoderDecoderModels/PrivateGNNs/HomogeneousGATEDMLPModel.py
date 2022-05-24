@@ -17,7 +17,6 @@ class HomogeneousGATEDMLPModel(torch.nn.Module):
         self.decoder = MLP(in_channels=2*encoder_hyperparameters["heads"] * encoder_hyperparameters["hidden_size"],
                               output_size=decoder_hyperparameters["output_size"],
                               nodes_per_hidden_layer=decoder_hyperparameters["nodes_per_hidden_layer"],
-                              number_of_hidden_layers=decoder_hyperparameters["number_of_hidden_layers"],
                               dropout=decoder_hyperparameters["dropout"])
     def forward(self, data):
         encoder_output = self.encoder.forward(data)

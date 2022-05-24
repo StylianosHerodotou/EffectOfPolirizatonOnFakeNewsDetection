@@ -1,6 +1,6 @@
 from Models.CompleteModels.PrivateModels.AbstractCompletePrivateModel import AbstractCompletePrivateModel
 import torch
-from Models.NNModels.CombinationModels.EncoderDecoderModels.HomogeneousGATEDMLPModel import HomogeneousGATEDMLPModel
+from Models.NNModels.CombinationModels.EncoderDecoderModels.PrivateGNNs.HomogeneousGATEDMLPModel import HomogeneousGATEDMLPModel
 import torch.nn.functional as F
 
 class HomogeneousGATCompleteModel(AbstractCompletePrivateModel):

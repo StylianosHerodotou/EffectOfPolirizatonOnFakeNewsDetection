@@ -27,7 +27,6 @@ class HomogeneousGAT_AND_LSTMBagOfWords_D_MLPModel(torch.nn.Module):
                                         encoders_hyperparameters["LSTMBagOfWordsEncoder"]["hidden_dim"],
                               output_size=decoder_hyperparameters["output_size"],
                               nodes_per_hidden_layer=decoder_hyperparameters["nodes_per_hidden_layer"],
-                              number_of_hidden_layers=decoder_hyperparameters["number_of_hidden_layers"],
                               dropout=decoder_hyperparameters["dropout"])
     def forward(self, data):
         HomogeneousGAT_output = self.encoders["HomogeneousGAT"].forward(data)
