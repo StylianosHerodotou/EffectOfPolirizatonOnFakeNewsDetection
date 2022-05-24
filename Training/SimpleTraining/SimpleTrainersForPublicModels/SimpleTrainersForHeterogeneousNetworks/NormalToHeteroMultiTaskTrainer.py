@@ -1,6 +1,6 @@
 from Models.CompleteModels.PublicModels.PublicHeterogeneousGraphModels.NormalToHeteroMultiTaskCompleteModel import \
     NormalToHeteroMultiTaskCompleteModel
-from Training.SimpleTraining.SimpleTrainersForHeterogeneousNetworks.AbstractSimpleTrainerForHeterogeneousNetwork import \
+from Training.SimpleTraining.SimpleTrainersForPublicModels.SimpleTrainersForHeterogeneousNetworks import \
     AbstractSimpleTrainerForHeterogeneousNetwork
 
 

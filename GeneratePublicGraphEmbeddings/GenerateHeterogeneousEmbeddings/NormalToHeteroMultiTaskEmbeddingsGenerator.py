@@ -1,7 +1,7 @@
 from GeneratePublicGraphEmbeddings.AbstractEmbeddingsGenerator import AbstractEmbeddingsGenerator
 from HyperParameterTuning.PublicHyperparameterTunning.HyperParameterTuningForHeterogenousNetworks import \
     NormalToHeteroGATMultiTaskTuner
-from Training.SimpleTraining.SimpleTrainersForHeterogeneousNetworks.NormalToHeteroMultiTaskTrainer import \
+from Training.SimpleTraining.SimpleTrainersForPublicModels.SimpleTrainersForHeterogeneousNetworks import \
     NormalToHeteroMultiTaskTrainer
 
 

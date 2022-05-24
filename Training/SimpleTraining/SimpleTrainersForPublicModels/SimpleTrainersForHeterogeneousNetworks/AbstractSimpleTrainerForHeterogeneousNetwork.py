@@ -1,10 +1,9 @@
 from abc import ABC
 
-from Training.SimpleTraining.AbstractSimpleTrainer import AbstractSimplePublicTrainer
+from Training.SimpleTraining.SimpleTrainersForPublicModels.AbstractSimplePublicTrainer import AbstractSimplePublicTrainer
 import numpy as np
 from Utilities.SignedGraphUtils import get_train_eval_indexes
 from sklearn.model_selection import train_test_split
-import torch
 import copy
 
 

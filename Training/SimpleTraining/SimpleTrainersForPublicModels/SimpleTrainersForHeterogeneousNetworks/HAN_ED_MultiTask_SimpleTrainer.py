@@ -1,5 +1,5 @@
 from Models.CompleteModels.PublicModels.PublicHeterogeneousGraphModels.MultiTaskDecoderCompleteModels.HAN_ED_MultiTask_CompleteModel import HAN_ED_MultiTask_CompleteModel
-from Training.SimpleTraining.SimpleTrainersForHeterogeneousNetworks.AbstractSimpleTrainerForHeterogeneousNetwork import \
+from Training.SimpleTraining.SimpleTrainersForPublicModels.SimpleTrainersForHeterogeneousNetworks import \
     AbstractSimpleTrainerForHeterogeneousNetwork
 
 

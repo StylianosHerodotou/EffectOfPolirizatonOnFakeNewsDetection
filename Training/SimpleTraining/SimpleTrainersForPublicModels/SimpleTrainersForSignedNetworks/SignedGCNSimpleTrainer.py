@@ -1,7 +1,7 @@
 from Models.CompleteModels.PublicModels.PublicSignedModels.SignedGCNCompleteModel import SignedGCNCompleteModel
 import torch
 
-from Training.SimpleTraining.SimpleTrainersForSignedNetworks.AbstractSimpleTrainerForSignedNetwork import \
+from Training.SimpleTraining.SimpleTrainersForPublicModels.SimpleTrainersForSignedNetworks.AbstractSimpleTrainerForSignedNetwork import \
     AbstractSimpleTrainerForSignedNetwork
 
 
