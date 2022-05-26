@@ -13,3 +13,5 @@ class HAN_ED_MultiTask_SimpleTrainer(AbstractSimpleTrainerForHeterogeneousNetwor
     def set_new_model_parameters(self, model, training_hyperparameters, model_hyperparameters,
                                  data, pre_processed_data, train_data, eval_data):
         pass
+
+
