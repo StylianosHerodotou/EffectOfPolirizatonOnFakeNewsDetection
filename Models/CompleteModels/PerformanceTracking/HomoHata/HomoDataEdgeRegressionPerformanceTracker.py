@@ -1,11 +1,10 @@
 from Models.CompleteModels.PerformanceTracking.AbstractPerformanceTracker import AbstractPerformanceTracker
 import torch
+import torch.nn.functional as F
 
 
-def MAPE(y_pred, y):
-    metric = ((y - y_pred).abs() / y.abs()).mean()
-    metric = metric.item()
-    return metric
+def find_metric(y_pred, y):
+    return F.nll_loss (y_pred, y)
 
 
 class HomoDataEdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
@@ -22,7 +21,7 @@ class HomoDataEdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
     def metric_function(self, output, pyg_data, *args):
         edge_prediction = torch.squeeze(output).float()
         edge_labels = torch.squeeze(pyg_data.edge_attr).float()
-        return MAPE(edge_prediction, edge_labels)
+        return find_metric(edge_prediction, edge_labels)
 
     def desired_metric_function(self, new_value, old_value):
         return min(new_value, old_value)
