@@ -1,15 +1,18 @@
 from Models.CompleteModels.PerformanceTracking.AbstractPerformanceTracker import AbstractPerformanceTracker
 import torch
 
-def MAPE(y_pred, y):
-    metric= ((y - y_pred).abs() / y.abs()).mean()
-    metric = metric.item()
-    return metric
+# def MAPE(y_pred, y):
+#     metric= ((y - y_pred).abs() / y.abs()).mean()
+#     metric = metric.item()
+#     return metric
+from Models.CompleteModels.PerformanceTracking.RMSELossFunction import RMSELoss
+
 
 class HeteroDataEdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
     def __init__(self):
         super().__init__()
-        self.criterion = torch.nn.L1Loss()
+        self.criterion = RMSELoss()
+        self.metric_criterion= torch.nn.L1Loss()
 
     def loss_function(self, output, pyg_data, *args):
         edge_type = args[0]
@@ -25,7 +28,7 @@ class HeteroDataEdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
         feature_name = args[1]
         edge_prediction = torch.squeeze(output[edge_type]).float()
         edge_labels = pyg_data[edge_type][feature_name].float()
-        return MAPE(edge_prediction, edge_labels)
+        return self.metric_criterion(edge_prediction, edge_labels).item()
 
     def desired_metric_function(self, new_value, old_value):
         return min(new_value, old_value)
