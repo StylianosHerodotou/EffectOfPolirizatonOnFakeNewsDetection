@@ -11,7 +11,7 @@ from Models.CompleteModels.PerformanceTracking.RMSELossFunction import RMSELoss
 class HeteroDataEdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
     def __init__(self):
         super().__init__()
-        self.criterion = RMSELoss()
+        self.criterion = torch.nn.L1Loss()
         self.metric_criterion= torch.nn.L1Loss()
 
     def loss_function(self, output, pyg_data, *args):
