@@ -18,14 +18,14 @@ class HEAT_ED_MultiTask_SimpleTrainer(AbstractSimpleTrainerForHeterogeneousNetwo
                                  data, pre_processed_data, train_data, eval_data):
         pass
 
-    def create_train_eval_data(self, pyg_data, pre_processed_data, training_hyperparameters):
+    def create_train_eval_data(pyg_data, pre_processed_data, training_hyperparameters):
         train_dict = copy.copy(pyg_data)
         eval_dict = copy.copy(pyg_data)
         if training_hyperparameters["test_size"] != 0:
 
             edge_index = pyg_data.edge_index
 
-            train_idx, val_idx = train_test_split(np.arange(edge_index.size()[1]),
+            train_idx, val_idx = train_test_split(np.arange(edge_index.size(1)),
                                                   test_size=training_hyperparameters["test_size"],
                                                   random_state=42, shuffle=True)
             train_index, eval_index = get_train_eval_indexes(edge_index, train_idx, val_idx)
@@ -33,7 +33,12 @@ class HEAT_ED_MultiTask_SimpleTrainer(AbstractSimpleTrainerForHeterogeneousNetwo
             train_dict.edge_index = train_index
             eval_dict.edge_index = eval_index
 
-            for edge_feature_name, edge_feature_values in pyg_data.items():
+            # edge type
+            # edge attribute
+            list_of_attributes_to_split = ["edge_type", "edge_attr"]
+
+            for edge_feature_name in list_of_attributes_to_split:
+                edge_feature_values = pyg_data[edge_feature_name]
                 if edge_feature_name == "edge_index":
                     continue
 
