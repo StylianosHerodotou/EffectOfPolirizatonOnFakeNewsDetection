@@ -1,6 +1,6 @@
 from Models.NNModels.CombinationModels.EncoderDecoderModels.AbstractEncoderDecoderNNModel import \
     AbstractEncoderDecoderNNModel
-from Models.NNModels.Decoders.MultiTaskDecoder import MultiTaskDecoder
+from Models.NNModels.Decoders.HeterogeneousDataMultiTaskDecoder import HeterogeneousDataMultiTaskDecoder
 from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.HANEncoder import HANEncoder
 
 
@@ -13,9 +13,9 @@ class HAN_ED_MultiTask_NNModel(AbstractEncoderDecoderNNModel):
 
         last_layer= encoder_hyperparameters["model_parameters"]["hyper_parameters_for_each_layer"][-1]
         decoder_in_channels = last_layer["hidden_channels"]
-        self.decoder = MultiTaskDecoder(in_channels=decoder_in_channels,
-                                        pyg_data=decoder_hyperparameters["pyg_data"],
-                                        classifier_per_task_arguments=decoder_hyperparameters[
+        self.decoder = HeterogeneousDataMultiTaskDecoder(in_channels=decoder_in_channels,
+                                                         pyg_data=decoder_hyperparameters["pyg_data"],
+                                                         classifier_per_task_arguments=decoder_hyperparameters[
                                             "classifier_per_task_arguments"])
 
     def forward(self, data):

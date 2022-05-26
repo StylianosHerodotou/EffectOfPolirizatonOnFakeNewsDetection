@@ -1,15 +1,15 @@
 import torch
-from Models.NNModels.Decoders.SingleTaskDecoder import SingleTaskDecoder
+from Models.NNModels.Decoders.HeterogeneousDataSingleTaskDecoder import HeterogeneousDataSingleTaskDecoder
 
 
-class MultiTaskDecoder(torch.nn.Module):
+class HeterogeneousDataMultiTaskDecoder(torch.nn.Module):
     def __init__(self, in_channels, pyg_data,classifier_per_task_arguments ):
         super().__init__()
 
         self.task_decoders = torch.nn.ModuleDict()
 
         for task_name, MLP_arguments in classifier_per_task_arguments.items():
-            self.task_decoders[task_name] = SingleTaskDecoder(in_channels, pyg_data, MLP_arguments)
+            self.task_decoders[task_name] = HeterogeneousDataSingleTaskDecoder(in_channels, pyg_data, MLP_arguments)
 
     def forward(self, data,encoder_output):
         decoder_output = dict()
