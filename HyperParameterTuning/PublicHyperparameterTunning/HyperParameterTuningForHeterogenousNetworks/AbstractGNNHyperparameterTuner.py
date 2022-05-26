@@ -1,6 +1,4 @@
 from HyperParameterTuning.AbstractHyperParameterTuner import AbstractHyperParameterTuner
-from Training.KFoldTraining.KFoldTrainersForPublicModels.KFoldTrainersForHeterogeneousNetworks.NormalToHeteroGATMultiTaskKFoldTrainer import NormalToHeteroGATMultiTaskKFoldTrainer
-
 
 class AbstractGNNHyperparameterTuner(AbstractHyperParameterTuner):
 
