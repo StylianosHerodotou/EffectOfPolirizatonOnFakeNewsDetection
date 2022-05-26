@@ -1,5 +1,6 @@
 from HyperParameterTuning.AbstractHyperParameterTuner import AbstractHyperParameterTuner
 
+
 class AbstractGNNHyperparameterTuner(AbstractHyperParameterTuner):
 
     def adjust_training_hyperparameters(self,config):
