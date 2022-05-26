@@ -107,7 +107,7 @@ class AbstractMultiTaskDecoderCompleteModel(AbstractCompletePublicModel):
         return to_return
 
     def get_report_score(self, performance_metric_dict):
-        combined_performance = 0;
+        combined_performance = 0
         for task_name, task_decoder in self.model.decoder.task_decoders.items():
             combined_performance += performance_metric_dict[task_name] * task_decoder.metric_weight
-        return combined_performance.item()
+        return combined_performance
