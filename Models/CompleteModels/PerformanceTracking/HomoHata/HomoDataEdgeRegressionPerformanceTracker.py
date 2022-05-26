@@ -9,7 +9,7 @@ class HomoDataEdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
     def __init__(self):
         super().__init__()
         self.criterion = torch.nn.L1Loss()
-        self.metric_criterion= F.nll_loss()
+        self.metric_criterion= torch.nn.CrossEntropyLoss()
 
     def loss_function(self, output, pyg_data, *args):
         edge_prediction = torch.squeeze(output).float()
