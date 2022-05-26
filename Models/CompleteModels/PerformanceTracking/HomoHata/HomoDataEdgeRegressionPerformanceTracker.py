@@ -1,30 +1,27 @@
 from Models.CompleteModels.PerformanceTracking.AbstractPerformanceTracker import AbstractPerformanceTracker
 import torch
 
+
 def MAPE(y_pred, y):
-    metric= ((y - y_pred).abs() / y.abs()).mean()
+    metric = ((y - y_pred).abs() / y.abs()).mean()
     metric = metric.item()
     return metric
 
-class EdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
+
+class HomoDataEdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
     def __init__(self):
         super().__init__()
         self.criterion = torch.nn.L1Loss()
 
     def loss_function(self, output, pyg_data, *args):
-        edge_type = args[0]
-        feature_name = args[1]
-        # print("this is something\n\n",edge_type, feature_name)
-        edge_prediction = torch.squeeze(output[edge_type]).float()
-        edge_labels = pyg_data[edge_type][feature_name].float()
+        edge_prediction = torch.squeeze(output).float()
+        edge_labels = torch.squeeze(pyg_data.edge_attr).float()
         loss = self.criterion(edge_prediction, edge_labels)
         return loss
 
     def metric_function(self, output, pyg_data, *args):
-        edge_type = args[0]
-        feature_name = args[1]
-        edge_prediction = torch.squeeze(output[edge_type]).float()
-        edge_labels = pyg_data[edge_type][feature_name].float()
+        edge_prediction = torch.squeeze(output).float()
+        edge_labels = torch.squeeze(pyg_data.edge_attr).float()
         return MAPE(edge_prediction, edge_labels)
 
     def desired_metric_function(self, new_value, old_value):

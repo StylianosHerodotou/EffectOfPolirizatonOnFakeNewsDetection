@@ -4,7 +4,7 @@ import torch
 from Utilities.PerformanceTrackerUtils import to_categorical
 
 
-class EdgeClassificationTracker(AbstractPerformanceTracker):
+class HeteroDataEdgeClassificationTracker(AbstractPerformanceTracker):
     def __init__(self):
         super().__init__()
         self.criterion = torch.nn.CrossEntropyLoss()
