@@ -18,7 +18,7 @@ class HEAT_ED_MultiTask_SimpleTrainer(AbstractSimpleTrainerForHeterogeneousNetwo
                                  data, pre_processed_data, train_data, eval_data):
         pass
 
-    def create_train_eval_data(pyg_data, pre_processed_data, training_hyperparameters):
+    def create_train_eval_data(self, pyg_data, pre_processed_data, training_hyperparameters):
         train_dict = copy.copy(pyg_data)
         eval_dict = copy.copy(pyg_data)
         if training_hyperparameters["test_size"] != 0:
