@@ -1,6 +1,6 @@
-from Models.CompleteModels.PublicModels.PublicHeterogeneousGraphModels.MultiTaskDecoderCompleteModels.HEAT_ED_MultiTask_CompleteModel import \
-    HEAT_ED_MultiTask_CompleteModel
-from Training.SimpleTraining.SimpleTrainersForPublicModels.SimpleTrainersForHeterogeneousNetworks import \
+from Models.CompleteModels.PublicModels.PublicHeterogeneousGraphModels.MultiTaskDecoderCompleteModels.\
+    HEAT_ED_MultiTask_CompleteModel import HEAT_ED_MultiTask_CompleteModel
+from Training.SimpleTraining.SimpleTrainersForPublicModels.SimpleTrainersForHeterogeneousNetworks.AbstractSimpleTrainerForHeterogeneousNetwork import \
     AbstractSimpleTrainerForHeterogeneousNetwork
 
 
