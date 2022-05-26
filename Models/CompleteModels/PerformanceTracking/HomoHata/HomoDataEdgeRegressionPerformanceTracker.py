@@ -2,6 +2,8 @@ from Models.CompleteModels.PerformanceTracking.AbstractPerformanceTracker import
 import torch
 import torch.nn.functional as F
 
+from Models.CompleteModels.PerformanceTracking.RMSELossFunction import RMSELoss
+
 
 def find_metric(y_pred, y):
     return F.nll_loss (y_pred, y)
@@ -10,7 +12,8 @@ def find_metric(y_pred, y):
 class HomoDataEdgeRegressionPerformanceTracker(AbstractPerformanceTracker):
     def __init__(self):
         super().__init__()
-        self.criterion = torch.nn.L1Loss()
+        self.criterion = RMSELoss()
+        self.metric_criterion= torch.nn.L1Loss()
 
     def loss_function(self, output, pyg_data, *args):
         edge_prediction = torch.squeeze(output).float()
