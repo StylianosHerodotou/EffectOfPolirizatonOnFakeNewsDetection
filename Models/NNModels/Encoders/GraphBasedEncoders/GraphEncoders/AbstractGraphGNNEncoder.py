@@ -24,7 +24,7 @@ class AbstractGraphGNNEncoder(AbstractGNNEncoder):
         pass
 
     @abstractmethod
-    def get_useful_pool_result_data(self, all_data):
+    def get_useful_pool_result_data(self, useful_data, all_data):
         pass
 
     @abstractmethod

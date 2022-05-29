@@ -12,7 +12,7 @@ class AbstractHomogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHomoge
     def pool_forward(self, useful_data, pool_layer):
         pool_input = self.get_pool_input(useful_data)
         all_data = pool_layer(pool_input)
-        useful_data = self.get_useful_pool_result_data(all_data)
+        useful_data = self.get_useful_pool_result_data(useful_data, all_data)
         return useful_data
 
     def update_vector_representation(self, useful_data, vector_representation):

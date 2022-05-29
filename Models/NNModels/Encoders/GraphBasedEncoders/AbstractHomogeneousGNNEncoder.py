@@ -1,7 +1,9 @@
+from abc import ABC
+
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractGNNEncoder import AbstractGNNEncoder
 
 
-class AbstractHomogeneousGNNEncoder(AbstractGNNEncoder):
+class AbstractHomogeneousGNNEncoder(AbstractGNNEncoder, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)

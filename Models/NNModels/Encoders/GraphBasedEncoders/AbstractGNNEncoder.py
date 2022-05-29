@@ -1,6 +1,7 @@
 import torch
 from abc import ABC, abstractmethod
 
+
 class AbstractGNNEncoder(ABC, torch.nn.Module):
     @abstractmethod
     def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
@@ -17,9 +18,8 @@ class AbstractGNNEncoder(ABC, torch.nn.Module):
             new_conv_layer = self.generate_conv_layer(pyg_data, layer_hyperparameters)
             self.convs.append(new_conv_layer)
 
-    @abstractmethod
     def extract_useful_data_from_input(self, pyg_data):
-        pass
+        return pyg_data.copy()
 
     @abstractmethod
     def get_conv_input(self, useful_data):
@@ -37,8 +37,8 @@ class AbstractGNNEncoder(ABC, torch.nn.Module):
     def forward(self, pyg_data):
         pass
 
-    def __init__(self, in_channels, pyg_data,model_parameters):
+    def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__()
-        self.activation_function= model_parameters["activation_function"]
+        self.activation_function = model_parameters["activation_function"]
         self.convs = torch.nn.ModuleList()
-        self.add_conv_layers(in_channels, pyg_data,model_parameters)
+        self.add_conv_layers(in_channels, pyg_data, model_parameters)

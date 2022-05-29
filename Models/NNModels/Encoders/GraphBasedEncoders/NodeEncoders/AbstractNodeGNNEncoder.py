@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractGNNEncoder import AbstractGNNEncoder
 
@@ -17,4 +17,4 @@ class AbstractNodeGNNEncoder(AbstractGNNEncoder, ABC):
         for conv_layer in self.convs:
             useful_data = self.conv_forward(useful_data, conv_layer)
             useful_data = self.activation_forward(useful_data)
-        return self.extract_useful_data_from_input(useful_data)
+        return self.extract_embeddings_from_useful_data(useful_data)

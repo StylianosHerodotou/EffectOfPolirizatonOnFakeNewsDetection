@@ -15,7 +15,7 @@ class AbstractHeterogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHete
             current_useful_data= useful_data[key]
             pool_input = self.get_pool_input(current_useful_data)
             all_data = pool_layer(pool_input)
-            current_useful_data = self.get_useful_pool_result_data(all_data)
+            current_useful_data = self.get_useful_pool_result_data(current_useful_data, all_data)
             useful_data[key]= current_useful_data
         return useful_data
 
