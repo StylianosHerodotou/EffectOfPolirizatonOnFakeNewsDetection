@@ -3,17 +3,16 @@ from abc import ABC
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractGNNEncoder import AbstractGNNEncoder
 
 
-class AbstractHeterogeneousGNNEncoder(AbstractGNNEncoder, ABC):
+class AbstractHeteroGNNEncoder(AbstractGNNEncoder, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
-    def conv_forward(self, useful_data, conv_layer):
-        conv_input = self.get_conv_input(useful_data)
-        x_dict = conv_layer(conv_input)
-        x_dict = {key: x for key, x in x_dict.items()}
-        useful_data.x_dict = x_dict
-        return useful_data
+    # def conv_forward(self, useful_data, conv_layer):
+    #     x_dict = self.object_specifci_conv_pass(useful_data, conv_layer)
+    #     x_dict = {key: x for key, x in x_dict.items()}
+    #     useful_data.x_dict = x_dict
+    #     return useful_data
 
     def activation_forward(self, useful_data):
         x_dict = useful_data.x_dict

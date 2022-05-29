@@ -1,18 +1,21 @@
-from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHomogeneousGNNEncoder import AbstractHomogeneousGNNEncoder
+from abc import ABC
+
+from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHomoGNNEncoder import AbstractHomogeneousGNNEncoder
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractGraphGNNEncoder import AbstractGraphGNNEncoder
 from torch_geometric.nn import global_mean_pool as gap, global_max_pool as gmp
 import torch
 
 
-class AbstractHomogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHomogeneousGNNEncoder):
+class AbstractHomogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHomogeneousGNNEncoder, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
+    def generate_pool_layer(self, pyg_data, layer_hyperparameters):
+        return self.generate_single_pool_layer(pyg_data, layer_hyperparameters)
+
     def pool_forward(self, useful_data, pool_layer):
-        pool_input = self.get_pool_input(useful_data)
-        all_data = pool_layer(pool_input)
-        useful_data = self.get_useful_pool_result_data(useful_data, all_data)
+        useful_data= self.single_pool_layer_pass(useful_data, pool_layer)
         return useful_data
 
     def update_vector_representation(self, useful_data, vector_representation):

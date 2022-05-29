@@ -1,22 +1,29 @@
-from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHeterogeneousGNNEncoder import AbstractHeterogeneousGNNEncoder
+from abc import ABC
+
+from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHeteroGNNEncoder import AbstractHeteroGNNEncoder
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractGraphGNNEncoder import AbstractGraphGNNEncoder
 from torch_geometric.nn import global_mean_pool as gap, global_max_pool as gmp
 import torch
 
 
-class AbstractHeterogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHeterogeneousGNNEncoder):
+class AbstractHeterogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHeteroGNNEncoder, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
-    def pool_forward(self, useful_data, pool_layer):
-        x_dict = useful_data.x_dict
-        for key in x_dict.keys():
-            current_useful_data= useful_data[key]
-            pool_input = self.get_pool_input(current_useful_data)
-            all_data = pool_layer(pool_input)
-            current_useful_data = self.get_useful_pool_result_data(current_useful_data, all_data)
-            useful_data[key]= current_useful_data
+    def generate_pool_layer(self, pyg_data, layer_hyperparameters):
+        x_dict = pyg_data.x_dict
+        current_layer_pooling_dict = torch.nn.ModuleDict()
+
+        for key in  x_dict.keys():
+            current_layer_pooling_dict[key] = self.generate_single_pool_layer(pyg_data, layer_hyperparameters)
+        return current_layer_pooling_dict
+
+    def pool_forward(self, useful_data, pool_layer_dict):
+        for key, pool_layer in pool_layer_dict.items():
+            current_useful_data = useful_data[key]
+            current_useful_data = self.single_pool_layer_pass(current_useful_data, pool_layer)
+            useful_data[key] = current_useful_data
         return useful_data
 
     def update_vector_representation(self, useful_data, vector_representation):

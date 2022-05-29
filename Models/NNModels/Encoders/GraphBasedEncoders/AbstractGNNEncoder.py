@@ -11,6 +11,10 @@ class AbstractGNNEncoder(ABC, torch.nn.Module):
     def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
         pass
 
+    @abstractmethod
+    def conv_forward(self, useful_data, conv_layer):
+        pass
+
     def add_conv_layers(self, in_channels, pyg_data, model_parameters):
         hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels, pyg_data,
                                                                                            model_parameters)
@@ -22,16 +26,11 @@ class AbstractGNNEncoder(ABC, torch.nn.Module):
         return copy.copy(pyg_data)
 
     @abstractmethod
-    def get_conv_input(self, useful_data):
-        pass
-
-    @abstractmethod
-    def conv_forward(self, useful_data, conv_layer):
-        pass
-
-    @abstractmethod
     def activation_forward(self, useful_data):
         pass
+
+    def extra_dropout_forward(self, useful_data):
+        return useful_data
 
     @abstractmethod
     def forward(self, pyg_data):

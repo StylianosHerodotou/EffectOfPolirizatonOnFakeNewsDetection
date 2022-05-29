@@ -1,7 +1,7 @@
 from Models.NNModels.CombinationModels.EncoderDecoderModels.AbstractEncoderDecoderNNModel import \
     AbstractEncoderDecoderNNModel
 from Models.NNModels.Decoders.HeterogeneousDataMultiTaskDecoder import HeterogeneousDataMultiTaskDecoder
-from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.NormalToHeteroGCNEncoder import NormalToHeteroGCNEncoder
+from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.HeteroDataModels.NormalToHeteroGCNEncoder import NormalToHeteroGCNEncoder
 
 
 class NormalToHeteroGCN_ED_MultiTask_NNModel(AbstractEncoderDecoderNNModel):

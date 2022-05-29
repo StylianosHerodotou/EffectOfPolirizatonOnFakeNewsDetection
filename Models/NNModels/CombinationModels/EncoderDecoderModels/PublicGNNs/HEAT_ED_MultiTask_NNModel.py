@@ -1,7 +1,7 @@
 from Models.NNModels.CombinationModels.EncoderDecoderModels.AbstractEncoderDecoderNNModel import \
     AbstractEncoderDecoderNNModel
 from Models.NNModels.Decoders.HomogeneousDataMultiTaskDecoder import HomogeneousDataMultiTaskDecoder
-from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.HEATEncoder import HEATEncoder
+from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.HeteroDataModels.HEATEncoder import HEATEncoder
 
 
 class HEAT_ED_MultiTask_NNModel(AbstractEncoderDecoderNNModel):

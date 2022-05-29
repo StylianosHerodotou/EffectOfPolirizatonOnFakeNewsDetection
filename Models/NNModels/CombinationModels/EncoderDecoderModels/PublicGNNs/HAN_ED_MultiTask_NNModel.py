@@ -1,7 +1,7 @@
 from Models.NNModels.CombinationModels.EncoderDecoderModels.AbstractEncoderDecoderNNModel import \
     AbstractEncoderDecoderNNModel
 from Models.NNModels.Decoders.HeterogeneousDataMultiTaskDecoder import HeterogeneousDataMultiTaskDecoder
-from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.HANEncoder import HANEncoder
+from Models.NNModels.Encoders.GraphBasedEncoders.NodeEncoders.HeteroDataModels.HANEncoder import HANEncoder
 
 
 class HAN_ED_MultiTask_NNModel(AbstractEncoderDecoderNNModel):

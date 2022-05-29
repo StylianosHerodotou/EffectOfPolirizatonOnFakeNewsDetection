@@ -1,5 +1,5 @@
 from torch_geometric.nn import GATv2Conv, SAGPooling
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractHomogeneousGraphGNNEncoder import \
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HomoDataModels.AbstractHomogeneousGraphGNNEncoder import \
     AbstractHomogeneousGraphGNNEncoder
 
 
