@@ -10,6 +10,7 @@ class AbstractHomogeneousGNNEncoder(AbstractGNNEncoder, ABC):
 
     def conv_forward(self, useful_data, conv_layer):
         conv_input = self.get_conv_input(useful_data)
+        print(conv_input)
         x = conv_layer(conv_input)
         useful_data.x = x
         return useful_data
