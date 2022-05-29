@@ -71,4 +71,3 @@ class HomogeneousGATGraphEncoder(AbstractHomogeneousGraphGNNEncoder):
     def get_conv_input(self, useful_data):
         conv_input = useful_data.x, useful_data.edge_index, useful_data.edge_attr
         return conv_input
-

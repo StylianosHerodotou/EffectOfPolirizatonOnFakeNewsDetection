@@ -1,6 +1,6 @@
 import torch
 from abc import ABC, abstractmethod
-
+import copy
 
 class AbstractGNNEncoder(ABC, torch.nn.Module):
     @abstractmethod
@@ -19,7 +19,7 @@ class AbstractGNNEncoder(ABC, torch.nn.Module):
             self.convs.append(new_conv_layer)
 
     def extract_useful_data_from_input(self, pyg_data):
-        return pyg_data.copy()
+        return copy.copy(pyg_data)
 
     @abstractmethod
     def get_conv_input(self, useful_data):
