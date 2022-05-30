@@ -52,11 +52,13 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
             if hasattr(useful_data, hetero_value_name):
                 useful_data[homo_value_name] = useful_data[hetero_value_name]
 
-        self.homo_convolution_class.conv_forward(self, useful_data, conv_layer)
+        useful_data= self.homo_convolution_class.conv_forward(self, useful_data, conv_layer)
 
         for hetero_value_name, homo_value_name in to_add.items():
             if hasattr(useful_data, hetero_value_name):
                 del useful_data[homo_value_name]
+
+        return useful_data
 
     # # returns a list of dictionaries of dictionaries .
     # def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
