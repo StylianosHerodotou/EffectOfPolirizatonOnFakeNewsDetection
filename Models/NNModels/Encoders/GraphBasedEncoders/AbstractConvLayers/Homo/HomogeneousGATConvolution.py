@@ -46,8 +46,3 @@ class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
 
         return useful_data
 
-    # def conv_forward(self, useful_data, conv_layer):
-    #     x, edge_index, edge_attr = useful_data.x, useful_data.edge_index, useful_data.edge_attr
-    #     new_x = conv_layer(x, edge_index, edge_attr)
-    #     useful_data.x = new_x
-    #     return useful_data
