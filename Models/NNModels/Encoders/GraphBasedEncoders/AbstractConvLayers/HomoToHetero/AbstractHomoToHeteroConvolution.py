@@ -13,7 +13,8 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
         conv_dict = dict()
         for edge_type in pyg_data.edge_types:
             layer_hyperparameters = layer_hyperparameters_for_all_edge_types[edge_type]
-            conv_dict[edge_type] = self.homo_convolution_class.generate_conv_layer(pyg_data, layer_hyperparameters,
+            conv_dict[edge_type] = self.homo_convolution_class.generate_conv_layer(self, pyg_data,
+                                                                                   layer_hyperparameters,
                                                                                    aggr_type=aggr_type)
 
         return HeteroConv(conv_dict, aggr=aggr_type)
@@ -26,7 +27,7 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
             current_edge_pyg_data = pyg_data[edge_type]
             current_edge_model_parameters = model_parameters[edge_type]
             hyperparameters_for_this_edge_type = self.homo_convolution_class. \
-                generate_hyperparameters_for_each_conv_layer(in_channels, pyg_data=current_edge_pyg_data,
+                generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data=current_edge_pyg_data,
                                                              model_parameters=current_edge_model_parameters)
             all_edges_hyperparameters_dict[edge_type] = hyperparameters_for_this_edge_type
 
@@ -44,7 +45,7 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
         return all_edges_hyperparameters_list
 
     def conv_forward(self, useful_data, conv_layer):
-        self.homo_convolution_class.conv_forward(useful_data, conv_layer)
+        self.homo_convolution_class.conv_forward(self, useful_data, conv_layer)
 
     # # returns a list of dictionaries of dictionaries .
     # def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
