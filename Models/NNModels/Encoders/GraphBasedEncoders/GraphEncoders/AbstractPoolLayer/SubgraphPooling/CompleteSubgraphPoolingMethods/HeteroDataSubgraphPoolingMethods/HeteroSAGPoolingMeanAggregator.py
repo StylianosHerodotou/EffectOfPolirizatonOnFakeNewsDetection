@@ -22,7 +22,7 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
         for all_edge_layer_hyperparameeters in conv_hyperparameters_for_each_layer_for_all_edge_type:
             input_size = 0
             for edge_type, edge_hyperparameters in all_edge_layer_hyperparameeters.items():
-                input_size += edge_hyperparameters["hidden_channels"] + \
+                input_size += edge_hyperparameters["hidden_channels"] * \
                               edge_hyperparameters["heads"]
             ratio = model_parameters["pooling_ratio"]
             layer_hyperparameters = {
