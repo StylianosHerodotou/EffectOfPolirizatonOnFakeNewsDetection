@@ -4,7 +4,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
     AbstractAtEndPooling
 from torch_geometric.nn import MemPooling
 import torch.nn.functional as F
-
+import torch
 
 class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
@@ -56,7 +56,8 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
 
     def get_single_vector_representation(self, useful_data):
         x = useful_data.x
-        return x.squeeze()
+        x= x.squeeze()
+        return torch.flatten(x)
 
     def get_single_pooling_additional_loss(self, useful_data):
         pooling_loss = useful_data.pooling_loss
