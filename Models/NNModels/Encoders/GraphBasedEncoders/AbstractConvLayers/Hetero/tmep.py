@@ -3,8 +3,8 @@ from abc import ABC
 from torch_geometric.nn import GATv2Conv
 
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractGraphGNNEncoder import AbstractGraphGNNEncoder
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HeteroDataModels.NormalToHeteroGATGraphEncoder import \
-    NormalToHeteroGATGraphEncoder
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HeteroDataModels.HomoToHeteroGATGraphEncoder import \
+    HomoToHeteroGATGraphEncoder
 
 
 class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
