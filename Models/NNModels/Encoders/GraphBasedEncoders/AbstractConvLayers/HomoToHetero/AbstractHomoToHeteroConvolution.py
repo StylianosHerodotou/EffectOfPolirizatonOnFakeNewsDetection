@@ -57,7 +57,7 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
 
         for hetero_value_name, homo_value_name in to_add.items():
             if hetero_value_name in useful_data_keys:
-                del useful_data[homo_value_name]=
+                del useful_data[homo_value_name]
 
     # # returns a list of dictionaries of dictionaries .
     # def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
