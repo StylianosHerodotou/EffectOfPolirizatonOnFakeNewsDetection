@@ -23,7 +23,7 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
         useful_data.x = x
 
         pooling_loss = MemPooling.kl_loss(pooling_loss)
-        if "pooling_loss" not in useful_data.keys():
+        if "pooling_loss" not in useful_data.to_dict().keys():
             useful_data.pooling_loss = 0
         useful_data.pooling_loss = useful_data.pooling_loss + pooling_loss
 
