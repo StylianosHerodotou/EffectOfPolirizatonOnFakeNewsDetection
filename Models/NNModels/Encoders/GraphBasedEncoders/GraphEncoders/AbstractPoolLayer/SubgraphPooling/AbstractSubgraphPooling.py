@@ -24,11 +24,17 @@ class AbstractSubgraphPooling(AbstractGraphGNNEncoder, ABC):
         pass
 
     def forward(self, pyg_data):
+        homo = pyg_data.to_homogeneous()
+
         useful_data = self.extract_useful_data_from_input(pyg_data)
+        homo = useful_data.to_homogeneous()
+
         vector_representation = None
         for conv_layer, pool_layer in zip(self.convs, self.pools):
             useful_data = self.conv_forward(useful_data, conv_layer)
+            homo= useful_data.to_homogeneous()
             useful_data = self.activation_forward(useful_data)
+            homo= useful_data.to_homogeneous()
             useful_data = self.pool_forward(useful_data, pool_layer)
             if conv_layer != self.convs[-1]:
                 useful_data = self.extra_dropout_forward(useful_data)
