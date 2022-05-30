@@ -41,4 +41,4 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
                 current_layer_all_edges_dict[edge_type] = edge_layer_hyperparameters
 
         return all_edges_hyperparameters_list
- 
+

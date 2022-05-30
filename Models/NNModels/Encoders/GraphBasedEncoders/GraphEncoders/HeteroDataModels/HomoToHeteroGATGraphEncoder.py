@@ -1,14 +1,13 @@
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractConvLayers.HomoToHetero.HomoToHeteroGATConvolution import \
     HomoToHeteroGATConvolution
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling. \
-    CompleteSubgraphPoolingMethods.HomoDataSubgraphPoolingMethods.HomoSAGPoolingMeanAggregator import \
-    HomoSAGPoolingMeanAggregator
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.CompleteSubgraphPoolingMethods.HeteroDataSubgraphPoolingMethods.HeteroSAGPoolingMeanAggregator import \
+    HeteroSAGPoolingMeanAggregator
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HeteroDataModels. \
     AbstractHeterogeneousGraphGNNEncoder import AbstractHeterogeneousGraphGNNEncoder
 
 
 class HomoToHeteroGATGraphEncoder(HomoToHeteroGATConvolution, AbstractHeterogeneousGraphGNNEncoder,
-                                  HomoSAGPoolingMeanAggregator):
+                                  HeteroSAGPoolingMeanAggregator):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
