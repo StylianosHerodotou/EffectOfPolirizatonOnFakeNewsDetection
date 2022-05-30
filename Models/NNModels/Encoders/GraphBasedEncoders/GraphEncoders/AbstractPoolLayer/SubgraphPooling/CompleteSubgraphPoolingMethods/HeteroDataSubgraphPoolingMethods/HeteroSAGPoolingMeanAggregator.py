@@ -17,16 +17,27 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
         super().__init__(in_channels, pyg_data, model_parameters)
 
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters, **kwargs):
+        conv_hyperparameters_for_each_layer_for_all_edge_type = self.generate_hyperparameters_for_each_conv_layer(in_channels,pyg_data,model_parameters)
+        conv_hyperparameters_per_edge_type = dict()
+        for edge_type in pyg_data.edge_types:
+            conv_hyperparameters_per_edge_type[edge_type] = list()
+
+        for all_edge_layer_hyperparameeters in conv_hyperparameters_for_each_layer_for_all_edge_type:
+            for edge_type, edge_hyperparameters in all_edge_layer_hyperparameeters.items():
+                conv_hyperparameters_per_edge_type[edge_type].append(edge_hyperparameters)
 
         # returns a list( layer) of dictionaries(edge_type)  of dictionaries (hyperparameters) .
         all_edges_hyperparameters_dict = dict()
         for edge_type in pyg_data.edge_types:
             current_edge_pyg_data = pyg_data[edge_type]
             current_edge_model_parameters = model_parameters[edge_type]
+            hyperparameters_for_each_layer = conv_hyperparameters_per_edge_type[edge_type]
+
             hyperparameters_for_this_edge_type = super().\
                 generate_hyperparameters_for_each_pool_layer(in_channels,
                                                              pyg_data=current_edge_pyg_data,
-                                                             model_parameters=current_edge_model_parameters)
+                                                             model_parameters=current_edge_model_parameters,
+                                                             hyperparameters_for_each_layer=hyperparameters_for_each_layer)
             all_edges_hyperparameters_dict[edge_type] = hyperparameters_for_this_edge_type
 
         all_edges_hyperparameters_list = list()
