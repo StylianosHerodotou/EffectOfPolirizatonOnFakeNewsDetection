@@ -45,20 +45,17 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
         return all_edges_hyperparameters_list
 
     def conv_forward(self, useful_data, conv_layer):
-        to_add = {"x_dict":"x", "edge_index_dict":"edge_index",
-                  "edge_attr_dict":"edge_attr"}
-        useful_data_keys= useful_data.to_dict().keys()
+        to_add = {"x_dict": "x", "edge_index_dict": "edge_index",
+                  "edge_attr_dict": "edge_attr"}
 
         for hetero_value_name, homo_value_name in to_add.items():
-            if hetero_value_name in useful_data_keys:
-                useful_data[homo_value_name]=useful_data[hetero_value_name]
-
-        print(useful_data.to_dict().keys())
+            if hasattr(useful_data, hetero_value_name):
+                useful_data[homo_value_name] = useful_data[hetero_value_name]
 
         self.homo_convolution_class.conv_forward(self, useful_data, conv_layer)
 
         for hetero_value_name, homo_value_name in to_add.items():
-            if hetero_value_name in useful_data_keys:
+            if hasattr(useful_data, hetero_value_name):
                 del useful_data[homo_value_name]
 
     # # returns a list of dictionaries of dictionaries .
