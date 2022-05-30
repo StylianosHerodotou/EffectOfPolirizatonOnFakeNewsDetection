@@ -14,6 +14,19 @@ class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
                                    ratio=layer_hyperparameters["ratio"])
         return pooling_layer
 
+    def single_pool_layer_pass(self, useful_data, pool_layer):
+        x, edge_index = useful_data.x, useful_data.edge_index
+        edge_attr, batch = useful_data.edge_attr, useful_data.batch
+
+        x, edge_index, edge_attr, batch, _, _ = pool_layer(x, edge_index, edge_attr, batch)
+
+        useful_data.x = x
+        useful_data.edge_index = edge_index
+        useful_data.edge_attr = edge_attr
+        useful_data.batch = batch
+        return useful_data
+
+
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters):
         hyperparameters_for_each_layer = []
         for current_hyperparameters in model_parameters["hyper_parameters_for_each_layer"]:

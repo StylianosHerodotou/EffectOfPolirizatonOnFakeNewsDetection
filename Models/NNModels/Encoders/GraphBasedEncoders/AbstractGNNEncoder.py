@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 import copy
 
 class AbstractGNNEncoder(ABC, torch.nn.Module):
+    # implemented in
     @abstractmethod
     def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
         pass
