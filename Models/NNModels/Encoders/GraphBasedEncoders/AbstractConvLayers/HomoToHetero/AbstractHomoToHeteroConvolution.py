@@ -5,13 +5,15 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractGraphGNNE
 
 
 class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
+    def __init__(self, in_channels, pyg_data, model_parameters):
+        super().__init__(in_channels, pyg_data, model_parameters)
+        self.homo_convolution_class = None
 
     def generate_conv_layer(self, pyg_data, layer_hyperparameters_for_all_edge_types, aggr_type="mean"):
         conv_dict = dict()
         for edge_type in pyg_data.edge_types:
             layer_hyperparameters = layer_hyperparameters_for_all_edge_types[edge_type]
-            conv_dict[edge_type] = super(AbstractHomoToHeteroConvolution, self). \
-                generate_conv_layer(pyg_data, layer_hyperparameters, aggr_type=aggr_type)
+            conv_dict[edge_type] = self.homo_convolution_class.generate_conv_layer(pyg_data, layer_hyperparameters, aggr_type=aggr_type)
 
         return HeteroConv(conv_dict, aggr=aggr_type)
 
@@ -22,7 +24,7 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
         for edge_type in pyg_data.edge_types:
             current_edge_pyg_data= pyg_data[edge_type]
             current_edge_model_parameters = model_parameters[edge_type]
-            hyperparameters_for_this_edge_type = super(AbstractHomoToHeteroConvolution, self). \
+            hyperparameters_for_this_edge_type = self.homo_convolution_class. \
                 generate_hyperparameters_for_each_conv_layer(in_channels, pyg_data= current_edge_pyg_data,
                                                              model_parameters= current_edge_model_parameters)
             all_edges_hyperparameters_dict[edge_type] = hyperparameters_for_this_edge_type
