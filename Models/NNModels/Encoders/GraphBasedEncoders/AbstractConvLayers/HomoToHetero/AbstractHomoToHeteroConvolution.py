@@ -47,27 +47,3 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
     def conv_forward(self, useful_data, conv_layer):
         useful_data = self.homo_convolution_class.conv_forward(self, useful_data, conv_layer, is_homogeneous=False)
         return useful_data
-
-    # # returns a list of dictionaries of dictionaries .
-    # def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
-    #     hyperparameters_for_each_layer = list()
-    #     for current_layer_hyperparameters in model_parameters["hyper_parameters_for_each_layer"]:
-    #         layer_hyperparameters_for_each_edge_type = dict()
-    #         for edge_type in pyg_data.edge_types:
-    #             current_hyperparameters = current_layer_hyperparameters[edge_type]
-    #
-    #             layer_hyperparameters_for_edge_type = dict()
-    #             if len(hyperparameters_for_each_layer) == 0:
-    #                 layer_hyperparameters_for_edge_type["in_channels"] = in_channels
-    #             else:
-    #                 prev_layer = hyperparameters_for_each_layer[-1][edge_type]
-    #                 layer_hyperparameters_for_edge_type["in_channels"] = prev_layer["hidden_channels"] \
-    #                                                                      * prev_layer["heads"]
-    #             layer_hyperparameters_for_edge_type["hidden_channels"] = current_hyperparameters["hidden_channels"]
-    #             layer_hyperparameters_for_edge_type["heads"] = current_hyperparameters["heads"]
-    #             layer_hyperparameters_for_edge_type["dropout"] = current_hyperparameters["dropout"]
-    #
-    #             layer_hyperparameters_for_edge_type["edge_dim"] = model_parameters[edge_type]["edge_dim"]
-    #             layer_hyperparameters_for_each_edge_type[edge_type] = layer_hyperparameters_for_edge_type
-    #         hyperparameters_for_each_layer.append(layer_hyperparameters_for_each_edge_type)
-    #     return hyperparameters_for_each_layer

@@ -36,10 +36,12 @@ class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
     def conv_forward(self, useful_data, conv_layer, is_homogeneous=True):
         if is_homogeneous:
             x, edge_index, edge_attr = useful_data.x, useful_data.edge_index, useful_data.edge_attr
+            new_x = conv_layer(x, edge_index, edge_attr)
+            useful_data.x = new_x
         else:
             print("hi")
-            x, edge_index, edge_attr = useful_data.x_dict, useful_data.edge_index_dict, useful_data.edge_attr_dict
+            x_dict, edge_index_dict, edge_attr_dict = useful_data.x_dict, useful_data.edge_index_dict, useful_data.edge_attr_dict
+            new_x_dict = conv_layer(x_dict, edge_index_dict, edge_attr_dict)
+            useful_data.x = new_x_dict
 
-        new_x = conv_layer(x, edge_index, edge_attr)
-        useful_data.x = new_x
         return useful_data
