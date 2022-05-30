@@ -3,7 +3,7 @@ from torch_geometric.nn import HEATConv
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHomoGNNEncoder import AbstractHomogeneousGNNEncoder
 
 
-class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
+class HEATConvolution(AbstractHomogeneousGNNEncoder, ABC):
 
     def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
         conv_layer = HEATConv(in_channels=layer_hyperparameters["in_channels"],
