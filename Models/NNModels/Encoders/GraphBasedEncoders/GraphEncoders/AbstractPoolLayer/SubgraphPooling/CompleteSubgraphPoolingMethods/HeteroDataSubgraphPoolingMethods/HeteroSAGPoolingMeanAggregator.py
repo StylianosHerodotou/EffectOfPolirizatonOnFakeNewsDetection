@@ -31,13 +31,13 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
         for edge_type in pyg_data.edge_types:
             current_edge_pyg_data = pyg_data[edge_type]
             current_edge_model_parameters = model_parameters[edge_type]
-            hyperparameters_for_each_layer = conv_hyperparameters_per_edge_type[edge_type]
+            conv_hyperparameters_for_each_layer = conv_hyperparameters_per_edge_type[edge_type]
 
             hyperparameters_for_this_edge_type = super().\
                 generate_hyperparameters_for_each_pool_layer(in_channels,
                                                              pyg_data=current_edge_pyg_data,
                                                              model_parameters=current_edge_model_parameters,
-                                                             hyperparameters_for_each_layer=hyperparameters_for_each_layer)
+                                                             conv_hyperparameters_for_each_layer=conv_hyperparameters_for_each_layer)
             all_edges_hyperparameters_dict[edge_type] = hyperparameters_for_this_edge_type
 
         all_edges_hyperparameters_list = list()
