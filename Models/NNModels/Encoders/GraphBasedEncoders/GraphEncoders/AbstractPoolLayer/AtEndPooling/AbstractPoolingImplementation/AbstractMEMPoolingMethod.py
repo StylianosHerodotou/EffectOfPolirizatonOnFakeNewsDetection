@@ -11,14 +11,14 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
-    def generate_single_pool_layer(self, pyg_data, layer_hyperparameters):
+    def generate_pool_layer(self, pyg_data, layer_hyperparameters):
         pooling_layer = MemPooling(in_channels=layer_hyperparameters["in_channels"],
                                    out_channels=layer_hyperparameters["hidden_channels"],
                                    heads=layer_hyperparameters["heads"],
                                    num_clusters=layer_hyperparameters["num_clusters"])
         return pooling_layer
 
-    def single_pool_layer_pass(self, useful_data, pool_layer, find_loss=False):
+    def pool_forward(self, useful_data, pool_layer, find_loss=False):
         x = useful_data.x
         x, pooling_loss = pool_layer(x)
         useful_data.x = x

@@ -3,9 +3,6 @@ from abc import ABC, abstractmethod
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractGNNEncoder import AbstractGNNEncoder
 
 class AbstractGraphGNNEncoder(AbstractGNNEncoder):
-    @abstractmethod
-    def generate_single_pool_layer(self, pyg_data, layer_hyperparameters):
-        pass
 
     @abstractmethod
     def generate_pool_layer(self, pyg_data, layer_hyperparameters):
@@ -23,9 +20,6 @@ class AbstractGraphGNNEncoder(AbstractGNNEncoder):
             new_pool_layer = self.generate_pool_layer(pyg_data, layer_hyperparameters)
             self.pools.append(new_pool_layer)
 
-    @abstractmethod
-    def single_pool_layer_pass(self, useful_data, pool_layer):
-        pass
 
     @abstractmethod
     def pool_forward(self, useful_data, pool_layer):

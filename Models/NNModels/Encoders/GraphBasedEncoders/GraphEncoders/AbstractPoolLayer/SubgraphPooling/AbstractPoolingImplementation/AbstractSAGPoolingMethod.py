@@ -9,12 +9,12 @@ class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
-    def generate_single_pool_layer(self, pyg_data, layer_hyperparameters):
+    def generate_pool_layer(self, pyg_data, layer_hyperparameters):
         pooling_layer = SAGPooling(in_channels=layer_hyperparameters["in_channels"],
                                    ratio=layer_hyperparameters["ratio"])
         return pooling_layer
 
-    def single_pool_layer_pass(self, useful_data, pool_layer):
+    def pool_forward(self, useful_data, pool_layer):
         x, edge_index = useful_data.x, useful_data.edge_index
         edge_attr, batch = useful_data.edge_attr, useful_data.batch
 
