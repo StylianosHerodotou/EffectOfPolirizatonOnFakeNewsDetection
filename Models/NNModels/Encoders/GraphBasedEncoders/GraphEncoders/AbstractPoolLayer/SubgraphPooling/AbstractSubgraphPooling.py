@@ -32,6 +32,7 @@ class AbstractSubgraphPooling(AbstractGraphGNNEncoder, ABC):
         vector_representation = None
         for conv_layer, pool_layer in zip(self.convs, self.pools):
             useful_data = self.conv_forward(useful_data, conv_layer)
+            print(useful_data)
             homo= useful_data.to_homogeneous()
             useful_data = self.activation_forward(useful_data)
             homo= useful_data.to_homogeneous()
