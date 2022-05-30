@@ -35,6 +35,7 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
 
     def pool_forward(self, useful_data, pool_layer):
         homo_data = useful_data.to_homogeneous()
+        print(homo_data.x.size())
         homo_data= super(HeteroSAGPoolingMeanAggregator, self).pool_forward(homo_data, pool_layer)
         useful_data = homo_data.to_heterogeneous()
         return useful_data
