@@ -53,6 +53,8 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
             if hetero_value_name in useful_data_keys:
                 useful_data[homo_value_name]=useful_data[hetero_value_name]
 
+        print(useful_data.to_dict().keys())
+
         self.homo_convolution_class.conv_forward(self, useful_data, conv_layer)
 
         for hetero_value_name, homo_value_name in to_add.items():
