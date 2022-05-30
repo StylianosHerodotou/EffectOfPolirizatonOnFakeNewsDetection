@@ -9,7 +9,7 @@ class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
 
     def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
         conv_layer = GATv2Conv(in_channels=layer_hyperparameters["in_channels"],
-                               hidden_size=layer_hyperparameters["hidden_channels"],
+                               out_channels=layer_hyperparameters["hidden_channels"],
                                heads=layer_hyperparameters["heads"],
                                dropout=layer_hyperparameters["dropout"],
                                edge_dim=layer_hyperparameters["edge_dim"])
