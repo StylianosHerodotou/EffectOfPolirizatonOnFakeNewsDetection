@@ -36,10 +36,7 @@ class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
             else:
                 prev_layer = hyperparameters_for_each_layer[-1]
                 layer_hyperparameters["in_channels"] = prev_layer["hidden_channels"] * prev_layer["heads"]
-            layer_hyperparameters["hidden_channels"] = current_hyperparameters["hidden_channels"]
-            layer_hyperparameters["heads"] = current_hyperparameters["heads"]
-            layer_hyperparameters["dropout"] = current_hyperparameters["dropout"]
 
-            layer_hyperparameters["edge_dim"] = model_parameters["edge_dim"]
+            layer_hyperparameters["ratio"] = model_parameters["pooling_ratio"]
             hyperparameters_for_each_layer.append(layer_hyperparameters)
         return hyperparameters_for_each_layer
