@@ -30,7 +30,8 @@ class AbstractSubgraphPooling(AbstractGraphGNNEncoder, ABC):
             useful_data = self.conv_forward(useful_data, conv_layer)
             useful_data = self.activation_forward(useful_data)
             useful_data = self.pool_forward(useful_data, pool_layer)
-            useful_data = self.extra_dropout_forward(useful_data)
+            if conv_layer != self.convs[-1]:
+                useful_data = self.extra_dropout_forward(useful_data)
             vector_representation = self.update_vector_representation(useful_data, vector_representation)
             print(vector_representation.size())
 

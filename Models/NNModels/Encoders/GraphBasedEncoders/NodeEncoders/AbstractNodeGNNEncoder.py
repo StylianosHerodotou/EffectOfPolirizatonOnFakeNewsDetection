@@ -17,5 +17,6 @@ class AbstractNodeGNNEncoder(AbstractGNNEncoder, ABC):
         for conv_layer in self.convs:
             useful_data = self.conv_forward(useful_data, conv_layer)
             useful_data = self.activation_forward(useful_data)
-            useful_data = self.extra_dropout_forward(useful_data)
+            if conv_layer != self.convs[-1]:
+                useful_data = self.extra_dropout_forward(useful_data)
         return self.extract_embeddings_from_useful_data(useful_data)

@@ -1,10 +1,11 @@
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractConvLayers.Homo.HomogeneousGATConvolution import \
     HomogeneousGATConvolution
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.\
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling. \
     CompleteSubgraphPoolingMethods.HomoDataSubgraphPoolingMethods.HomoSAGPoolingMeanAggregator import \
     HomoSAGPoolingMeanAggregator
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HomoDataModels.AbstractHomogeneousGraphGNNEncoder import \
     AbstractHomogeneousGraphGNNEncoder
+
 
 class HomogeneousGATGraphEncoder(AbstractHomogeneousGraphGNNEncoder, HomogeneousGATConvolution,
                                  HomoSAGPoolingMeanAggregator):
