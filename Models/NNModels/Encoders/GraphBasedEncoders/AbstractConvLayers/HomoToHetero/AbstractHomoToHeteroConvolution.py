@@ -7,7 +7,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractGraphGNNE
 class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
-        self.homo_convolution_class = None
+        # self.homo_convolution_class = None
 
     def generate_conv_layer(self, pyg_data, layer_hyperparameters_for_all_edge_types, aggr_type="mean"):
         conv_dict = dict()

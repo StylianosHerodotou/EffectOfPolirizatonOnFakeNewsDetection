@@ -33,9 +33,9 @@ class AbstractSubgraphPooling(AbstractGraphGNNEncoder, ABC):
             if conv_layer != self.convs[-1]:
                 useful_data = self.extra_dropout_forward(useful_data)
             vector_representation = self.update_vector_representation(useful_data, vector_representation)
-            print(vector_representation.size())
+            # print(vector_representation.size())
 
         vector_representation = self.final_update_vector_representation(vector_representation)
-        print(vector_representation.size())
+        # print(vector_representation.size())
 
         return vector_representation
