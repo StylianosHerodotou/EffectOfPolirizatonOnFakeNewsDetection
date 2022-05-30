@@ -9,7 +9,6 @@ class AbstractHomoVectorAggregationMethod(AbstractSubgraphPooling, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
-
     def update_vector_representation(self, useful_data, vector_representation):
         return self.update_single_vector_representation(useful_data, vector_representation)
 
