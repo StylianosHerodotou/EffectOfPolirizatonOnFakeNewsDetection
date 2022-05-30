@@ -6,6 +6,7 @@ from torch_geometric.nn import MemPooling
 import torch.nn.functional as F
 import torch
 
+
 class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
@@ -29,9 +30,12 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
 
         return useful_data
 
-    def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters):
-        conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels, pyg_data,
-                                                                                                model_parameters)
+    def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
+                                                     hyperparameters_for_each_layer=None):
+        if hyperparameters_for_each_layer is None:
+            conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels,
+                                                                                                    pyg_data,
+                                                                                                    model_parameters)
         last_conv_layer_hyperparameters = conv_hyperparameters_for_each_layer[-1]
 
         hyperparameters_for_each_layer = []
@@ -56,7 +60,7 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
 
     def get_single_vector_representation(self, useful_data):
         x = useful_data.x
-        x= x.squeeze()
+        x = x.squeeze()
         return torch.flatten(x)
 
     def get_single_pooling_additional_loss(self, useful_data):
@@ -69,5 +73,3 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
         x = F.dropout(x, p=dropout_value)
         useful_data.x = x
         return useful_data
-
-

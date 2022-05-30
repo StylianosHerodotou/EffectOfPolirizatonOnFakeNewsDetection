@@ -12,7 +12,8 @@ class AbstractGraphGNNEncoder(AbstractGNNEncoder):
         pass
 
     @abstractmethod
-    def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters):
+    def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
+                                                     hyperparameters_for_each_layer=None ):
         pass
 
     def add_pool_layers(self, in_channels, pyg_data, model_parameters):

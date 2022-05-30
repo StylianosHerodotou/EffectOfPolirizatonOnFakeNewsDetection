@@ -26,9 +26,12 @@ class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
         useful_data.batch = batch
         return useful_data
 
-    def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters):
-        conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels, pyg_data,
-                                                                                                model_parameters)
+    def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
+                                                     hyperparameters_for_each_layer=None):
+        if hyperparameters_for_each_layer is None:
+            conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels,
+                                                                                                    pyg_data,
+                                                                                                    model_parameters)
 
         hyperparameters_for_each_layer = []
         for index, current_hyperparameters in enumerate(model_parameters["hyper_parameters_for_each_layer"]):
