@@ -21,7 +21,7 @@ class AbstractHomogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHomoge
     def update_vector_representation(self, useful_data, vector_representation):
         x, batch = useful_data.x, useful_data.batch
 
-        current_layer_vector_representation = torch.cat([gmp(x, batch), gap(x, batch)], dim=1)
+        current_layer_vector_representation = torch.cat([gmp(x, batch), gap(x, batch)], dim=-1)
         if vector_representation is None:
             return current_layer_vector_representation
         else:
