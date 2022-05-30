@@ -39,9 +39,9 @@ class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
             new_x = conv_layer(x, edge_index, edge_attr)
             useful_data.x = new_x
         else:
-            print("hi")
             x_dict, edge_index_dict, edge_attr_dict = useful_data.x_dict, useful_data.edge_index_dict, \
                                                       useful_data.edge_attr_dict
             new_x_dict = conv_layer(x_dict, edge_index_dict)
-            useful_data.x_dict = new_x_dict
+            for node_type, new_x in new_x_dict.items():
+                useful_data[node_type].x=new_x
         return useful_data
