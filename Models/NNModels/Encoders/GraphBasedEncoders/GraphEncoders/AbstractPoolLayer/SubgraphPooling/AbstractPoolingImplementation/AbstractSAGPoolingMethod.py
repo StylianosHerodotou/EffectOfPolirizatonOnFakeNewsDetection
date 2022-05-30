@@ -26,17 +26,17 @@ class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
         useful_data.batch = batch
         return useful_data
 
-
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters):
-        hyperparameters_for_each_layer = []
-        for current_hyperparameters in model_parameters["hyper_parameters_for_each_layer"]:
-            layer_hyperparameters = dict()
-            if len(hyperparameters_for_each_layer) == 0:
-                layer_hyperparameters["in_channels"] = in_channels
-            else:
-                prev_layer = hyperparameters_for_each_layer[-1]
-                layer_hyperparameters["in_channels"] = prev_layer["hidden_channels"] * prev_layer["heads"]
+        conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels, pyg_data,
+                                                                                                model_parameters)
 
+        hyperparameters_for_each_layer = []
+        for index, current_hyperparameters in enumerate(model_parameters["hyper_parameters_for_each_layer"]):
+            layer_hyperparameters = dict()
+            current_conv_hyperparameters = conv_hyperparameters_for_each_layer[index]
+
+            layer_hyperparameters["in_channels"] = current_conv_hyperparameters["hidden_channels"] * \
+                                                   current_conv_hyperparameters["heads"]
             layer_hyperparameters["ratio"] = model_parameters["pooling_ratio"]
             hyperparameters_for_each_layer.append(layer_hyperparameters)
         return hyperparameters_for_each_layer
