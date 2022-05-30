@@ -26,5 +26,6 @@ class AbstractMeanAggregator(AbstractSubgraphPooling, ABC):
             return vector_representation
 
     def final_single_update_vector_representation(self, vector_representation):
+        vector_representation = torch.squeeze(vector_representation)
         vector_representation /= len(self.convs)
         return vector_representation

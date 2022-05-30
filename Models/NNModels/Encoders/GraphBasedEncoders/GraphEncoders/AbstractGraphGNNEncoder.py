@@ -2,7 +2,6 @@ import torch
 from abc import ABC, abstractmethod
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractGNNEncoder import AbstractGNNEncoder
 
-
 class AbstractGraphGNNEncoder(AbstractGNNEncoder):
     @abstractmethod
     def generate_single_pool_layer(self, pyg_data, layer_hyperparameters):

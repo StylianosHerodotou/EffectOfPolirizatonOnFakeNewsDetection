@@ -6,7 +6,6 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HomoDataModels.AbstractHomogeneousGraphGNNEncoder import \
     AbstractHomogeneousGraphGNNEncoder
 
-
 class HomogeneousGATGraphEncoder(AbstractHomogeneousGraphGNNEncoder, HomogeneousGATConvolution,
                                  HomoSAGPoolingMeanAggregator):
 
