@@ -37,6 +37,7 @@ class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
         if is_homogeneous:
             x, edge_index, edge_attr = useful_data.x, useful_data.edge_index, useful_data.edge_attr
         else:
+            print("hi")
             x, edge_index, edge_attr = useful_data.x_dict, useful_data.edge_index_dict, useful_data.edge_attr_dict
 
         new_x = conv_layer(x, edge_index, edge_attr)
