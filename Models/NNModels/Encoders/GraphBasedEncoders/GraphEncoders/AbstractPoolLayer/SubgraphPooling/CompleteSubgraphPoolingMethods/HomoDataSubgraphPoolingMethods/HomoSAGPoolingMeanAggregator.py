@@ -2,8 +2,7 @@ from abc import ABC
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.\
     AbstractPoolingImplementation.AbstractSAGPoolingMethod import \
     AbstractSAGPoolingMethod
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.\
-    CompleteSubgraphPoolingMethods.HomoDataSubgraphPoolingMethods.AbstractHomoVectorAggregationMethod import \
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.VectorAggregationMethods.AbstractHomoVectorAggregationMethod import \
     AbstractHomoVectorAggregationMethod
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.\
     VectorAggregationMethods.AbstractMeanAggregator import \

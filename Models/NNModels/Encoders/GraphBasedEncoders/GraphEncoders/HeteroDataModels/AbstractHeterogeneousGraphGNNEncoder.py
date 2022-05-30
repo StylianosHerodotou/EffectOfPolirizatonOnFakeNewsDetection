@@ -14,13 +14,16 @@ class AbstractHeterogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHete
     def generate_pool_layer(self, pyg_data, layer_hyperparameters):
         current_layer_pooling_dict = torch.nn.ModuleDict()
 
-        for edge_type in  pyg_data.edge_types:
-            current_layer_pooling_dict[str(edge_type)] = self.generate_single_pool_layer(pyg_data, layer_hyperparameters[edge_type])
+        for node_type in pyg_data.node_type:
+            current_layer_pooling_dict[node_type] = self.generate_single_pool_layer(pyg_data, layer_hyperparameters[edge_type])
         return current_layer_pooling_dict
 
     def pool_forward(self, useful_data, pool_layer_dict):
+
+
         for key, pool_layer in pool_layer_dict.items():
             current_useful_data = useful_data[key]
+            print(current_useful_data)
             current_useful_data = self.single_pool_layer_pass(current_useful_data, pool_layer)
             useful_data[key] = current_useful_data
         return useful_data
