@@ -4,8 +4,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
     AbstractPoolingImplementation.AbstractMEMPoolingMethod import \
     AbstractMEMPoolingMethod
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling.\
-    CompleteAtEndPoolingMethods.HomoDataAtEndPoolingMethods import \
-    AbstractHomoAtEndPooling
+    CompleteAtEndPoolingMethods.HomoDataAtEndPoolingMethods.AbstractHomoAtEndPooling import AbstractHomoAtEndPooling
 
 
 class HomoMEMPooling(AbstractHomoAtEndPooling, AbstractMEMPoolingMethod, ABC):
