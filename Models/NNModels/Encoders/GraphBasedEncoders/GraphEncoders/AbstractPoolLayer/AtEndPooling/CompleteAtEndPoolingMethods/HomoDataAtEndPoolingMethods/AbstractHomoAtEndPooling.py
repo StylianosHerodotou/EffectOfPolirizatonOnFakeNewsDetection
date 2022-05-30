@@ -15,5 +15,5 @@ class AbstractHomoAtEndPooling(AbstractAtEndPooling, ABC):
         return self.get_single_pooling_additional_loss(useful_data)
 
     def extra_pooling_dropout_forward(self, useful_data, index):
-        return self.single_extra_pooling_dropout_forward(useful_data)
+        return self.single_extra_pooling_dropout_forward(useful_data, index)
 
