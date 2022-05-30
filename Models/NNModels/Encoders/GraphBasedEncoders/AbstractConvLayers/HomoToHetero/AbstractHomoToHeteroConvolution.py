@@ -2,7 +2,6 @@ from abc import ABC
 from torch_geometric.nn import HeteroConv
 
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractGraphGNNEncoder import AbstractGraphGNNEncoder
-from Utilities.ClassifyArticlesUtils import add_homo_attributes, remove_homo_attributes
 
 
 class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
@@ -45,11 +44,8 @@ class AbstractHomoToHeteroConvolution(AbstractGraphGNNEncoder, ABC):
 
         return all_edges_hyperparameters_list
 
-
     def conv_forward(self, useful_data, conv_layer):
-        add_homo_attributes(useful_data)
-        useful_data= self.homo_convolution_class.conv_forward(self, useful_data, conv_layer)
-        remove_homo_attributes(useful_data)
+        useful_data = self.homo_convolution_class.conv_forward(self, useful_data, conv_layer, is_homogeneous=False)
         return useful_data
 
     # # returns a list of dictionaries of dictionaries .

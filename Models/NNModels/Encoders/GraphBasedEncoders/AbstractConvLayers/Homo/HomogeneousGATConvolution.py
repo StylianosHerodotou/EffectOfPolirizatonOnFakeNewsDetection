@@ -33,8 +33,12 @@ class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
             hyperparameters_for_each_layer.append(layer_hyperparameters)
         return hyperparameters_for_each_layer
 
-    def conv_forward(self, useful_data, conv_layer):
-        x, edge_index, edge_attr = useful_data.x, useful_data.edge_index, useful_data.edge_attr
+    def conv_forward(self, useful_data, conv_layer, is_homogeneous=True):
+        if is_homogeneous:
+            x, edge_index, edge_attr = useful_data.x, useful_data.edge_index, useful_data.edge_attr
+        else:
+            x, edge_index, edge_attr = useful_data.x_dict, useful_data.edge_index_dict, useful_data.edge_attr_dict
+
         new_x = conv_layer(x, edge_index, edge_attr)
         useful_data.x = new_x
         return useful_data
