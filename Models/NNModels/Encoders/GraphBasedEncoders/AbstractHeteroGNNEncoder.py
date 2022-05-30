@@ -16,7 +16,9 @@ class AbstractHeteroGNNEncoder(AbstractGNNEncoder, ABC):
 
     def activation_forward(self, useful_data):
         x_dict = useful_data.x_dict
+        print(x_dict)
         for key, value in x_dict.items():
             x_dict[key] = self.activation_function(value)
+        print("something else \n\n", x_dict)
         useful_data.x_dict = x_dict
         return useful_data
