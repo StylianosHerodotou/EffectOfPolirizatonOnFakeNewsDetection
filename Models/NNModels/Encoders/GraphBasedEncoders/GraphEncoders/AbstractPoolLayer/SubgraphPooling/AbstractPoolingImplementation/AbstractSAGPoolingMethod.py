@@ -18,12 +18,14 @@ class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
         x, edge_index = useful_data.x, useful_data.edge_index
         edge_attr, batch = useful_data.edge_attr, useful_data.batch
 
-        x, edge_index, edge_attr, batch, _, _ = pool_layer(x, edge_index, edge_attr, batch)
+        x, edge_index, edge_attr, batch, perm, importance = pool_layer(x, edge_index, edge_attr, batch)
 
         useful_data.x = x
         useful_data.edge_index = edge_index
         useful_data.edge_attr = edge_attr
         useful_data.batch = batch
+        useful_data.pooling_perm = perm
+        useful_data.pooling_importance = importance
         return useful_data
 
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
