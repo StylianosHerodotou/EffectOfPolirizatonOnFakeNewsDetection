@@ -6,12 +6,81 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling. \
     CompleteAtEndPoolingMethods.HeteroDataAtEndPoolingMethods.AbstractHeteroAtEndPooling import \
     AbstractHeteroAtEndPooling
-
+from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHomoGNNEncoder import AbstractHomogeneousGNNEncoder
+from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHeteroGNNEncoder import AbstractHeteroGNNEncoder
 
 class HeteroMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
+
+    def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
+                                                     conv_hyperparameters_for_each_layer=None):
+        if conv_hyperparameters_for_each_layer is None:
+            conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels,
+                                                                                                    pyg_data,
+                                                                                                    model_parameters)
+        last_conv_layer_hyperparameters = conv_hyperparameters_for_each_layer[-1]
+
+        first_layer_input = 0
+        for edge_type, edge_conv_hyperparameters in last_conv_layer_hyperparameters.items():
+            first_layer_input+= edge_conv_hyperparameters["hidden_channels"] * \
+                               edge_conv_hyperparameters["heads"]
+
+        hyperparameters_for_each_layer = list()
+        for current_hyperparameters in model_parameters["pooling_hyper_parameters_for_each_layer"]:
+            layer_hyperparameters = dict()
+
+            if len(hyperparameters_for_each_layer) == 0:
+                layer_hyperparameters["in_channels"] = first_layer_input
+            else:
+                prev_layer = hyperparameters_for_each_layer[-1]
+                layer_hyperparameters["in_channels"] = prev_layer["hidden_channels"]
+
+            layer_hyperparameters["hidden_channels"] = current_hyperparameters["pooling_hidden_channels"]
+            layer_hyperparameters["heads"] = current_hyperparameters["pooling_heads"]
+            layer_hyperparameters["num_clusters"] = current_hyperparameters["pooling_num_clusters"]
+
+            layer_hyperparameters["dropout"] = current_hyperparameters["pooling_dropout"]
+
+            hyperparameters_for_each_layer.append(layer_hyperparameters)
+        return hyperparameters_for_each_layer
+
+    def activation_forward(self, useful_data):
+        if "hetero_x" not in useful_data.to_dict().keys():
+            to_return = AbstractHeteroGNNEncoder.activation_forward(self,useful_data)
+        else:
+            to_return= AbstractHomogeneousGNNEncoder.activation_forward(self,useful_data)
+
+        return to_return
+
+    def forward(self, pyg_data):
+        useful_data = self.extract_useful_data_from_input(pyg_data)
+        for conv_layer in self.convs:
+            useful_data = self.conv_forward(useful_data, conv_layer)
+            useful_data = self.activation_forward(useful_data)
+            if conv_layer != self.convs[-1]:
+                useful_data = self.extra_dropout_forward(useful_data)
+
+        if not self.is_homogeneous_data:
+            useful_data = useful_data.to_homogenous()
+            useful_data.hetero_x = useful_data.x
+
+        for index, pool_layer in enumerate(self.pools):
+            useful_data = self.pool_forward(useful_data, pool_layer)
+            useful_data = self.activation_forward(useful_data)
+            useful_data = self.extra_pooling_dropout_forward(useful_data, index)
+
+        return self.get_vector_representation(useful_data)
+
+
+
+
+
+
+
+
+
 
     # def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data,
     #                                                  model_parameters,
@@ -49,38 +118,3 @@ class HeteroMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC
     #             current_layer_all_nodes_dict[node_type] = node_layer_hyperparameters
     #
     #     return all_nodes_hyperparameters_list
-
-
-    def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
-                                                     conv_hyperparameters_for_each_layer=None):
-        if conv_hyperparameters_for_each_layer is None:
-            conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels,
-                                                                                                    pyg_data,
-                                                                                                    model_parameters)
-        last_conv_layer_hyperparameters = conv_hyperparameters_for_each_layer[-1]
-
-        first_layer_input = 0
-        for edge_type, edge_conv_hyperparameters in last_conv_layer_hyperparameters.items():
-            first_layer_input+= edge_conv_hyperparameters["hidden_channels"] * \
-                               edge_conv_hyperparameters["heads"]
-
-        hyperparameters_for_each_layer = list()
-        for current_hyperparameters in model_parameters["pooling_hyper_parameters_for_each_layer"]:
-            print(type(current_hyperparameters),
-                  current_hyperparameters)
-            layer_hyperparameters = dict()
-
-            if len(hyperparameters_for_each_layer) == 0:
-                layer_hyperparameters["in_channels"] = first_layer_input
-            else:
-                prev_layer = hyperparameters_for_each_layer[-1]
-                layer_hyperparameters["in_channels"] = prev_layer["hidden_channels"]
-
-            layer_hyperparameters["hidden_channels"] = current_hyperparameters["pooling_hidden_channels"]
-            layer_hyperparameters["heads"] = current_hyperparameters["pooling_heads"]
-            layer_hyperparameters["num_clusters"] = current_hyperparameters["pooling_num_clusters"]
-
-            layer_hyperparameters["dropout"] = current_hyperparameters["pooling_dropout"]
-
-            hyperparameters_for_each_layer.append(layer_hyperparameters)
-        return hyperparameters_for_each_layer
