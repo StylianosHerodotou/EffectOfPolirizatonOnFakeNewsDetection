@@ -20,8 +20,8 @@ class AbstractHeteroVectorAggregationMethod(AbstractSubgraphPooling, ABC):
             current_useful_data.hetero_x = value
             current_layer_vector_representation_for_node_type = current_layer_vector_representation[key]
             current_layer_vector_representation_for_node_type = self.update_single_vector_representation(
-                current_useful_data, current_layer_vector_representation_for_node_type, is_homogeneous_data=False)
-            current_useful_data.hetero_x = value
+                current_useful_data, current_layer_vector_representation_for_node_type)
+            del current_useful_data.hetero_x
             current_layer_vector_representation[key] = current_layer_vector_representation_for_node_type
 
         if vector_representation is None:

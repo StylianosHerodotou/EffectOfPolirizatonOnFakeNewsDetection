@@ -18,10 +18,23 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
                                    num_clusters=layer_hyperparameters["num_clusters"])
         return pooling_layer
 
+    def get_node_features(self, useful_data):
+        if self.is_homogeneous_data:
+            return useful_data.x
+        else:
+            return useful_data.hetero_x
+
+    def set_node_features(self, x, useful_data):
+        if self.is_homogeneous_data:
+            useful_data.x = x
+        else:
+            useful_data.hetero_x = x
+        return useful_data
+
     def pool_forward(self, useful_data, pool_layer, find_loss=False):
-        x = useful_data.x
+        x = self.get_node_features(useful_data)
         x, pooling_loss = pool_layer(x)
-        useful_data.x = x
+        useful_data = self.set_node_features(x, useful_data)
 
         pooling_loss = MemPooling.kl_loss(pooling_loss)
         if "pooling_loss" not in useful_data.to_dict().keys():
@@ -59,7 +72,7 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
         return hyperparameters_for_each_layer
 
     def get_single_vector_representation(self, useful_data):
-        x = useful_data.x
+        x = self.get_node_features(useful_data)
         x = x.squeeze()
         return torch.flatten(x)
 
@@ -68,8 +81,8 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
         return pooling_loss
 
     def single_extra_pooling_dropout_forward(self, useful_data, index):
-        x = useful_data.x
+        x = self.get_node_features(useful_data)
         dropout_value = self.pooling_dropout[index]
         x = F.dropout(x, p=dropout_value)
-        useful_data.x = x
+        useful_data = self.set_node_features(x, useful_data)
         return useful_data

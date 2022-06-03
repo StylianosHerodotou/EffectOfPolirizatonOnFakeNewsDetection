@@ -10,8 +10,8 @@ class AbstractMeanAggregator(AbstractSubgraphPooling, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
-    def update_single_vector_representation(self, useful_data, vector_representation, is_homogeneous_data):
-        if is_homogeneous_data:
+    def update_single_vector_representation(self, useful_data, vector_representation):
+        if self.is_homogeneous_data:
             x, batch = useful_data.x, useful_data.batch
         else:
             x, batch = useful_data.hetero_x, useful_data.batch
