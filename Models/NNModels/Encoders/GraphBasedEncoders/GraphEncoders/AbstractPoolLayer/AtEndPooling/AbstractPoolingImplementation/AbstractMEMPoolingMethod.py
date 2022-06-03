@@ -39,12 +39,12 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
         return useful_data
 
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
-                                                     conv_hyperparameters_for_each_layer=None):
-        if conv_hyperparameters_for_each_layer is None:
+                                                     last_conv_layer_hyperparameters=None):
+        if last_conv_layer_hyperparameters is None:
             conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels,
                                                                                                     pyg_data,
                                                                                                     model_parameters)
-        last_conv_layer_hyperparameters = conv_hyperparameters_for_each_layer[-1]
+            last_conv_layer_hyperparameters = conv_hyperparameters_for_each_layer[-1]
 
         hyperparameters_for_each_layer = []
         for current_hyperparameters in model_parameters["pooling_hyper_parameters_for_each_layer"]:
