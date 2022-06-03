@@ -44,10 +44,16 @@ class NetworkXDataset(BaseDataset):
         for graph in graphs:
             graph = json.loads(graph)
             # turn keys back to int
-            graph = turn_str_keys_to_int(graph)
-            for key in graph.keys():
-                graph[key] = turn_str_keys_to_int(graph[key])
+            try:
+                graph = turn_str_keys_to_int(graph)
+            except:
+                pass
 
+            for key in graph.keys():
+                try:
+                    graph[key] = turn_str_keys_to_int(graph[key])
+                except:
+                    pass
             new_graphs.append(nx.from_dict_of_dicts(graph))
         self.df[self.graph_column_name] = new_graphs
 
@@ -64,7 +70,7 @@ class NetworkXDataset(BaseDataset):
     def save_dataframe_with_networkx(self, dir_path, filename):
         path_to_save = os.path.join(dir_path, filename)
         self.turn_networkx_graphs_to_dicts()
-        self.turn_mapping_to_json()
+        # self.turn_mapping_to_json()
         if "node_to_int_mapping" in self.df.columns:
             self.df = self.df.drop("node_to_int_mapping", axis=1)
         self.df.to_csv(path_to_save, index=False)

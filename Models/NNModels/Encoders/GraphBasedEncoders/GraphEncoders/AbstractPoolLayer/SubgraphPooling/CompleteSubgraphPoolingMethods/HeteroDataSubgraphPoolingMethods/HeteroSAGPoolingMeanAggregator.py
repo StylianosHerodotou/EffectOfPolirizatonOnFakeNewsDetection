@@ -7,6 +7,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling. \
     VectorAggregationMethods.AbstractMeanAggregator import \
     AbstractMeanAggregator
+import torch
 
 
 class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVectorAggregationMethod,
@@ -35,9 +36,38 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
 
         return pool_hyperparameters_for_each_layer
 
+    def get_node_mask(self, homo_data):
+        return homo_data.pooling_perm
+
+    def get_edge_mask(self, homo_data, old_edge_index):
+        perm = homo_data.pooling_perm
+        num_nodes = homo_data.node_type_labels.size(0)
+        mask = perm.new_full((num_nodes,), -1)
+        i = torch.arange(perm.size(0), dtype=torch.long, device=perm.device)
+        mask[perm] = i
+        row, col = old_edge_index
+        row, col = mask[row], mask[col]
+        mask = (row >= 0) & (col >= 0)
+        return mask
+
+    def extend_pooling_to_remaining_attributes(self, homo_data, old_edge_index, old_x):
+        node_mask = self.get_node_mask(homo_data)
+        edge_mask = self.get_edge_mask(homo_data, old_edge_index)
+        number_of_old_nodes = old_x.size(0)
+        number_of_edges_nodes = old_x.size(0)
+
+        for key in homo_data.to_dict().keys():
+            if key.startswith("edge"):
+                homo_data[key] = homo_data[key][edge_mask]
+            else:
+                homo_data[key] = homo_data[key][node_mask]
+        return homo_data
+
     def pool_forward(self, useful_data, pool_layer):
         homo_data = useful_data.to_homogeneous()
-        print(homo_data.x.size())
+        old_edge_index = homo_data.edge_index
+        old_x = homo_data.x
         homo_data= super(HeteroSAGPoolingMeanAggregator, self).pool_forward(homo_data, pool_layer)
+        homo_data = self.extend_pooling_to_remaining_attributes(homo_data, old_edge_index, old_x)
         useful_data = homo_data.to_heterogeneous()
         return useful_data
