@@ -57,9 +57,10 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
         number_of_edges_nodes = old_x.size(0)
 
         for key in homo_data.to_dict().keys():
-            if key.startswith("edge"):
+            tensor_size= homo_data[key].size(0)
+            if tensor_size == number_of_edges_nodes and key.startswith("edge"):
                 homo_data[key] = homo_data[key][edge_mask]
-            else:
+            elif tensor_size == number_of_old_nodes:
                 homo_data[key] = homo_data[key][node_mask]
         return homo_data
 
