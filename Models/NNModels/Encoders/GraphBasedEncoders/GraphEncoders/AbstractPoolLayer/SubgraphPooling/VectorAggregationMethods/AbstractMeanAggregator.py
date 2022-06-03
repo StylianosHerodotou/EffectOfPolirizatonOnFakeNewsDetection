@@ -14,7 +14,7 @@ class AbstractMeanAggregator(AbstractSubgraphPooling, ABC):
         if is_homogeneous_data:
             x, batch = useful_data.x, useful_data.batch
         else:
-            x, batch = useful_data.x_dict, useful_data.batch
+            x, batch = useful_data.hetero_x, useful_data.batch
 
         current_layer_vector_representation = list()
         current_layer_vector_representation.append(global_add_pool(x, batch))

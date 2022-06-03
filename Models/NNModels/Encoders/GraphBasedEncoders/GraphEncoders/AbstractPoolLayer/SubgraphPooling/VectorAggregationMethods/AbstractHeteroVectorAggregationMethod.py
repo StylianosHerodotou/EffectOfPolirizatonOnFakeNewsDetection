@@ -17,11 +17,11 @@ class AbstractHeteroVectorAggregationMethod(AbstractSubgraphPooling, ABC):
 
         for key,value in x_dict.items():
             current_useful_data = useful_data[key]
-            # current_useful_data.x = value
+            current_useful_data.hetero_x = value
             current_layer_vector_representation_for_node_type = current_layer_vector_representation[key]
             current_layer_vector_representation_for_node_type = self.update_single_vector_representation(
                 current_useful_data, current_layer_vector_representation_for_node_type, is_homogeneous_data=False)
-            # del current_useful_data.x
+            current_useful_data.hetero_x = value
             current_layer_vector_representation[key] = current_layer_vector_representation_for_node_type
 
         if vector_representation is None:
