@@ -58,3 +58,4 @@ class AbstractHeteroAtEndPooling(AbstractAtEndPooling, ABC):
 
             useful_data[key] = current_useful_data
         return useful_data
+
