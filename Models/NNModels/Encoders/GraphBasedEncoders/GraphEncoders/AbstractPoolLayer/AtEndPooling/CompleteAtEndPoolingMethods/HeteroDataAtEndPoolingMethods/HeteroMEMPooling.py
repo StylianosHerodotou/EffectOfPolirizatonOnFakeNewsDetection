@@ -63,7 +63,7 @@ class HeteroMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC
                 useful_data = self.extra_dropout_forward(useful_data)
 
         if not self.is_homogeneous_data:
-            useful_data = useful_data.to_homogenous()
+            useful_data = useful_data.to_homogeneous()
             useful_data.hetero_x = useful_data.x
 
         for index, pool_layer in enumerate(self.pools):
