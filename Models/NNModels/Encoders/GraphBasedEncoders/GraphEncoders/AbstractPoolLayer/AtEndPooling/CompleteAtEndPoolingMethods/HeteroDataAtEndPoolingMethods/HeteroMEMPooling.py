@@ -22,10 +22,10 @@ class HeteroMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC
                                                                                                     model_parameters)
         last_conv_layer_hyperparameters = conv_hyperparameters_for_each_layer[-1]
 
-        first_layer_input = 0
         for edge_type, edge_conv_hyperparameters in last_conv_layer_hyperparameters.items():
-            first_layer_input+= edge_conv_hyperparameters["hidden_channels"] * \
+            first_layer_input = edge_conv_hyperparameters["hidden_channels"] * \
                                edge_conv_hyperparameters["heads"]
+            break
 
         print("first_layer_input", first_layer_input)
 
