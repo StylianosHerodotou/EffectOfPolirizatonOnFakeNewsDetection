@@ -46,6 +46,7 @@ class AbstractAtEndPooling(AbstractGraphGNNEncoder, ABC):
             useful_data = self.activation_forward(useful_data)
             if conv_layer != self.convs[-1]:
                 useful_data = self.extra_dropout_forward(useful_data)
+
         for index, pool_layer in enumerate(self.pools):
             useful_data = self.pool_forward(useful_data, pool_layer)
             useful_data = self.activation_forward(useful_data)

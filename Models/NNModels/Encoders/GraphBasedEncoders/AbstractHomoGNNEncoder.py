@@ -7,11 +7,7 @@ class AbstractHomogeneousGNNEncoder(AbstractGNNEncoder, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
-
-    # def conv_forward(self, useful_data, conv_layer):
-    #     x = self.object_specifci_conv_pass(useful_data, conv_layer)
-    #     useful_data.x = x
-    #     return useful_data
+        self.is_homogeneous_data=True
 
     def activation_forward(self, useful_data):
         x = useful_data.x

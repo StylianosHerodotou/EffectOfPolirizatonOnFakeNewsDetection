@@ -15,7 +15,6 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
-        self.is_homogeneous_data=False
 
 
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters, **kwargs):

@@ -8,8 +8,13 @@ class AbstractHeteroAtEndPooling(AbstractAtEndPooling, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
-        self.is_homogeneous_data = True
 
+    def get_node_features(self, useful_data):
+        return useful_data.hetero_x
+
+    def set_node_features(self, x, useful_data):
+        useful_data.hetero_x = x
+        return useful_data
 
     def get_vector_representation(self, useful_data):
         vector_representation_dict = dict()
@@ -48,7 +53,7 @@ class AbstractHeteroAtEndPooling(AbstractAtEndPooling, ABC):
             current_useful_data = useful_data[key]
             current_useful_data.hetero_x = value
             current_useful_data = self.single_extra_pooling_dropout_forward(
-                current_useful_data)
+                current_useful_data, index)
             del current_useful_data.hetero_x
 
             useful_data[key] = current_useful_data

@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling.AbstractAtEndPooling import \
     AbstractAtEndPooling
@@ -18,18 +18,13 @@ class AbstractMEMPoolingMethod(AbstractAtEndPooling, ABC):
                                    num_clusters=layer_hyperparameters["num_clusters"])
         return pooling_layer
 
+    @abstractmethod
     def get_node_features(self, useful_data):
-        if self.is_homogeneous_data:
-            return useful_data.x
-        else:
-            return useful_data.hetero_x
+        pass
 
+    @abstractmethod
     def set_node_features(self, x, useful_data):
-        if self.is_homogeneous_data:
-            useful_data.x = x
-        else:
-            useful_data.hetero_x = x
-        return useful_data
+        pass
 
     def pool_forward(self, useful_data, pool_layer, find_loss=False):
         x = self.get_node_features(useful_data)

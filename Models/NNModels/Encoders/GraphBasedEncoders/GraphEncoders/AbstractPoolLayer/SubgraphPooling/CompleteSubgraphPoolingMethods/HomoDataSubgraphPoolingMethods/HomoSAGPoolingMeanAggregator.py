@@ -13,4 +13,3 @@ class HomoSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHomoVectorA
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
-        self.is_homogeneous_data=True
