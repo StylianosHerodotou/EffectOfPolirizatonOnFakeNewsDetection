@@ -21,7 +21,8 @@ class AbstractHeteroAtEndPooling(AbstractAtEndPooling, ABC):
         for value in vector_representation_dict.values():
             all_vector_representations.append(value)
 
-        vector_representation = torch.stack(all_vector_representations, dim=-1)
+        # vector_representation = torch.stack(all_vector_representations, dim=-1)
+        vector_representation = torch.cat(all_vector_representations)
         return vector_representation
 
     def get_pooling_additional_loss(self, useful_data):

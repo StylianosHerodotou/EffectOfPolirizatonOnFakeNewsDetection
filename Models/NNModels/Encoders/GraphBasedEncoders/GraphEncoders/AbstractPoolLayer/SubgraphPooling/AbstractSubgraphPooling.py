@@ -19,10 +19,6 @@ class AbstractSubgraphPooling(AbstractGraphGNNEncoder, ABC):
     def final_update_vector_representation(self, vector_representation):
         pass
 
-    @abstractmethod
-    def final_update_vector_representation(self, vector_representation):
-        pass
-
     def forward(self, pyg_data):
         useful_data = self.extract_useful_data_from_input(pyg_data)
 
