@@ -75,14 +75,8 @@ class HeteroMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC
 
         return self.get_vector_representation(useful_data)
 
-
-
-
-
-
-
-
-
+    def extra_pooling_dropout_forward(self, useful_data, index):
+        return self.single_extra_pooling_dropout_forward(useful_data, index)
 
     # def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data,
     #                                                  model_parameters,
