@@ -16,16 +16,18 @@ class HeteroMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC
 
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
                                                      conv_hyperparameters_for_each_layer=None):
-        # if conv_hyperparameters_for_each_layer is None:
-        #     conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels,
-        #                                                                                             pyg_data,
-        #                                                                                             model_parameters)
-        # last_conv_layer_hyperparameters = conv_hyperparameters_for_each_layer[-1]
-        #
-        # first_layer_input = 0
-        # for edge_type, edge_conv_hyperparameters in last_conv_layer_hyperparameters.items():
-        #     first_layer_input+= edge_conv_hyperparameters["hidden_channels"] * \
-        #                        edge_conv_hyperparameters["heads"]
+        if conv_hyperparameters_for_each_layer is None:
+            conv_hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_conv_layer(in_channels,
+                                                                                                    pyg_data,
+                                                                                                    model_parameters)
+        last_conv_layer_hyperparameters = conv_hyperparameters_for_each_layer[-1]
+
+        first_layer_input = 0
+        for edge_type, edge_conv_hyperparameters in last_conv_layer_hyperparameters.items():
+            first_layer_input+= edge_conv_hyperparameters["hidden_channels"] * \
+                               edge_conv_hyperparameters["heads"]
+
+        print("first_layer_input", first_layer_input)
 
         hyperparameters_for_each_layer = list()
         for current_hyperparameters in model_parameters["pooling_hyper_parameters_for_each_layer"]:
