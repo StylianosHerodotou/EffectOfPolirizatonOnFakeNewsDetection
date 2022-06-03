@@ -34,7 +34,7 @@ class HeteroMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC
             layer_hyperparameters = dict()
 
             if len(hyperparameters_for_each_layer) == 0:
-                layer_hyperparameters["in_channels"] = -1
+                layer_hyperparameters["in_channels"] = first_layer_input
             else:
                 prev_layer = hyperparameters_for_each_layer[-1]
                 layer_hyperparameters["in_channels"] = prev_layer["hidden_channels"]
