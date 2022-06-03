@@ -66,6 +66,8 @@ class HeteroMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC
 
         hyperparameters_for_each_layer = list()
         for current_hyperparameters in model_parameters["pooling_hyper_parameters_for_each_layer"]:
+            print(type(current_hyperparameters),
+                  current_hyperparameters)
             layer_hyperparameters = dict()
 
             if len(hyperparameters_for_each_layer) == 0:
