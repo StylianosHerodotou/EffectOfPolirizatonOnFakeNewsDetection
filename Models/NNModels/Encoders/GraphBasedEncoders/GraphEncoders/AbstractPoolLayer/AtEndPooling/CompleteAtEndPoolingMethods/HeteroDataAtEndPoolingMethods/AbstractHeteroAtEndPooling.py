@@ -29,9 +29,9 @@ class AbstractHeteroAtEndPooling(AbstractAtEndPooling, ABC):
 
         all_vector_representations = list()
         for value in vector_representation_dict.values():
+            print(value.size())
             all_vector_representations.append(value)
 
-        # vector_representation = torch.stack(all_vector_representations, dim=-1)
         vector_representation = torch.cat(all_vector_representations)
         return vector_representation
 
