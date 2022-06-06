@@ -6,7 +6,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HeteroDataModels.
     AbstractHeterogeneousGraphGNNEncoder import AbstractHeterogeneousGraphGNNEncoder
 
 
-class HomoToHeteroGATMEMGraphEncoder(HomoToHeteroGATConvolution, AbstractHeterogeneousGraphGNNEncoder,
+class HomoToHeteroGATPerNodeMEMGraphEncoder(HomoToHeteroGATConvolution, AbstractHeterogeneousGraphGNNEncoder,
                                      PerNodeTypeMEMPooling):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
