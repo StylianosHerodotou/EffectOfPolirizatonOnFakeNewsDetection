@@ -7,7 +7,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
     CompleteAtEndPoolingMethods.HeteroDataAtEndPoolingMethods.AbstractHeteroAtEndPooling import \
     AbstractHeteroAtEndPooling
 from torch_geometric.nn import MemPooling
-
+import torch
 
 class PerNodeTypeMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC):
 
@@ -27,7 +27,7 @@ class PerNodeTypeMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod
                                 node_conv_hyperparameters["heads"]
             break
 
-        print("first_layer_input", first_layer_input)
+        # print("first_layer_input", first_layer_input)
 
         hyperparameters_for_each_node_type = dict()
         for node_type in pyg_data.node_types:
@@ -66,16 +66,24 @@ class PerNodeTypeMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod
 
         return hyperparameters_for_each_layer
 
+    def generate_pool_layer(self, pyg_data, layer_hyperparameters):
+        pooling_layer= torch.nn.ModuleDict()
+        for node_type in pyg_data.node_types:
+            current_layer_hyperparameters = layer_hyperparameters[node_type]
+            current_pooling_layer = super().generate_pool_layer(pyg_data, current_layer_hyperparameters)
+            pooling_layer[node_type] = current_pooling_layer
+        return pooling_layer
+
     def pool_forward(self, useful_data, pool_layer, find_loss=False):
         x_dict = useful_data.x_dict
-        for key, x in x_dict.items():
-            x, pooling_loss = pool_layer(x)
-            x_dict[key] = x
+        for node_type, x in x_dict.items():
+            node_type_pool_layer = pool_layer[node_type]
+            x, pooling_loss = node_type_pool_layer(x)
+            x_dict[node_type] = x
             pooling_loss = MemPooling.kl_loss(pooling_loss)
             if "pooling_loss" not in useful_data.to_dict().keys():
                 useful_data.pooling_loss = 0
             useful_data.pooling_loss = useful_data.pooling_loss + pooling_loss
-
         # useful_data.x_dict = x_dict
         return useful_data
 
