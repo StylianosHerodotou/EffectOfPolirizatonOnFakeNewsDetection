@@ -37,7 +37,10 @@ class AbstractAtEndPooling(AbstractGraphGNNEncoder, ABC):
         hyperparameters_for_each_layer = self.generate_hyperparameters_for_each_pool_layer(in_channels, pyg_data,
                                                                                            model_parameters)
         for layer_hyperparameters in hyperparameters_for_each_layer:
-            self.pooling_dropout.append(layer_hyperparameters["dropout"])
+            dropout=0
+            if "dropout" in  layer_hyperparameters.keys():
+                dropout= layer_hyperparameters["dropout"]
+            self.pooling_dropout.append(dropout)
 
     def forward(self, pyg_data):
         useful_data = self.extract_useful_data_from_input(pyg_data)
