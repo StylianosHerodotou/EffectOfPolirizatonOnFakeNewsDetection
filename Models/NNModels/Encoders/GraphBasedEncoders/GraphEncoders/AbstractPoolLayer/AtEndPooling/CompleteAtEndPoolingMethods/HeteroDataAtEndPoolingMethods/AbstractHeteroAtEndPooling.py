@@ -56,6 +56,6 @@ class AbstractHeteroAtEndPooling(AbstractAtEndPooling, ABC):
                 current_useful_data, index)
             del current_useful_data.hetero_x
 
-            useful_data[key] = current_useful_data
+            # useful_data[key] = current_useful_data
         return useful_data
 
