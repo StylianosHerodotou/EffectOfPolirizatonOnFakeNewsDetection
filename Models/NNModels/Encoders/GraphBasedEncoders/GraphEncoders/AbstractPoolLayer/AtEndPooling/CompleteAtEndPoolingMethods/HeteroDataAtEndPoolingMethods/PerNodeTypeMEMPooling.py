@@ -62,7 +62,7 @@ class PerNodeTypeMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod
                 current_layer_all_nodes_dict = hyperparameters_for_each_layer[index]
                 current_layer_all_nodes_dict[node_type] = node_layer_hyperparameters
 
-        print(hyperparameters_for_each_layer)
+        print("hyperparameters_for_each_layer\n\n", hyperparameters_for_each_layer)
 
         return hyperparameters_for_each_layer
 
