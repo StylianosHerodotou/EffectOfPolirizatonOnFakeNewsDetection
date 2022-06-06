@@ -117,7 +117,10 @@ def find_node_names_in_graph(graph, int_to_node_mapping):
 def remove_nodes_from_gragh_not_in_large_without_specific_list_of_nodes(small_graph, int_to_node_mapping,
                                                                         large_nodes_names):
     # get small nodes names
-    small_nodes_names = find_node_names_in_graph(small_graph, int_to_node_mapping)
+    if isinstance(list(small_graph.nodes)[0],str):
+        small_nodes_names = set(small_graph.nodes())
+    else:
+        small_nodes_names = find_node_names_in_graph(small_graph, int_to_node_mapping)
 
     # to remain = small interconnection large
     to_remain_nodes_names = small_nodes_names.intersection(large_nodes_names)
@@ -136,9 +139,9 @@ def remove_nodes_from_gragh_not_in_large_without_specific_list_of_nodes(small_gr
         small_nodes_ids_to_remove.append(node_to_int_mapping[node_name])
 
     # remove from graph
-    # print("before ", small_graph.number_of_nodes())
+    print("before ", small_graph.number_of_nodes())
     small_graph.remove_nodes_from(small_nodes_ids_to_remove)
-    # print("after ", small_graph.number_of_nodes())
+    print("after ", small_graph.number_of_nodes())
     return small_graph
 
 # dir_to_raw="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset"
