@@ -74,7 +74,7 @@ class PerNodeTypeMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod
                 useful_data.pooling_loss = 0
             useful_data.pooling_loss = useful_data.pooling_loss + pooling_loss
 
-        useful_data.x_dict = x_dict
+        # useful_data.x_dict = x_dict
         return useful_data
 
     def forward(self, pyg_data):

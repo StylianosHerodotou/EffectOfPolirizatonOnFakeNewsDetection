@@ -13,5 +13,5 @@ class AbstractHeteroGNNEncoder(AbstractGNNEncoder, ABC):
         x_dict = useful_data.x_dict
         for key, value in x_dict.items():
             x_dict[key] = self.activation_function(value)
-        useful_data.x_dict = x_dict
+        # useful_data.x_dict = x_dict
         return useful_data
