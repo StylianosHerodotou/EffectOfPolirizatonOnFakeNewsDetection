@@ -116,8 +116,9 @@ def find_node_names_in_graph(graph, int_to_node_mapping):
 
 def remove_nodes_from_gragh_not_in_large_without_specific_list_of_nodes(small_graph, int_to_node_mapping,
                                                                         large_nodes_names):
+
     # get small nodes names
-    if isinstance(list(small_graph.nodes)[0],str):
+    if small_graph.number_of_nodes() != 0 and isinstance(list(small_graph.nodes)[0],str):
         small_nodes_names = set(small_graph.nodes())
     else:
         small_nodes_names = find_node_names_in_graph(small_graph, int_to_node_mapping)
