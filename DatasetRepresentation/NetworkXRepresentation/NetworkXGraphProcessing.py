@@ -140,9 +140,9 @@ def remove_nodes_from_gragh_not_in_large_without_specific_list_of_nodes(small_gr
         small_nodes_ids_to_remove.append(node_to_int_mapping[node_name])
 
     # remove from graph
-    print("before ", small_graph.number_of_nodes())
+    # print("before ", small_graph.number_of_nodes())
     small_graph.remove_nodes_from(small_nodes_ids_to_remove)
-    print("after ", small_graph.number_of_nodes())
+    # print("after ", small_graph.number_of_nodes())
     return small_graph
 
 # dir_to_raw="/content/drive/MyDrive/ThesisProject/fake_news_in_time/compact_dataset"
