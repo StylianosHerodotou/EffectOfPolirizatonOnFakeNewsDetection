@@ -23,8 +23,21 @@ class AbstractGNNEncoder(ABC, torch.nn.Module):
             new_conv_layer = self.generate_conv_layer(pyg_data, layer_hyperparameters)
             self.convs.append(new_conv_layer)
 
+    def clone_dictionary(self, dic):
+        new_dic = copy.copy(dic)
+        for key, item in new_dic:
+            if isinstance(item, dict):
+                new_dic[key] =  self.clone_dictionary(item)
+            elif isinstance(item, torch.Tensor):
+                new_dic[key] = torch.clone(item)
+        return new_dic
+
     def extract_useful_data_from_input(self, pyg_data):
-        return copy.copy(pyg_data)
+        useful_data=  copy.copy(pyg_data)
+        for key,value  in useful_data.to_dict().items():
+            if()
+            useful_data[key] = torch.clone(value)
+
 
     @abstractmethod
     def activation_forward(self, useful_data):

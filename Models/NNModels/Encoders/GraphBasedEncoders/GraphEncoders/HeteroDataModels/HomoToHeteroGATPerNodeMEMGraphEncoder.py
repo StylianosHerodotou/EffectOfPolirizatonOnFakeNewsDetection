@@ -1,7 +1,6 @@
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractConvLayers.HomoToHetero.HomoToHeteroGATConvolution import \
     HomoToHeteroGATConvolution
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling.\
-    CompleteAtEndPoolingMethods.HeteroDataAtEndPoolingMethods.PerNodeTypeMEMPooling import PerNodeTypeMEMPooling
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling.PerNodeTypeMEMPooling import PerNodeTypeMEMPooling
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HeteroDataModels. \
     AbstractHeterogeneousGraphGNNEncoder import AbstractHeterogeneousGraphGNNEncoder
 

@@ -1,6 +1,5 @@
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractConvLayers.HeteroWithHomoData.HEATConvolution import HEATConvolution
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling.CompleteAtEndPoolingMethods.HomoDataAtEndPoolingMethods.HomoMEMPooling import \
-    HomoMEMPooling
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling.HomoMEMPooling import HomoMEMPooling
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HomoDataModels.AbstractHomogeneousGraphGNNEncoder import \
     AbstractHomogeneousGraphGNNEncoder
 

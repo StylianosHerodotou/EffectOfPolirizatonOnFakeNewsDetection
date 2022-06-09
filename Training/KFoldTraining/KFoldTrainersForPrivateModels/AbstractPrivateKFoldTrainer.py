@@ -1,6 +1,3 @@
-from abc import ABC, abstractmethod
-from sklearn.model_selection import KFold
-
 from Training.AbstractTrainer import AbstractTrainer
 from abc import ABC
 from sklearn.model_selection import KFold

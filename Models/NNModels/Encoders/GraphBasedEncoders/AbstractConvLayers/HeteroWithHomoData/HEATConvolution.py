@@ -43,9 +43,11 @@ class HEATConvolution(AbstractHomogeneousGNNEncoder, ABC):
         return hyperparameters_for_each_layer
 
     def conv_forward(self, useful_data, conv_layer):
-        x, edge_index, edge_attr, node_type, edge_type = useful_data.x, useful_data.edge_index,\
-                                                         useful_data.edge_attr, useful_data.node_type,\
-                                                         useful_data.edge_type
+        x, edge_index, edge_attr, node_type, edge_type = useful_data["x"], \
+                                                         useful_data["edge_index"],\
+                                                         useful_data["edge_attr"],\
+                                                         useful_data["node_type"],\
+                                                         useful_data["edge_type"]
         new_x = conv_layer(x, edge_index, node_type, edge_type, edge_attr)
-        useful_data.x = new_x
+        useful_data["x"] = new_x
         return useful_data

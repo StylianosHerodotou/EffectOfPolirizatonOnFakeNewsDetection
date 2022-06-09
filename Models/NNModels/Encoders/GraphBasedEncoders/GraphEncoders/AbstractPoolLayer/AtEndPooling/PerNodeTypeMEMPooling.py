@@ -1,15 +1,13 @@
 from abc import ABC
 
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling. \
-    AbstractPoolingImplementation.AbstractMEMPoolingMethod import \
-    AbstractMEMPoolingMethod
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling. \
-    CompleteAtEndPoolingMethods.HeteroDataAtEndPoolingMethods.AbstractHeteroAtEndPooling import \
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling.HomoMEMPooling import \
+    HomoMEMPooling
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.AtEndPooling.AbstractHeteroAtEndPooling import \
     AbstractHeteroAtEndPooling
 from torch_geometric.nn import MemPooling
 import torch
 
-class PerNodeTypeMEMPooling(AbstractHeteroAtEndPooling, AbstractMEMPoolingMethod, ABC):
+class PerNodeTypeMEMPooling(AbstractHeteroAtEndPooling, HomoMEMPooling, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
