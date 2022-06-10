@@ -5,7 +5,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
 from torch_geometric.nn import SAGPooling
 
 
-class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
+class HomoSAGPoolingMethod(AbstractSubgraphPooling, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
@@ -13,20 +13,6 @@ class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
         pooling_layer = SAGPooling(in_channels=layer_hyperparameters["in_channels"],
                                    ratio=layer_hyperparameters["ratio"])
         return pooling_layer
-
-    def pool_forward(self, useful_data, pool_layer):
-        x, edge_index = useful_data.x, useful_data.edge_index
-        edge_attr, batch = useful_data.edge_attr, useful_data.batch
-
-        x, edge_index, edge_attr, batch, perm, importance = pool_layer(x, edge_index, edge_attr, batch)
-
-        useful_data.x = x
-        useful_data.edge_index = edge_index
-        useful_data.edge_attr = edge_attr
-        useful_data.batch = batch
-        useful_data.pooling_perm = perm
-        useful_data.pooling_importance = importance
-        return useful_data
 
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters,
                                                      conv_hyperparameters_for_each_layer=None):
@@ -45,3 +31,18 @@ class AbstractSAGPoolingMethod(AbstractSubgraphPooling, ABC):
             layer_hyperparameters["ratio"] = model_parameters["pooling_ratio"]
             hyperparameters_for_each_layer.append(layer_hyperparameters)
         return hyperparameters_for_each_layer
+
+    def pool_forward(self, useful_data, pool_layer):
+        x, edge_index = useful_data["x"], useful_data["edge_index"]
+        edge_attr, batch = useful_data["edge_attr"], useful_data["batch"]
+
+        x, edge_index, edge_attr, batch, perm, importance = pool_layer(x, edge_index, edge_attr, batch)
+
+        useful_data["x"] = x
+        useful_data["edge_index"] = edge_index
+        useful_data["edge_attr"] = edge_attr
+        useful_data["batch"] = batch
+        useful_data["pooling_per"] = perm
+        useful_data["pooling_importance"] = importance
+        return useful_data
+

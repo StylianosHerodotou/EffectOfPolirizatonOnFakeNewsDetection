@@ -1,20 +1,17 @@
 from abc import ABC, abstractmethod
+from torch_geometric.nn import global_add_pool, global_mean_pool, global_max_pool
+import torch
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.AbstractSubgraphPooling import \
     AbstractSubgraphPooling
-import torch
-from torch_geometric.nn import global_add_pool, global_mean_pool, global_max_pool
 
 
-class AbstractMeanAggregator(AbstractSubgraphPooling, ABC):
+class HomoMeanVectorAggregationMethod(AbstractSubgraphPooling, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
-    def update_single_vector_representation(self, useful_data, vector_representation):
-        if self.is_homogeneous_data:
-            x, batch = useful_data.x, useful_data.batch
-        else:
-            x, batch = useful_data.hetero_x, useful_data.batch
+    def update_vector_representation(self, useful_data, vector_representation):
+        x, batch = useful_data["x"], useful_data["batch"]
 
         current_layer_vector_representation = list()
         current_layer_vector_representation.append(global_add_pool(x, batch))
@@ -28,7 +25,7 @@ class AbstractMeanAggregator(AbstractSubgraphPooling, ABC):
             vector_representation += current_layer_vector_representation
             return vector_representation
 
-    def final_single_update_vector_representation(self, vector_representation):
+    def final_update_vector_representation(self, vector_representation):
         vector_representation = torch.squeeze(vector_representation)
         vector_representation /= len(self.convs)
         return vector_representation

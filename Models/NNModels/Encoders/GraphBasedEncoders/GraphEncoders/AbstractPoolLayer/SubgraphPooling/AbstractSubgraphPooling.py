@@ -8,10 +8,6 @@ class AbstractSubgraphPooling(AbstractGraphGNNEncoder, ABC):
         super().__init__(in_channels, pyg_data, model_parameters)
 
     @abstractmethod
-    def update_single_vector_representation(self, useful_data, vector_representation):
-        pass
-
-    @abstractmethod
     def update_vector_representation(self, useful_data, vector_representation):
         pass
 

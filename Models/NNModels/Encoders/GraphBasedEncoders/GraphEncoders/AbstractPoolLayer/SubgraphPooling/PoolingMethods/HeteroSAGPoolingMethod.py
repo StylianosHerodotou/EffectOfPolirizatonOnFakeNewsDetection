@@ -1,24 +1,14 @@
 from abc import ABC
-
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHeteroGNNEncoder import HeterogeneousDict
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling. \
-    AbstractPoolingImplementation.AbstractSAGPoolingMethod import \
-    AbstractSAGPoolingMethod
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.VectorAggregationMethods.AbstractHeteroVectorAggregationMethod import \
-    AbstractHeteroVectorAggregationMethod
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling. \
-    VectorAggregationMethods.AbstractMeanAggregator import \
-    AbstractMeanAggregator
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling.PoolingMethods.HomoSAGPoolingMethod import \
+    HomoSAGPoolingMethod
 import torch
 from torch_geometric.data import HeteroData
 
 
-class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVectorAggregationMethod,
-                                     AbstractMeanAggregator, ABC):
-
+class HeteroSAGPoolingMethod(HomoSAGPoolingMethod, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
-
 
     def generate_hyperparameters_for_each_pool_layer(self, in_channels, pyg_data, model_parameters, **kwargs):
         conv_hyperparameters_for_each_layer_for_all_edge_type = self.generate_hyperparameters_for_each_conv_layer(
@@ -61,7 +51,9 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
         number_of_old_edges = old_edge_index.t().size(0)
 
         for key in homo_data.to_dict().keys():
-            # print(key)
+            print(key, homo_data[key])
+            if isinstance(homo_data[key], list):
+                continue
             tensor_size = homo_data[key].size(0)
             if tensor_size == number_of_old_edges and key.startswith("edge"):
                 homo_data[key] = homo_data[key][edge_mask]
@@ -70,14 +62,15 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
         return homo_data
 
     def pool_forward(self, useful_data, pool_layer):
-        print(useful_data)
         hetero_data = HeteroData(useful_data)
+
         homo_data = hetero_data.to_homogeneous()
         old_edge_index = homo_data.edge_index
         old_x = homo_data.x
-        homo_data= super(HeteroSAGPoolingMeanAggregator, self).pool_forward(homo_data, pool_layer)
+        homo_data = super().pool_forward(homo_data, pool_layer)
         homo_data = self.extend_pooling_to_remaining_attributes(homo_data, old_edge_index, old_x)
         hetero_data = homo_data.to_heterogeneous()
 
-        useful_data= HeterogeneousDict(hetero_data)
+        useful_data = HeterogeneousDict(hetero_data)
         return useful_data
+
