@@ -5,7 +5,8 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
     HomoMeanVectorAggregationMethod
 
 
-class HomoSAGPoolingMeanAggregator(HomoSAGPoolingMethod, HomoMeanVectorAggregationMethod, ABC):
+class HomoSAGPoolingMeanAggregator(HomoSAGPoolingMethod, HomoMeanVectorAggregationMethod,
+                                   HomoMeanVectorAggregationMethod, ABC):
 
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
