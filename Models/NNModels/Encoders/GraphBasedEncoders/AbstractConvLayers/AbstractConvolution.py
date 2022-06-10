@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
-import torch
 
 
-class AbstractConvolution(torch.nn.Module, ABC):
+class AbstractConvolution(ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
