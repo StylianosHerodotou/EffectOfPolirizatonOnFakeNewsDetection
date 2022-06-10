@@ -1,13 +1,14 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from torch_geometric.nn import HeteroConv
-from Models.NNModels.Encoders.GraphBasedEncoders.AbstractConvLayers. \
-    Homo.AbstractHomoConvolution import AbstractHomoConvolution
+from Models.NNModels.Encoders.GraphBasedEncoders.AbstractConvLayers.AbstractConvolution import AbstractConvolution
 
 
-class AbstractHomoToHeteroConvolution(AbstractHomoConvolution, ABC):
+# this class shows the template. You need to copy paste the below methods to make it work.
+class AbstractHomoToHeteroConvolution(AbstractConvolution, ABC):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
+    @abstractmethod
     def generate_conv_layer(self, pyg_data, layer_hyperparameters_for_all_edge_types, aggr_type="mean"):
         conv_dict = dict()
         for edge_type in pyg_data.edge_types:
@@ -19,13 +20,14 @@ class AbstractHomoToHeteroConvolution(AbstractHomoConvolution, ABC):
         return HeteroConv(conv_dict, aggr=aggr_type)
 
     # returns a list( layer) of dictionaries(edge_type)  of dictionaries (hyperparameters) .
+    @abstractmethod
     def generate_hyperparameters_for_each_conv_layer(self, in_channels, pyg_data, model_parameters):
         # for each edge type generate another model_parameters and call super
         all_edges_hyperparameters_dict = dict()
         for edge_type in pyg_data.edge_types:
             current_edge_pyg_data = pyg_data[edge_type]
             current_edge_model_parameters = model_parameters[edge_type]
-            hyperparameters_for_this_edge_type = super().\
+            hyperparameters_for_this_edge_type = super(). \
                 generate_hyperparameters_for_each_conv_layer(in_channels,
                                                              pyg_data=current_edge_pyg_data,
                                                              model_parameters=current_edge_model_parameters)
@@ -43,7 +45,3 @@ class AbstractHomoToHeteroConvolution(AbstractHomoConvolution, ABC):
                 current_layer_all_edges_dict[edge_type] = edge_layer_hyperparameters
 
         return all_edges_hyperparameters_list
-
-    def conv_forward(self, useful_data, conv_layer):
-        useful_data = super().conv_forward(useful_data, conv_layer)
-        return useful_data

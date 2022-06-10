@@ -1,6 +1,7 @@
 from Models.NNModels.Classifiers.MLP import MLP
-from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HomoDataModels.HEATGraphEncoder import HEATGraphEncoder
 import torch
+
+from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.HomoDataModels.HEATGraphEncoder import HEATGraphEncoder
 
 
 class HEAT_SAG_ED_MLP_Model(torch.nn.Module):
@@ -10,7 +11,10 @@ class HEAT_SAG_ED_MLP_Model(torch.nn.Module):
                                         pyg_data=encoder_hyperparameters["pyg_data"],
                                         model_parameters=encoder_hyperparameters["model_parameters"])
 
-        self.decoder = MLP(in_channels=3 * encoder_hyperparameters["heads"] * encoder_hyperparameters["hidden_size"],
+        last_layer= encoder_hyperparameters["model_parameters"]["pooling_hyper_parameters_for_each_layer"][-1]
+        decoder_input_size= last_layer["pooling_hidden_channels"] * last_layer["pooling_num_clusters"]
+
+        self.decoder = MLP(in_channels=decoder_input_size,
                            output_size=decoder_hyperparameters["output_size"],
                            nodes_per_hidden_layer=decoder_hyperparameters["nodes_per_hidden_layer"],
                            dropout=decoder_hyperparameters["dropout"])

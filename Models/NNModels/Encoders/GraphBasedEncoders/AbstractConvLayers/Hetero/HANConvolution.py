@@ -2,10 +2,10 @@ from abc import ABC
 
 from torch_geometric.nn import GATv2Conv
 
-from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHomoGNNEncoder import AbstractHomogeneousGNNEncoder
+from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHeteroGNNEncoder import AbstractHeteroGNNEncoder
 
 
-class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
+class HANConvolution(AbstractHeteroGNNEncoder, ABC):
 
     def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
         conv_layer = GATv2Conv(in_channels=layer_hyperparameters["in_channels"],
@@ -33,15 +33,11 @@ class HomogeneousGATConvolution(AbstractHomogeneousGNNEncoder, ABC):
             hyperparameters_for_each_layer.append(layer_hyperparameters)
         return hyperparameters_for_each_layer
 
-    def conv_forward(self, useful_data, conv_layer, is_homogeneous=True):
-        if is_homogeneous:
-            x, edge_index, edge_attr = useful_data.x, useful_data.edge_index, useful_data.edge_attr
-            new_x = conv_layer(x, edge_index, edge_attr)
-            useful_data.x = new_x
-        else:
-            x_dict, edge_index_dict, edge_attr_dict = useful_data.x_dict, useful_data.edge_index_dict, \
-                                                      useful_data.edge_attr_dict
-            new_x_dict = conv_layer(x_dict, edge_index_dict)
-            for node_type, new_x in new_x_dict.items():
-                useful_data[node_type].x=new_x
+    def conv_forward(self, useful_data, conv_layer):
+        x_dict, edge_index_dict, edge_attr_dict = useful_data["x_dict"],\
+                                                  useful_data["edge_index_dict"],\
+                                                  useful_data["edge_attr_dict"]
+        new_x_dict = conv_layer(x_dict, edge_index_dict)
+        for node_type, new_x in new_x_dict.items():
+            useful_data[node_type].x=new_x
         return useful_data

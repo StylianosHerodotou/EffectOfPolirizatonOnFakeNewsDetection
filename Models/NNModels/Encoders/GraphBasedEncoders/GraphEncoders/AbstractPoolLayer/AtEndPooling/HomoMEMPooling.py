@@ -66,7 +66,10 @@ class HomoMEMPooling(AbstractGraphGNNEncoder, ABC):
 
     def pool_forward(self, useful_data, pool_layer, find_loss=False):
         x = useful_data["x"]
-        x, pooling_loss = pool_layer(x)
+        batch = None
+        if "batch" in useful_data.keys():
+            batch = useful_data["batch"]
+        x, pooling_loss = pool_layer(x,batch)
         useful_data["x"] = x
 
         pooling_loss = MemPooling.kl_loss(pooling_loss)
