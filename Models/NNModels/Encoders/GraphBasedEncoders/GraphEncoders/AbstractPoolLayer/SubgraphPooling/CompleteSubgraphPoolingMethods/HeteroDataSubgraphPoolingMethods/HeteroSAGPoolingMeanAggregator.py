@@ -70,6 +70,7 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
         return homo_data
 
     def pool_forward(self, useful_data, pool_layer):
+        print(useful_data)
         hetero_data = HeteroData(useful_data)
         homo_data = hetero_data.to_homogeneous()
         old_edge_index = homo_data.edge_index
