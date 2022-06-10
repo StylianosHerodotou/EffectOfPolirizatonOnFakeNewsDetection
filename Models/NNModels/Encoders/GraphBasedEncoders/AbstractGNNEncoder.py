@@ -2,10 +2,26 @@ import torch
 from abc import ABC, abstractmethod
 import copy
 
+def copy_dict(original_dict):
+    object_dict = dict()
+    for key, value in original_dict.items():
+        if isinstance(value, dict):
+            object_dict[key] = copy_dict(value)
+        if isinstance(value, torch.Tensor):
+            object_dict[key] = torch.clone(value)
+        else:
+            object_dict[key] = copy.copy(value)
+
+    return object_dict
+
+
 class AbstractGNNEncoder(ABC, torch.nn.Module):
-    # implemented in
     @abstractmethod
     def generate_conv_layer(self, pyg_data, layer_hyperparameters, aggr_type="mean"):
+        pass
+
+    @abstractmethod
+    def extract_useful_data_from_input(self, pyg_data):
         pass
 
     @abstractmethod
@@ -31,12 +47,6 @@ class AbstractGNNEncoder(ABC, torch.nn.Module):
             elif isinstance(item, torch.Tensor):
                 new_dic[key] = torch.clone(item)
         return new_dic
-
-    def extract_useful_data_from_input(self, pyg_data):
-        useful_data=  copy.copy(pyg_data)
-        for key,value  in useful_data.to_dict().items():
-            if()
-            useful_data[key] = torch.clone(value)
 
 
     @abstractmethod
