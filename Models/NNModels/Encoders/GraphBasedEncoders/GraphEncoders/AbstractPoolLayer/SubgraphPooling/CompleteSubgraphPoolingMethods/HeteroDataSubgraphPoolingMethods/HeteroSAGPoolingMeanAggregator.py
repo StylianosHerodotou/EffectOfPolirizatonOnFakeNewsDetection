@@ -1,4 +1,6 @@
 from abc import ABC
+
+from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHeteroGNNEncoder import HeterogeneousDict
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer.SubgraphPooling. \
     AbstractPoolingImplementation.AbstractSAGPoolingMethod import \
     AbstractSAGPoolingMethod
@@ -8,6 +10,7 @@ from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractPoolLayer
     VectorAggregationMethods.AbstractMeanAggregator import \
     AbstractMeanAggregator
 import torch
+from torch_geometric.data import HeteroData
 
 
 class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVectorAggregationMethod,
@@ -67,10 +70,13 @@ class HeteroSAGPoolingMeanAggregator(AbstractSAGPoolingMethod, AbstractHeteroVec
         return homo_data
 
     def pool_forward(self, useful_data, pool_layer):
-        homo_data = useful_data.to_homogeneous()
+        hetero_data = HeteroData(useful_data)
+        homo_data = hetero_data.to_homogeneous()
         old_edge_index = homo_data.edge_index
         old_x = homo_data.x
         homo_data= super(HeteroSAGPoolingMeanAggregator, self).pool_forward(homo_data, pool_layer)
         homo_data = self.extend_pooling_to_remaining_attributes(homo_data, old_edge_index, old_x)
-        useful_data = homo_data.to_heterogeneous()
+        hetero_data = homo_data.to_heterogeneous()
+
+        useful_data= HeterogeneousDict(hetero_data)
         return useful_data
