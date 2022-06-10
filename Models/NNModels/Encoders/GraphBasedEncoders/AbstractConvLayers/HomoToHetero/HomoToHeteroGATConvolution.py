@@ -1,11 +1,9 @@
-from abc import ABC
-
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractConvLayers.Homo.HomogeneousGATConvolution import \
     HomogeneousGATConvolution
 from torch_geometric.nn import HeteroConv
 
 
-class HomoToHeteroGATConvolution(HomogeneousGATConvolution, ABC):
+class HomoToHeteroGATConvolution(HomogeneousGATConvolution):
     def __init__(self, in_channels, pyg_data, model_parameters):
         super().__init__(in_channels, pyg_data, model_parameters)
 
@@ -46,6 +44,19 @@ class HomoToHeteroGATConvolution(HomogeneousGATConvolution, ABC):
         return all_edges_hyperparameters_list
 
     def conv_forward(self, useful_data, conv_layer):
-        x, edge_index, edge_attr = useful_data, useful_data.get_edge_index_dict(), useful_data.get_edge_attr_dict()
-        new_x_dict = conv_layer(x, edge_index, edge_attr)
+#         print(useful_data)
+        x_dict, edge_index_dict, edge_attr_dict = \
+            useful_data.get_x_dict(), useful_data.get_edge_index_dict(), useful_data.get_edge_attr_dict()
+#         print("x_dict", x_dict)
+#         print("edge_index_dict", edge_index_dict)
+#         print("edge_attr_dict",edge_attr_dict )
+
+#         TODO: FIX THE ATTR thing
+#         if edge_attr_dict is not None:
+#             new_x_dict = conv_layer(x_dict, edge_index_dict, edge_attr_dict)
+#         else:
+#             new_x_dict = conv_layer(x_dict, edge_index_dict)
+
+        new_x_dict = conv_layer(x_dict, edge_index_dict)
         useful_data.set_new_x_dict(new_x_dict)
+        return useful_data

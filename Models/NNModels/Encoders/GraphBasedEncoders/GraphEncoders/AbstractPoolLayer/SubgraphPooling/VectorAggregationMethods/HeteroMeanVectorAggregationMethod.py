@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 import torch
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.\
     AbstractPoolLayer.SubgraphPooling.VectorAggregationMethods.\

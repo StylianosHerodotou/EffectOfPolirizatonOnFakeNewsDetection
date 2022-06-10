@@ -1,7 +1,4 @@
-from abc import ABC
-
 from torch_geometric.nn import GATv2Conv
-
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractConvLayers.AbstractConvolution import AbstractConvolution
 
 
