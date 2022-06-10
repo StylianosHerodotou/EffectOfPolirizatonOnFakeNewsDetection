@@ -2,8 +2,7 @@ from abc import ABC
 
 from Models.NNModels.Encoders.GraphBasedEncoders.AbstractHeteroGNNEncoder import AbstractHeteroGNNEncoder
 from Models.NNModels.Encoders.GraphBasedEncoders.GraphEncoders.AbstractGraphGNNEncoder import AbstractGraphGNNEncoder
-from torch_geometric.nn import global_mean_pool as gap, global_max_pool as gmp
-import torch
+
 
 
 class AbstractHeterogeneousGraphGNNEncoder(AbstractGraphGNNEncoder, AbstractHeteroGNNEncoder, ABC):
